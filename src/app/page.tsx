@@ -46,7 +46,7 @@ export default function Home() {
                 🌳 Save the Riverview Lands!
               </h2>
               <p className="text-lg font-body text-gray-600 mb-8">
-                Join thousands of supporters in preserving this unique arboretum and green space for future generations. Your voice matters!
+                Join us in preserving this unique arboretum and green space for future generations. Your voice matters!
               </p>
               <button className="bg-darkgreen hover:bg-primary text-cream px-10 py-4 rounded-full font-display font-semibold transition-all duration-300 hover:scale-105 hover:shadow-medium animate-bounce-gentle">
                 Sign the Petition Now
