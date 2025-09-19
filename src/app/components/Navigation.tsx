@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { menuData } from '../data/menuData';
+import { menuData, MenuItem } from '../data/menuData';
 
 
 const HamburgerIcon = () => (
@@ -103,7 +103,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = "" }) => {
   const desktopMenuItems = menuData.filter(item => item.name !== "Home");
 
   // Function to check if dropdown should open to the left (for last 2 items with dropdowns)
-  const shouldOpenLeft = (item: any, index: number) => {
+  const shouldOpenLeft = (item: MenuItem) => {
     // Check if this is one of the last 2 items that have subPages
     const itemsWithDropdowns = desktopMenuItems.filter(menuItem => menuItem.subPages);
     const dropdownIndex = itemsWithDropdowns.findIndex(menuItem => menuItem.name === item.name);
@@ -150,7 +150,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = "" }) => {
                       {/* Desktop Dropdown */}
                       {openDropdown === item.name && (
                         <div className={`absolute top-full mt-1 w-64 bg-nav-dropdown rounded-lg shadow-dropdown border border-nav-border z-50 animate-dropdown-appear ${
-                          shouldOpenLeft(item, index) ? 'right-0' : 'left-0'
+                          shouldOpenLeft(item) ? 'right-0' : 'left-0'
                         }`}>
                           <div className="py-2">
                             {item.subPages.map((subPage) => (
@@ -199,7 +199,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = "" }) => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden absolute top-full left-0 right-0 bg-cream shadow-dropdown border-t border-nav-border z-40 animate-slide-down">
+        <div className="lg:hidden absolute top-full left-0 right-0 bg-white shadow-dropdown border-t border-nav-border z-40 animate-slide-down">
           <div className="px-4 py-2 space-y-1 max-h-[80vh] overflow-y-auto">
             {menuData.map((item) => (
               <div key={item.name}>
