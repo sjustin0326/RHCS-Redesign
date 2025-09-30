@@ -13,10 +13,14 @@ export interface Event {
   slug: string;
 }
 
-// toren's note ;)
-// this is trying to read events out of a directory, which is a local kind of thing
-// is the events directory kept in the public folder uploaded with the site? 
-// I forget how but I'm pretty sure there's a similar way to loop over all of those. Nextjs probably has something built in
+function createVancouverDate(dateString: string): Date {
+  if (dateString.includes('PDT') || dateString.includes('PST') || dateString.includes('-07') || dateString.includes('-08')) {
+    return new Date(dateString);
+  }
+  
+  const withTimezone = `${dateString} America/Vancouver`;
+  return new Date(withTimezone);
+}
 
 export function getAllEvents(): Event[] {
   const eventsDirectory = path.join(process.cwd(), 'src/content/events');
@@ -48,17 +52,17 @@ export function getAllEvents(): Event[] {
   });
 
   return events.sort((a, b) => 
-    new Date(a.startDateTime).getTime() - new Date(b.startDateTime).getTime()
+    createVancouverDate(a.startDateTime).getTime() - createVancouverDate(b.startDateTime).getTime()
   );
 }
 
-
 export function getNextEvent(): Event | null {
   const allEvents = getAllEvents();
-  const now = new Date();
+  const nowInVancouver = new Date().toLocaleString("en-US", {timeZone: "America/Vancouver"});
+  const now = new Date(nowInVancouver);
   
   const upcomingEvents = allEvents.filter(event => 
-    new Date(event.startDateTime) > now
+    createVancouverDate(event.startDateTime) > now
   );
   
   return upcomingEvents.length > 0 ? upcomingEvents[0] : null;
@@ -66,10 +70,11 @@ export function getNextEvent(): Event | null {
 
 export function getUpcomingEvents(excludeNext: boolean = false): Event[] {
   const allEvents = getAllEvents();
-  const now = new Date();
+  const nowInVancouver = new Date().toLocaleString("en-US", {timeZone: "America/Vancouver"});
+  const now = new Date(nowInVancouver);
   
   let upcomingEvents = allEvents.filter(event => 
-    new Date(event.startDateTime) > now
+    createVancouverDate(event.startDateTime) > now
   );
   
   if (excludeNext && upcomingEvents.length > 0) {
