@@ -5,11 +5,37 @@ backend:
 media_folder: public/uploads
 public_folder: /uploads
 
+
 collections:
-  - name: "pages"
-    label: "Pages"
-    folder: "content/pages"
-    create: true
-    fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Body", name: "body", widget: "markdown"}
+  - name: "tree-tours" 
+    label: "Tree Tours"
+    folder: "src/content/events" 
+    create: true 
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields: 
+      - { label: "Title", name: "title", widget: "string" }
+      - label: "Start Date and Time"
+        name: "startDateTime"
+        widget: "datetime"
+        date_format: "YYYY-MM-DD"
+        time_format: "hh:mm A" # example: 10:00 AM
+        format: "YYYY-MM-DD hh:mm A" 
+        hint: "Time is in Coquitlam, BC (America/Vancouver). "
+      - label: "End Date and Time"
+        name: "endDateTime"
+        widget: "datetime"
+        date_format: "YYYY-MM-DD"
+        time_format: "hh:mm A" # e.g., 02:00 PM
+        format: "YYYY-MM-DD hh:mm A"
+        hint: "The time the event will finish."
+      - label: "Location"
+        name: "location"
+        widget: "string"
+        default: "Henry Esson Young Building (HEY Building)"
+        required: false
+        hint: "For standard Tree Tours, leave this as the default. Change it only for special events at a different location."
+      - label: "Timezone"
+        name: "timezone"
+        widget: "hidden"
+        default: "America/Vancouver"
+      - { label: "Description", name: "description", widget: "markdown", required: false }
