@@ -1,6 +1,29 @@
+'use client'
 import Navigation from "./components/Navigation"
+import { useState, useEffect } from 'react';
+import { Event } from '@/utils/eventUtils';
+import { getNextEventClient } from '@/utils/clientEventUtils';
+import Schedule from "./components/Schedule";
 
 export default function Home() {
+  const [nextEvent, setNextEvent] = useState<Event | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadEvents = async () => {
+      try {
+        const next = await getNextEventClient();
+        setNextEvent(next);
+      } catch (error) {
+        console.error('Error loading events:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadEvents();
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -26,22 +49,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Call to Action Card */}
-      <section className="py-20 px-6">
+      {/* Events in Home Page */}
+      <section className="py-16 px-6">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-3xl p-8 md:p-12 shadow-strong border-2 border-forest-light animate-slide-up">
-            <div className="text-center">
-              <h2 className="text-3xl md:text-4xl font-display font-bold text-forest-DEFAULT mb-6">
-                🌳 Save the Riverview Lands!
-              </h2>
-              <p className="text-lg font-body text-gray-600 mb-8">
-                Join us in preserving this unique arboretum and green space for future generations. Your voice matters!
-              </p>
-              <button className="bg-darkgreen hover:bg-primary text-cream px-10 py-4 rounded-full font-display font-semibold transition-all duration-300 hover:scale-105 hover:shadow-medium animate-bounce-gentle">
-                Sign the Petition Now
-              </button>
+          <h2 className="text-3xl font-bold text-darkgreen mb-6">
+            Upcoming Events
+          </h2>
+          {loading ? (
+            <div className="animate-pulse">
+              <div className="h-32 bg-gray-200 rounded-xl"></div>
             </div>
-          </div>
+          ) : (
+            <Schedule 
+              nextEvent={nextEvent}
+              showFullSchedule={false}
+            />
+          )}
         </div>
       </section>
 
