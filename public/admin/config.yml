@@ -40,4 +40,4 @@ collections:
         name: "timezone"
         widget: "hidden"
         default: "America/Vancouver"
-      - { label: "Description", name: "description", widget: "markdown", required: false }
+      - { label: "Description", name: "description", widget: "markdown", modes: ['raw'],  required: false }
