@@ -8,6 +8,7 @@ public_folder: /uploads
 display_url: https://rhcs.netlify.app/
 logo_url: /logo.png
 
+
 collections:
   - name: "tree-tours" 
     label: "Tree Tours"
