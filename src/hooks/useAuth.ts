@@ -1,9 +1,18 @@
 'use client';
 import { useEffect, useState } from 'react';
 
+interface NetlifyIdentity {
+  init: () => void;
+  currentUser: () => User | null;
+  on: (event: string, callback: (user?: User) => void) => void;
+  open: () => void;
+  close: () => void;
+  logout: () => void;
+}
+
 declare global {
   interface Window {
-    netlifyIdentity: any;
+    netlifyIdentity: NetlifyIdentity;
   }
 }
 
@@ -23,7 +32,7 @@ export const useAuth = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Load Netlify Identity script
+    // Netlify Identity script
     const script = document.createElement('script');
     script.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
     script.async = true;
@@ -38,8 +47,10 @@ export const useAuth = () => {
       setLoading(false);
 
       // Listen for login events
-      window.netlifyIdentity.on('login', (user: User) => {
-        setUser(user);
+      window.netlifyIdentity.on('login', (user?: User) => {
+        if (user) {
+          setUser(user);
+        }
         window.netlifyIdentity.close();
       });
 

@@ -131,7 +131,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = "" }) => {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <div className="flex items-center space-x-1">
-              {desktopMenuItems.map((item, index) => (
+              {desktopMenuItems.map((item) => (
                 <div key={item.name} className="relative">
                   {item.subPages ? (
                     <div className="relative">
