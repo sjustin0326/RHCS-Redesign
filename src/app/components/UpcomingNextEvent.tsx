@@ -7,18 +7,18 @@ interface UpcomingNextEventProps {
 
 const UpcomingNextEvent: React.FC<UpcomingNextEventProps> = ({ event }) => {
   return (
-    <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 sm:p-6 mb-6">
+    <div className="bg-cream rounded-lg p-4 sm:p-6 mb-4">
       <div className="flex flex-col justify-center sm:flex-row gap-6 h-full">
         {/* Date Display */}
-        <div className="flex justify-center sm:justify-start">
-          <div className="bg-darkgreen sm:items-stretch sm:flex sm:flex-col sm:justify-center px-4 py-6 sm:py-12 rounded-md min-w-[5rem] text-center">
-            <div className="text-xs font-bold text-yellow-50 uppercase tracking-wide">
+        <div className="flex justify-center sm:justify-start sm:self-stretch">
+          <div className="bg-darkgreen flex flex-col justify-center px-4 py-6 sm:py-0 rounded-md min-w-[5rem] sm:w-[5rem] text-center sm:h-full">
+            <div className="text-xs font-bold text-cream uppercase tracking-wide">
               {event.month}
             </div>
-            <div className="text-3xl my-2 font-bold text-yellow-50">
+            <div className="text-3xl my-2 font-bold text-cream">
               {event.dayOfMonth}
             </div>
-            <div className="text-xs font-bold text-yellow-50 capitalize">
+            <div className="text-xs font-bold text-cream capitalize">
               {event.dayOfWeek}
             </div>
           </div>

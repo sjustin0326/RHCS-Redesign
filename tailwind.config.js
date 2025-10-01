@@ -12,6 +12,7 @@ module.exports = {
         olive: '#606C38',  
         dark: '#283618', 
         cream: '#FEFAE0',
+        terracotta: '#BC6C25',
         'forest': {
           light: '#606C38',  // Olive green
           dark: '#283618', 
