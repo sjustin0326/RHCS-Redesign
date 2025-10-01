@@ -11,7 +11,7 @@ const UpcomingNextEvent: React.FC<UpcomingNextEventProps> = ({ event }) => {
       <div className="flex flex-col justify-center sm:flex-row gap-6 h-full">
         {/* Date Display */}
         <div className="flex justify-center sm:justify-start">
-          <div className="bg-darkgreen px-4 py-6 sm:py-12 rounded-md min-w-[5rem] text-center">
+          <div className="bg-darkgreen sm:items-stretch sm:flex sm:flex-col sm:justify-center px-4 py-6 sm:py-12 rounded-md min-w-[5rem] text-center">
             <div className="text-xs font-bold text-yellow-50 uppercase tracking-wide">
               {event.month}
             </div>
