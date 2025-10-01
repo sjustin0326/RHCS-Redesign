@@ -1,4 +1,3 @@
-// src/components/OtherUpcomingEvents.tsx
 import React from 'react';
 import { ParsedEvent } from '@/utils/eventUtils';
 

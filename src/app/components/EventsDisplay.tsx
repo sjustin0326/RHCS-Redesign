@@ -1,11 +1,11 @@
-// src/components/EventsDisplay.tsx - Modified version
+
 import React from 'react';
 import { getNextEvent, getOtherUpcomingEvents } from '@/utils/eventUtils';
 import UpcomingNextEvent from './UpcomingNextEvent';
 import OtherUpcomingEvents from './OtherUpcomingEvents';
 import ComingSoon from './ComingSoonEvents';
 interface EventsDisplayProps {
-  showOnlyNext?: boolean; // New prop to control what to display
+  showOnlyNext?: boolean;
 }
 
 const EventsDisplay: React.FC<EventsDisplayProps> = ({ showOnlyNext = false }) => {

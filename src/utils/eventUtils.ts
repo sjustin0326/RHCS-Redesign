@@ -27,8 +27,7 @@ export interface ParsedEvent extends Event {
 
 export function getAllEvents(): ParsedEvent[] {
   const eventsDirectory = path.join(process.cwd(), 'src/content/events');
-  
-  // Check if directory exists
+
   if (!fs.existsSync(eventsDirectory)) {
     return [];
   }
@@ -54,21 +53,15 @@ export function getAllEvents(): ParsedEvent[] {
 
 function parseEvent(event: Event): ParsedEvent | null {
   try {
-    // Parse the datetime strings from Decap CMS format
-    const startDate = DateTime.fromFormat(
-      event.startDateTime, 
-      'yyyy-MM-dd hh:mm a [America/Vancouver]',
-      { zone: 'America/Vancouver' }
-    );
+    const format = 'yyyy-MM-dd hh:mm a';
     
-    const endDate = DateTime.fromFormat(
-      event.endDateTime, 
-      'yyyy-MM-dd hh:mm a [America/Vancouver]',
-      { zone: 'America/Vancouver' }
-    );
+    // Usamos el campo `event.timezone` en la opción `zone` de Luxon.
+    // Esto le dice a Luxon: "Interpreta esta cadena de tiempo COMO SI estuviera en esta zona horaria".
+    const startDate = DateTime.fromFormat(event.startDateTime, format, { zone: event.timezone });
+    const endDate = DateTime.fromFormat(event.endDateTime, format, { zone: event.timezone });
 
     if (!startDate.isValid || !endDate.isValid) {
-      console.error('Invalid date format for event:', event.title);
+      console.error('Invalid date format for event:', event.title, '- Received:', event.startDateTime);
       return null;
     }
 
@@ -93,10 +86,24 @@ export function getUpcomingEvents(): ParsedEvent[] {
   const allEvents = getAllEvents();
   const now = DateTime.now().setZone('America/Vancouver');
   
+  //"upcoming event" if the end date is after "now" 
   return allEvents
-    .filter(event => event.startDate > now)
+    .filter(event => event.endDate > now)
     .sort((a, b) => a.startDate.toMillis() - b.startDate.toMillis());
 }
+
+
+export function getPastEvents(): ParsedEvent[] {
+  const allEvents = getAllEvents();
+  const now = DateTime.now().setZone('America/Vancouver');
+
+  //past event = the end date is im the past (not "now" or further) 
+  return allEvents
+    .filter(event => event.endDate <= now)
+    // From more recent to oldest
+    .sort((a, b) => b.startDate.toMillis() - a.startDate.toMillis()); 
+}
+
 
 export function getNextEvent(): ParsedEvent | null {
   const upcomingEvents = getUpcomingEvents();

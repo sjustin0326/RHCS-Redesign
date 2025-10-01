@@ -1,4 +1,3 @@
-// Remover 'use client'
 import Navigation from "./components/Navigation"
 import { getNextEvent } from '@/utils/eventUtils';
 import HomePageEvents from "./components/HomePageEvent";

@@ -1,4 +1,3 @@
-// src/components/ComingSoon.tsx
 import React from 'react';
 
 const ComingSoon: React.FC = () => {
