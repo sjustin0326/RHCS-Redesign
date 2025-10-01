@@ -9,6 +9,9 @@ module.exports = {
     extend: {
       colors: {
         darkgreen: '#283618', // Dark forest green
+        olive: '#606C38',  
+        dark: '#283618', 
+        cream: '#FEFAE0',
         'forest': {
           light: '#606C38',  // Olive green
           dark: '#283618', 
