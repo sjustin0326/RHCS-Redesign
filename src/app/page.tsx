@@ -1,7 +1,7 @@
 import Navigation from "./components/Navigation"
 import { getNextEvent } from '@/utils/eventUtils';
 import HomePageEvents from "./components/HomePageEvent";
-import { tektonFont } from "./layout";
+import { tektonFont } from "@/lib/fonts";
 
 export default function Home() {
   // Esto se ejecuta en el servidor durante el build
