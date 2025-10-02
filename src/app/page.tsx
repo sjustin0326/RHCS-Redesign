@@ -4,7 +4,6 @@ import HomePageEvents from "./components/HomePageEvent";
 import { tektonFont } from "@/lib/fonts";
 
 export default function Home() {
-  const nextEvent = getNextEvent();
 
   return (
     <div className="min-h-screen bg-background">
