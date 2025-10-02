@@ -4,7 +4,6 @@ import HomePageEvents from "./components/HomePageEvent";
 import { tektonFont } from "@/lib/fonts";
 
 export default function Home() {
-  // Esto se ejecuta en el servidor durante el build
   const nextEvent = getNextEvent();
 
   return (
