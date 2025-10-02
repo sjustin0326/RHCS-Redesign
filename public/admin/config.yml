@@ -8,12 +8,35 @@ display_url: https://rhcs.netlify.app/
 logo_url: /logo.png
 
 collections:
+  - name: "settings"
+      label: "Settings"
+      files:
+        - name: "social-media"
+          label: "Social Media"
+          file: "content/settings/social-media.json"
+          fields:
+            - name: "facebook"
+              label: "Facebook URL"
+              widget: "string"
+              required: false
+              hint: "Complete link to RHCS Facebook page"
+            - name: "instagram"
+              label: "Instagram URL"
+              widget: "string"
+              required: false
+              hint: "Complete link to RHCS Instagram account"
+            - name: "twitter"
+              label: "Twitter URL"
+              widget: "string"
+              required: false
+              hint: "Complete link to RHCS Twitter/X account"
+
   - name: "tree-tours"
     label: "Tree Tours"
     folder: "src/content/events"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    preview_path: /events  # Opcional: ruta para vista previa en vivo
+    preview_path: /events
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - label: "Start Date and Time"
