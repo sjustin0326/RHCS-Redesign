@@ -15,7 +15,7 @@ export default function Home() {
           <h1 className={`text-4xl md:text-6xl font-bold mb-8 animate-slide-up ${tektonFont.className}`}>
           The Riverview Horticultural Centre Society
           </h1>
-          <p className="text-lg md:text-xl font-poppins font-semibold mb-12 animate-slide-up">
+          <p className="text-lg md:text-xl font-poppins font-medium mb-12 animate-slide-up">
             Preserving the historic səmiq̓ʷəʔelə / Riverview Lands and its unique tree arboretum for future
             generations through education, advocacy, and community engagement.
           </p>

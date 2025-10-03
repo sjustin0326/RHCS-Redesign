@@ -200,7 +200,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = "" }) => {
       <div className="hidden md:block fixed bottom-4 right-4">
               <a 
                 href="/admin/index.html#/" 
-                className="bg-golden hover:bg-accent text-forest-DEFAULT px-4 py-2 rounded-lg font-poppins font-semibold shadow-medium transition-all duration-300 hover:scale-105"
+                className="bg-golden hover:bg-accent text-forest-DEFAULT px-4 py-2 rounded-lg font-poppins font-medium shadow-medium transition-all duration-300 hover:scale-105"
               >
                 🌱 Admin
               </a>
