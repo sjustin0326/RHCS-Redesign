@@ -15,7 +15,7 @@ export interface NewsPost {
 }
 
 export interface ProcessedNewsPost extends Omit<NewsPost, 'images'> {
-  // Omit original images and replace with a more structured version
+  // Omit original images and replace with a more structured version.
   year: string;
   formattedDate: string; // like "October 11, 2025"
   excerpt: string;
