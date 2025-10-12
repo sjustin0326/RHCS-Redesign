@@ -11,7 +11,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function NewsPostPage({ params }: { params: { slug: string } }) {
+export default async function NewsPostPage({ params }: { params: { slug: string } }){
     const post = await getNewsPostBySlug(params.slug);
   
     if (!post) {
