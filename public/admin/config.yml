@@ -44,7 +44,7 @@ collections:
       - { label: "Description", name: "description", widget: "markdown", modes: ['raw'], required: false }
 
   - name: "news"
-    label: "News & Updates"
+    label: "News"
     folder: "src/content/news"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
@@ -73,7 +73,7 @@ collections:
     files:
       - name: "social-media"
         label: "Social Media"
-        file: "content/settings/social-media.json"
+        file: "src/content/settings/social-media.json"
         fields:
           - name: "facebook"
             label: "Facebook URL"
