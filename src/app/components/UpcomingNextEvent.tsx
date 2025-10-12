@@ -21,18 +21,18 @@ const UpcomingNextEvent: React.FC<UpcomingNextEventProps> = ({ event }) => {
 
   return (
     <>
-      <div className="bg-cream rounded-lg p-4 sm:p-6 mb-4">
+      <div className="bg-cream rounded-lg p-4 mb-4">
         <div className="flex flex-col justify-center border-2 border-darkgreen rounded-lg  sm:flex-row gap-2 md:gap-6 h-full ">
           {/* Date Display */}
           <div className="flex md:justify-center justify-start self-stretch ">
             <div className="bg-darkgreen flex flex-col md:justify-center md:py-6  py-2 md: md:px-12 min-w-[5rem] w-full text-center h-full">
-              <div className="text-xs font-bold text-cream uppercase tracking-wide">
+              <div className="text-xs font-poppins font-bold text-cream uppercase tracking-wide">
                 {event.month}
               </div>
-              <div className="text-3xl my-2 font-bold text-cream">
+              <div className="text-3xl my-2 font-poppins font-bold text-cream">
                 {event.dayOfMonth}
               </div>
-              <div className="text-xs font-bold text-cream capitalize">
+              <div className="text-xs font-poppins font-bold text-cream capitalize">
                 {event.dayOfWeek}
               </div>
             </div>

@@ -16,9 +16,12 @@ export default function EventsPage() {
           <h1 className="text-4xl font-inter font-black text-center text-darkgreen mb-12">
             Tree Tours & Walks
           </h1>
-          <p className='px-4 md:px-8 font-poppins font-medium'>
+          <p className='px-4 text-sm md:text-lg font-poppins font-medium'>
             The Riverview Horticultural Centre Society invite tou to a Tree Tour of a significant and beautiful part of the Lower Mainland, the historic Riverview Lands Arboretum.
-            </p>
+          </p>
+          <h2 className="text-3xl font-Inter font-black text-darkgreen capitalize animate-slide-down mt-12 px-4">
+            NEXT TREE TOUR
+          </h2>
 
           {!nextEvent ? (
             <ComingSoon />
@@ -27,9 +30,9 @@ export default function EventsPage() {
               <UpcomingNextEvent event={nextEvent} />
               
               {otherEvents.length > 0 && (
-                <div className="mt-12">
-                  <h2 className="text-3xl font-bold text-darkgreen mb-6">
-                    Other Upcoming Events
+                <div className="mt-2">
+                  <h2 className="text-lg font-Inter font-black text-darkgreen capitalize animate-slide-down mt-2 px-4">
+                    OTHER UPCOMING TREE TOURS
                   </h2>
                   <OtherUpcomingEvents events={otherEvents} />
                 </div>

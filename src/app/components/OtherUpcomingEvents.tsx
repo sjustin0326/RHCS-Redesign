@@ -26,7 +26,7 @@ const OtherUpcomingEvents: React.FC<OtherUpcomingEventsProps> = ({ events }) => 
 
   return (
     <>
-      <div className="space-y-4">
+      <div className="space-y-4 px-4">
         {events.map((event) => {
           const isDescriptionTruncated = event.description && event.description.length > 100;
           const truncatedDescription = event.description 
@@ -38,10 +38,10 @@ const OtherUpcomingEvents: React.FC<OtherUpcomingEventsProps> = ({ events }) => 
               key={event.slug}
               className="bg-cream border-darkgreen border-2 rounded-lg hover:shadow-md transition-shadow p-4"
             >
-              <div className="flex flex-col justify-center sm:flex-row gap-6 h-full">
+              <div className="flex flex-row justify-center gap-6 h-full">
                 {/* Date Display */}
                 <div className="flex justify-center sm:justify-start sm:self-stretch">
-                  <div className="bg-darkgreen flex flex-col justify-center py-4 sm:py-0 min-w-[5rem] sm:w-[5rem] text-center sm:h-full">
+                  <div className="bg-darkgreen rounded-lg flex flex-col justify-center py-4 sm:py-0 min-w-[5rem] sm:w-[5rem] text-center sm:h-full">
                     <div className="text-xs pt-2 font-bold text-cream uppercase tracking-wide">
                       {event.month}
                     </div>

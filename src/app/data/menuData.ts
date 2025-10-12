@@ -26,12 +26,8 @@ export interface SubPage {
       ],
     },
     {
-      name: "News & Updates",
+      name: "News",
       href: "/news",
-      subPages: [
-        { name: "Latest Social Media", href: "/news", id: "social-media" },
-        { name: "What's Happening", href: "/news", id: "whats-happening" },
-      ],
     },
     {
       name: "Photo Gallery",
