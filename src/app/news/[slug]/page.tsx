@@ -1,17 +1,12 @@
-// src/app/news/[slug]/page.tsx
-
 import { getAllNewsPosts, getNewsPostBySlug } from '@/utils/newsUtils';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
-// THE FIX: Define an explicit, complete Props type for the page.
-type Props = {
-  params: { slug: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
-};
-
-// This function remains the same
+type Params = Promise<{
+   slug: string
+//   searchParams?: { [key: string]: string | string[] | undefined };
+}>;
 export async function generateStaticParams() {
   const posts = getAllNewsPosts();
   return posts.map((post) => ({
@@ -19,8 +14,8 @@ export async function generateStaticParams() {
   }));
 }
 
-// THE FIX: Apply the new 'Props' type to the component's arguments.
-export default async function NewsPostPage({ params }: Props) {
+export default async function NewsPostPage(props: {params: Params}) {
+    const params = await props.params
     const post = getNewsPostBySlug(params.slug);
   
     if (!post) {
