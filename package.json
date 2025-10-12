@@ -11,6 +11,8 @@
   "dependencies": {
     "@next/font": "^14.2.15",
     "@tailwindcss/forms": "^0.5.10",
+    "embla-carousel-autoplay": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
     "gray-matter": "^4.0.3",
     "image-size": "^2.0.2",
     "luxon": "^3.7.2",

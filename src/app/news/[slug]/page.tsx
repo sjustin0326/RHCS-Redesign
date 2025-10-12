@@ -1,5 +1,6 @@
 import { getAllNewsPosts, getNewsPostBySlug } from '@/utils/newsUtils';
 import { notFound } from 'next/navigation';
+import ImageCarousel from '@/app/components/ImageCarousel';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -44,41 +45,53 @@ export default async function NewsPostPage(props: {params: Params}) {
          
           {/* Conditional Image Rendering */}
           
-          {hasSingleImage && !isVerticalImage && (
-            <div className="relative w-full h-96 rounded-lg overflow-hidden mb-8">
-              <Image src={singleImage!.src} alt={post.title} fill className="object-cover" />
-            </div>
-          )}
-  
-          <div className={`
-            ${hasSingleImage && isVerticalImage ? 'lg:grid lg:grid-cols-3 lg:gap-12' : ''}
-          `}>
-            {/* text content */}
-            <div className="lg:col-span-2">
-              <div
-                className="prose prose-lg max-w-none prose-h2:font-inter prose-h2:text-darkgreen prose-a:text-logo-green hover:prose-a:underline"
-                dangerouslySetInnerHTML={{ __html: post.htmlContent }}
-              />
-            </div>
-  
-            {/* Case 2: SINGLE VERTICAL IMAGE (Desktop only) */}
-            {hasSingleImage && isVerticalImage && (
-              <div className="relative w-full aspect-[3/4] rounded-lg overflow-hidden mt-8 lg:mt-0 lg:col-span-1">
-                <Image src={singleImage!.src} alt={post.title} fill className="object-cover"/>
+          {hasMultipleImages ? (
+            // --- LAYOUT A: multiple images (Carrusel + Texto) ---
+            <div className="lg:grid lg:grid-cols-3 lg:gap-12">
+              {/* left col: Carrusel */}
+              <div className="mb-8 lg:mb-0 lg:col-span-1">
+                <ImageCarousel images={post.images} altText={post.title} />
               </div>
-            )}
-          </div>
-  
-          {/* Case 3: MULTIPLE IMAGES (render a carousel) */}
-          {hasMultipleImages && (
-            <div className="mt-8">
-              <p className="text-center font-bold text-lg mb-4">Image Gallery</p>
-              {/* TODO: implement an image carousel component here */}
-              <div className="bg-gray-200 p-8 rounded-lg text-center">
-                [Image Carousel Placeholder] - See Step 5
+              {/* right col: text */}
+              <div className="lg:col-span-2">
+                <div
+                  className="prose prose-lg max-w-none prose-h2:font-inter prose-h2:text-darkgreen prose-a:text-logo-green hover:prose-a:underline"
+                  dangerouslySetInnerHTML={{ __html: post.htmlContent }}
+                />
               </div>
             </div>
+          ) : (
+            // --- LAYOUT B: 1 or NO image ---
+            <>
+              {/* single image horizontal */}
+              {hasSingleImage && !isVerticalImage && (
+                <div className="relative w-full h-96 rounded-lg overflow-hidden mb-8">
+                  <Image src={singleImage!.src} alt={post.title} fill className="object-cover" />
+                </div>
+              )}
+      
+              {/* container for text or vertical img */}
+              <div className={`
+                ${hasSingleImage && isVerticalImage ? 'lg:grid lg:grid-cols-3 lg:gap-12' : ''}
+              `}>
+                {/* Text content */}
+                <div className="lg:col-span-2">
+                  <div
+                    className="prose prose-lg max-w-none prose-h2:font-inter prose-h2:text-darkgreen prose-a:text-logo-green hover:prose-a:underline"
+                    dangerouslySetInnerHTML={{ __html: post.htmlContent }}
+                  />
+                </div>
+      
+                {/* Single image vertical */}
+                {hasSingleImage && isVerticalImage && (
+                  <div className="relative w-full aspect-[3/4] rounded-lg overflow-hidden mt-8 lg:mt-0 lg:col-span-1">
+                    <Image src={singleImage!.src} alt={post.title} fill className="object-cover"/>
+                  </div>
+                )}
+              </div>
+            </>
           )}
+
         </div>
       </article>
     );
