@@ -1,4 +1,3 @@
-// src/app/layout.tsx
 import type { Metadata } from 'next'
 import { tektonFont, inter, poppins, openSans } from '@/lib/fonts'
 import Navigation from './components/Navigation'
@@ -19,7 +18,7 @@ export default function RootLayout({
       <head>
         <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" async></script>
       </head>
-      <Navigation></Navigation>
+      <Navigation/>
       <body className="font-sans bg-background text-primary antialiased">
         {children}
       </body>

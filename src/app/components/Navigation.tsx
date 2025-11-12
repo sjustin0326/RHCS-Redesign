@@ -113,7 +113,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = "" }) => {
   };
 
   return (
-    <main>
+    <div>
       <nav className={`sticky top-0 z-50 bg-nav-bg shadow-nav ${className}`} ref={dropdownRef}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20 lg:h-24">
@@ -256,7 +256,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = "" }) => {
         </div>
       )}
     </nav>
-    </main>
+    </div>
   );
 };
 

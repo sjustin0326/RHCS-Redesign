@@ -34,8 +34,8 @@ export interface SubPage {
       href: "/gallery",
     },
     {
-      name: "Support Us",
-      href: "/support",
+      name: "Get Involved",
+      href: "/get-involved",
       subPages: [
         { name: "Membership", href: "/support", id: "membership" },
         { name: "Donations", href: "/support", id: "donations" },
@@ -44,10 +44,10 @@ export interface SubPage {
     },
     {
       name: "About Us",
-      href: "/about",
+      href: "/about-us",
       subPages: [
-        { name: "Mission, Vision, Founding History", href: "/about", id: "mission-vision" },
-        { name: "About Riverview Lands and Finnie's Garden", href: "/about", id: "riverview-lands" },
+        { name: "Mission, Vision, Founding History", href: "/about-us", id: "mission-vision" },
+        { name: "About Riverview Lands and Finnie's Garden", href: "/about-us/riverview-lands", id: "riverview-lands" },
         { name: "Our Achievements", href: "/about", id: "achievements" },
         { name: "In Memoriam", href: "/about", id: "memoriam" },
       ],
