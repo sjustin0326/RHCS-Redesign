@@ -1,12 +1,12 @@
 ---
 directions:
   by_car: >-
-    1. Enter the site at the Colony Farm Road traffic light (or Holly Drive off
-    the Lougheed Hwy)
+    1. Enter the site at the **Colony Farm Road** traffic light (or **Holly
+    Drive** off the Lougheed Hwy)
 
-    2. Take Holly Drive through the hospital grounds, then go uphill.
+    2. Take **Holly Drive** through the hospital grounds, then go uphill.
 
-    3. On Oak Crescent, and the Henry Esson Young building (H.E.Y.) is on your right on Kalmia Drive.
+    3. On **Oak Crescent**, and the Henry Esson Young building (H.E.Y.) is on your right on **Kalmia Drive**.
 
     4. Find parking where permitted, follow event parking signage.
 
