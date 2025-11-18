@@ -1,4 +1,5 @@
 import { getSerializedNextEvent, getSerializedOtherUpcomingEvents } from '@/utils/eventUtils';
+import { getVisitorInfo, getDirections, getMaps } from '@/utils/treeToursUtils';
 import SectionNav from '../components/SectionNav';
 import UpcomingNextEvent from '../components/UpcomingNextEvent';
 import OtherUpcomingEvents from '../components/OtherUpcomingEvents';
@@ -7,6 +8,9 @@ import ComingSoon from '../components/ComingSoonEvents';
 export default function TreeToursPage() {
   const nextEvent = getSerializedNextEvent();
   const otherEvents = getSerializedOtherUpcomingEvents();
+  const visitorInfo = getVisitorInfo();
+  const directions = getDirections();
+  const maps = getMaps();
 
   const treeTourSections = [
     { label: "Tree Tours", targetId: "tree-tours" },
@@ -27,6 +31,8 @@ export default function TreeToursPage() {
       </div>
     </section>
   );
+
+  
 
   return (
     <main>
@@ -70,23 +76,39 @@ export default function TreeToursPage() {
         </PageSection>
 
         {/* === VISITOR INFORMATION === */}
-        <PageSection id="visitor-info" title="VISITOR INFORMATION">
-          <div className="space-y-4 text-gray-800">
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae, voluptatum.</p>
-          </div>
+        <PageSection id="visitor-info" title= 'VISITOR INFORMATION'>
+          <div dangerouslySetInnerHTML={{ __html: visitorInfo.htmlContent }} />
         </PageSection>
 
         {/* === DIRECTIONS === */}
-        <PageSection id="directions" title="DIRECTIONS">
-          <div className="space-y-4 text-gray-800">
-            <h2>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae, voluptatum.</h2>
+        <PageSection id="directions" title='DIRECTIONS'>
+          <div>
+            <h3>By Car</h3>
+            <div dangerouslySetInnerHTML={{ __html: directions.byCarHtml }} />
+
+            <h3 style={{ marginTop: '2rem' }}>By Public Transit</h3>
+            <div dangerouslySetInnerHTML={{ __html: directions.byTransitHtml }} />
           </div>
         </PageSection>
 
-        {/* === b MAPS === */}
-        <PageSection id="maps" title="MAPS">
-          <div className="space-y-4 text-gray-800">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, temporibus debitis cum alias unde et.</p>
+        {/* === MAPS === */}
+        <PageSection id="maps" title='MAPS'>
+          <div>
+            <p>Here are some helpful maps for your visit:</p>
+            <ul>
+              {maps.map_list.map((map, index) => (
+                <li key={index} style={{ marginBottom: '0.5rem' }}>
+                  <a 
+                    href={map.type === 'External Link' ? map.url : map.file}
+                    // Open external links in a new tab 
+                    target={map.type === 'External Link' ? '_blank' : '_self'}
+                    rel="noopener noreferrer"
+                  >
+                    {map.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </PageSection>
 
