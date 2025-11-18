@@ -68,7 +68,7 @@ collections:
               #   label: "Type of Link"
               #   widget: "select"
               #   options: ["File Upload (PDF/Image)", "External Link"]
-              #   default: "File Upload (PDF/Image)" to be planned
+              #   default: "File Upload (PDF/Image)" to be planned 
               - name: "file"
                 label: "Map File"
                 widget: "file"
