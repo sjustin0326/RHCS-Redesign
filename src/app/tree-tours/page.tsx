@@ -78,32 +78,33 @@ export default function TreeToursPage() {
 
         {/* === VISITOR INFORMATION === */}
         <PageSection id="visitor-info" title= 'VISITOR INFORMATION'>
-          <div dangerouslySetInnerHTML={{ __html: visitorInfo.htmlContent }} />
+          <div className="prose max-w-none"> 
+            <div dangerouslySetInnerHTML={{ __html: visitorInfo.htmlContent }} />
+          </div>
         </PageSection>
-
         {/* === DIRECTIONS === */}
         <PageSection id="directions" title='DIRECTIONS'>
-          <div>
+        <div className="prose max-w-none">
             <h3>By Car</h3>
             <div dangerouslySetInnerHTML={{ __html: directions.byCarHtml }} />
 
-            <h3 style={{ marginTop: '2rem' }}>By Public Transit</h3>
+            <h3 className='mt-8 text-xl font-bold'>By Public Transit</h3>
             <div dangerouslySetInnerHTML={{ __html: directions.byTransitHtml }} />
           </div>
         </PageSection>
 
         {/* === MAPS === */}
         <PageSection id="maps" title='MAPS'>
-          <div>
+        <div className="prose max-w-none">
             <p>Here are some helpful maps for your visit:</p>
             <ul>
               {maps.map_list.map((map, index) => (
-                <li key={index} style={{ marginBottom: '0.5rem' }}>
-                  <a 
+                <li key={index} className="mb-2"> 
+                  <a
                     href={map.type === 'External Link' ? map.url : map.file}
-                    // Open external links in a new tab 
-                    target={map.type === 'External Link' ? '_blank' : '_self'}
+                    target="_blank"
                     rel="noopener noreferrer"
+                    className="text-terracotta hover:underline"
                   >
                     {map.title}
                   </a>
