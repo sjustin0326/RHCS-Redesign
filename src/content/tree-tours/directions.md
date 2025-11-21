@@ -1,4 +1,5 @@
 ---
+title: Directions
 directions:
   by_car: >-
     1. Enter the site at the **Colony Farm Road** traffic light (or **Holly
