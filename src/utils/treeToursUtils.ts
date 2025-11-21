@@ -21,6 +21,14 @@ export interface MapItem {
   url?: string;
 }
 
+
+export interface RawMapItem {
+  title: string;
+  type?: "File Upload (PDF/Image)" | "External Link"; 
+  file?: string;
+  url?: string;
+}
+
 export interface Maps {
   title: string;
   map_list: MapItem[];
@@ -33,7 +41,6 @@ export function getVisitorInfo(): VisitorInfo {
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
 
-
   return {
     title: (data.title || 'Visitor Information') as string,
     htmlContent: marked.parse(content) as string,
@@ -45,10 +52,12 @@ export function getDirections(): Directions {
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data } = matter(fileContents);
 
+  const directionsData = data.directions || {};
+
   return {
-    title: (data.title || 'Directions') as string, 
-    byCarHtml: marked.parse(data.directions.by_car || '') as string,
-    byTransitHtml: marked.parse(data.directions.by_transit || '') as string,
+    title: (data.title || 'Directions') as string,
+    byCarHtml: marked.parse(directionsData.by_car || '') as string,
+    byTransitHtml: marked.parse(directionsData.by_transit || '') as string,
   };
 }
 
@@ -57,16 +66,18 @@ export function getMaps(): Maps {
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data } = matter(fileContents);
 
-
-  const mapList: MapItem[] = (data.map_list || []).map((item: any) => ({
-    title: item.title,
-    type: item.type || 'File Upload (PDF/Image)', 
-    file: item.file,
-    url: item.url,
-  }));
+  const mapList: MapItem[] = (data.map_list || [] as RawMapItem[]).map((item: RawMapItem) => {
+    
+    return {
+      title: item.title,
+      type: item.type || 'File Upload (PDF/Image)',
+      file: item.file,
+      url: item.url,
+    };
+  });
 
   return {
-    title: (data.title || 'Maps') as string, 
+    title: (data.title || 'Maps') as string,
     map_list: mapList,
   };
 }
