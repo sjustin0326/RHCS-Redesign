@@ -1,3 +1,6 @@
+---
+title: Visitor Information
+---
 * We will be meeting at our usual location, at **Serenity Gardens**, by the **Henry Esson Young Building (HEY)** which is located approximately in the centre of the Riverview grounds.
 * ***We go Rain or Shine***.
 * Tours/Walks are led by a volunteer arborist, highlighting the magnificent trees & unique features of these lands.
