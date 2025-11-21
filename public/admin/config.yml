@@ -12,71 +12,73 @@ logo_url: /logo.png
 
 collections:
 
-  - name: "tree_tours_page" 
-    label: "Page: Tree Tours"
-    label_singular: "Page Section"
-    description: "Edit the content on Tree Tours Page."
-    files:
-      
-      - name: "visitor_information"
-        label: "Visitor Information"
-        file: "src/content/tree-tours/visitor-information.md"
-        fields:
-          # - name: "title"
-          #   label: "Page Title"
-          #   widget: "string"
-          #   default: "Visitor Information"
-          - name: "body"
-            label: "Content"
-            widget: "markdown"
-            modes: ["rich_text"]
-            buttons: ["bold", "italic", "link", "quote", "bulleted-list", "numbered-list"]
-            hint: "Rules, What to Bring and Info for Visitors"
+  - name: "tree_tours_page"
+  label: "Page: Tree Tours"
+  label_singular: "Page Section"
+  description: "Edit the content on Tree Tours Page."
+  files:
+    - name: "visitor_information"
+      label: "Visitor Information"
+      file: "src/content/tree-tours/visitor-information.md"
+      fields:
+        - name: "title"
+          label: "Page Title"
+          widget: "string"
+          default: "Visitor Information"
+        - name: "body"
+          label: "Content"
+          widget: "markdown"
+          modes: ["rich_text"]
+          buttons: ["bold", "italic", "link", "quote", "bulleted-list", "numbered-list"]
+          hint: "Rules, What to Bring and Info for Visitors"
 
-      - name: "directions"
-        label: "Directions"
-        file: "src/content/tree-tours/directions.md"
-        fields:
-          # - name: "title"
-          #   label: "Page Title"
-          #   widget: "string"
-          #   default: "Directions"
+    - name: "directions"
+      label: "Directions"
+      file: "src/content/tree-tours/directions.md"
+      fields:
+        - name: "title"
+          label: "Page Title"
+          widget: "string"
+          default: "Directions"
+        - name: "directions"
+          label: "Directions Content"
+          widget: "object"
+          fields:
+            - { label: "By Car", name: "by_car", widget: "markdown", modes: ["rich_text"], buttons: ["bold", "italic", "link", "quote", "bulleted-list", "numbered-list"] }
+            - { label: "By Public Transit", name: "by_transit", widget: "markdown", modes: ["rich_text"], buttons: ["bold", "italic", "link", "quote", "bulleted-list", "numbered-list"] }
 
-          - name: "directions"
-            label: "Directions Content"
-            widget: "object"
-            fields:
-              - { label: "By Car", name: "by_car", widget: "markdown", modes: ["rich_text"], buttons: ["bold", "italic", "link", "quote", "bulleted-list", "numbered-list"] }
-              - { label: "By Public Transit", name: "by_transit", widget: "markdown", modes: ["rich_text"], buttons: ["bold", "italic", "link", "quote", "bulleted-list", "numbered-list"] }
-
-
-      - name: "maps"
-        label: "Maps"
-        file: "src/content/tree-tours/maps.md"
-        fields:
-          # - name: "title"
-          #   label: "Page Title"
-          #   widget: "string"
-          #   default: "Maps"
-          - name: "map_list"
-            label: "Maps & Links"
-            widget: "list"
-            summary: "{{fields.title}}"
-            fields:
-              - { label: "Title", name: "title", widget: "string" }
-              # - name: "type"
-              #   label: "Type of Link"
-              #   widget: "select"
-              #   options: ["File Upload (PDF/Image)", "External Link"]
-              #   default: "File Upload (PDF/Image)" to be planned 
-              - name: "file"
-                label: "Map File"
-                widget: "file"
-                media_library:
-                  config:
-                    multiple: false
-                    allow_uploads: true
-                condition: { field: "type", value: "File Upload (PDF/Image)" }
+    - name: "maps"
+      label: "Maps"
+      file: "src/content/tree-tours/maps.md"
+      fields:
+        - name: "title"
+          label: "Page Title"
+          widget: "string"
+          default: "Maps"
+        - name: "map_list"
+          label: "Maps & Links"
+          widget: "list"
+          summary: "{{fields.title}}"
+          fields:
+            - { label: "Title", name: "title", widget: "string" }
+            - name: "type"
+              label: "Type of Link"
+              widget: "select"
+              options: ["File Upload (PDF/Image)", "External Link"]
+              default: "File Upload (PDF/Image)"
+            - name: "file"
+              label: "Map File"
+              widget: "file"
+              media_library:
+                config:
+                  multiple: false
+                  allow_uploads: true
+              
+            - name: "url"
+              label: "External URL"
+              widget: "string"
+              required: false
+              condition: { field: "type", value: "External Link" }
               
 
 
