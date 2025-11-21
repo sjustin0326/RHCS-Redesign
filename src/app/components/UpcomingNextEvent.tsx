@@ -25,7 +25,7 @@ const UpcomingNextEvent: React.FC<UpcomingNextEventProps> = ({ event }) => {
         <div className="flex flex-col justify-center rounded-xl  sm:flex-row gap-2 md:gap-6 h-full ">
           {/* Date Display */}
           <div className="flex md:justify-center justify-start self-stretch ">
-            <div className="bg-darkgreen rounded-l-xl flex flex-col md:justify-center md:py-6  py-2 md: md:px-12 min-w-[5rem] w-full text-center h-full">
+            <div className="bg-darkgreen rounded-t-lg md:rounded-l-xl flex flex-col md:justify-center md:py-6  py-2 md: md:px-12 min-w-[5rem] w-full text-center h-full">
               <div className="text-lg font-poppins font-bold text-white uppercase tracking-wide">
                 {event.month}
               </div>
@@ -39,8 +39,8 @@ const UpcomingNextEvent: React.FC<UpcomingNextEventProps> = ({ event }) => {
           </div>
 
           {/* Event Details */}
-          <div className="flex-1 min-w-0 px-2 mt-4">
-            <h3 className="text-lg md:text-xl font-semibold text-darkgreen mb-3">
+          <div className="flex-1 min-w-0 my-4 mx-4 md:mx-0 md:mr-6">
+            <h3 className="text-md md:text-lg font-semibold text-darkgreen mb-3">
               {event.title}
             </h3>
 

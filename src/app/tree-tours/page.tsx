@@ -17,7 +17,7 @@ interface DirectionMethodProps {
 }
 
 const DirectionMethod: React.FC<DirectionMethodProps> = ({ icon, title, htmlContent }) => (
-  <div className="flex flex-col md:flex-row items-center md:items-start gap-4 p-4 md:p-6 bg-white rounded-xl shadow-soft animate-slide-up">
+  <div className="flex flex-col md:flex-row items-center md:items-start gap-4 p-4 md:p-6 bg-darkcream rounded-xl shadow-soft animate-slide-up">
     <div className="flex-shrink-0 w-12 h-12 bg-olive/10 text-olive rounded-full flex items-center justify-center p-2 mb-2 md:mb-0">
       {React.cloneElement(icon as React.ReactElement, { className: "w-full h-full text-olive" })}
     </div>
@@ -44,12 +44,12 @@ const MapLink: React.FC<{ map: MapItem }> = ({ map }) => {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center justify-center w-full px-4 py-3 bg-darkcream hover:bg-terracottalight text-darkgreen hover:text-white rounded-lg shadow-sm transition-all duration-300 ease-in-out font-poppins text-base font-medium group"
+      className="inline-flex items-center justify-center w-full px-4 py-3 bg-darkgreen hover:bg-terracottalight text-cream hover:text-white  rounded-lg shadow-sm transition-all duration-300 ease-in-out font-poppins text-base font-medium group"
     >
       {isExternalLink ? (
         <ArrowTopRightOnSquareIcon className="w-5 h-5 mr-2 text-olive group-hover:text-white" />
       ) : (
-        <DocumentTextIcon className="w-5 h-5 mr-2 text-olive group-hover:text-white" />
+        <DocumentTextIcon className="w-5 h-5 mr-2 text-cream group-hover:text-white" />
       )}
       <span>{map.title}</span>
       {isExternalLink && (
@@ -132,10 +132,9 @@ export default function TreeToursPage() {
             <h2 className="text-xl font-inter font-black text-darkgreen capitalize animate-slide-down mb-4 text-center">
                 Virtual Tree Tour Video
             </h2>
-            <p className='text-md md:text-xl font-poppins font-medium text-gray-700 pb-4'>
-              Explore the beauty and history of the Riverview Arboretum from home with this relaxing virtual tree tour by Camera Jamie. Wander through lush park-like grounds, discover unique and heritage trees, and learn interesting bits of trivia about one of Western Canada’s most important cultivated tree collections.
+            <p className='text-sm md:text-md font-opensans font-semibold text-gray-700 mb-4'>
+              Explore the beauty and history of the Riverview Arboretum from home with this relaxing Virtual Tree Tour by Camera Jamie. Wander through lush park-like grounds, discover unique and heritage trees, and learn interesting bits of trivia about Riverview Lands' tree collections.
             </p>
-
 
             <div className="relative rounded-lg overflow-hidden shadow-medium" style={{ paddingBottom: '56.25%', height: 0 }}> {/* Aspect Ratio 16:9*/}
               <iframe
@@ -163,14 +162,14 @@ export default function TreeToursPage() {
 
         {/* === VISITOR INFORMATION === */}
         <PageSection id="visitor-info" title={visitorInfo.title}>
-          <div className="prose prose-poppins max-w-none text-gray-700 bg-white p-6 rounded-xl shadow-soft animate-fade-in">
+          <div className="prose prose-poppins max-w-none text-gray-700 bg-darkcream p-6 rounded-xl shadow-soft animate-fade-in">
             <div dangerouslySetInnerHTML={{ __html: visitorInfo.htmlContent }} />
           </div>
         </PageSection>
 
         {/* === DIRECTIONS === */}
         <PageSection id="directions" title={directions.title}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
             <DirectionMethod
               icon={<CarIcon />}
               title="By Car"
@@ -186,11 +185,11 @@ export default function TreeToursPage() {
 
         {/* === MAPS === */}
         <PageSection id="maps" title={maps.title}>
-          <div className="prose prose-poppins max-w-none text-gray-700 bg-white p-6 rounded-xl shadow-soft">
+          <div className="prose prose-poppins max-w-none  text-gray-700 bg-darkcream p-6 rounded-xl shadow-soft">
             <p className='mb-6 text-lg font-poppins text-center'>Here are some helpful maps and resources for your visit:</p>
 
             {/* Google Map Section */}
-            <div className="mb-8 p-4 bg-darkcream rounded-xl shadow-inner-soft animate-scale-in">
+            <div className=" p-4 bg-darkcream animate-scale-in  border-b-2 border-olive">
               <h3 className="text-xl font-inter font-semibold text-darkgreen mb-4 text-center md:text-left">
                 Location: Henry Esson Young Building
               </h3>
@@ -219,7 +218,7 @@ export default function TreeToursPage() {
             </div>
 
             {/* Downloadable Maps & Links Section */}
-            <div className="mb-8 p-4 bg-darkcream rounded-xl shadow-inner-soft animate-slide-up">
+            <div className=" p-4 bg-darkcream rounded-xl  animate-slide-up">
               <h3 className="text-xl font-inter font-semibold text-darkgreen mb-4 text-center md:text-left">
                 Downloadable Maps & Resources
               </h3>
