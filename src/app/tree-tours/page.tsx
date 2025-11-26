@@ -74,7 +74,7 @@ export default function TreeToursPage() {
   ];
 
   const PageSection = ({ id, title, children }: { id: string, title?: string, children: React.ReactNode }) => (
-    <section id={id} className="min-h-screen scroll-mt-24 bg-cream">
+    <section id={id} className="min-h-screen py-16 scroll-mt-24 bg-cream">
       <div className="container mx-auto px-6 max-w-4xl">
         {title && (
           <h2 className="text-3xl font-inter font-black text-darkgreen mb-8 text-center animate-slide-down">
@@ -94,15 +94,7 @@ export default function TreeToursPage() {
 
   return (
     <main className='max-w-4xl mx-auto'>
-      
-      <SectionNav sections={treeTourSections} />
-
-      <div className="bg-cream">
-      <div className="bg-cream px-6">
-        
-      </div>
-        {/* === TREE TOURS === */}
-        <PageSection id="tree-tours">
+      <div className="bg-cream pt-16 px-6 pb-8">
         <div className='mb-8 border-b-2 border-olive pb-4'>
           <h1 className="text-3xl md:text-4xl font-inter font-black text-darkgreen capitalize animate-slide-down pb-2 text-center">
             Tree Tours
@@ -111,6 +103,12 @@ export default function TreeToursPage() {
             The Riverview Horticultural Centre Society invite you to a Tree Tour of a significant and beautiful part of the Lower Mainland, the historic Riverview Lands Arboretum.
           </p>
         </div>
+      </div>
+      <SectionNav sections={treeTourSections} />
+
+      <div className="bg-cream">
+        {/* === TREE TOURS === */}
+        <PageSection id="tree-tours">
           <h2 className="text-3xl font-inter font-black text-darkgreen capitalize animate-slide-down mb-8 text-center">
             NEXT TREE TOUR
           </h2>
