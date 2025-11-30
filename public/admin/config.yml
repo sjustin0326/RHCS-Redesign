@@ -1,10 +1,12 @@
 backend:
   name: git-gateway
   branch: main
-  media_folder: "public/uploads"
-  public_folder: "/uploads"
-  display_url: https://rhcs.netlify.app/
-  logo_url: /logo.png
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+display_url: https://rhcs.netlify.app/
+logo_url: /logo.png
 
 # --- Media Library Configuration ---
 media_library:
@@ -95,22 +97,25 @@ collections:
       - { name: "timezone", label: "Timezone", widget: "hidden", default: "America/Vancouver" }
       - { name: "description", label: "Description", widget: "markdown", required: false }
 
-  # --- NEWS COLLECTION ---
-  - name: "news_listing_hero"
-    label: "News Listing Hero"
-    file: "src/content/news/hero.md" 
-    fields:
-      - { name: "title", label: "Hero Title", widget: "string" }
-      - { name: "description", label: "Hero Description", widget: "text", maxlength: 250 }
-      - { label: "Background Image", name: "backgroundImage", widget: "image", required: false }
-      - { label: "Primary Button", name: "primaryButton", widget: "object", required: false, fields: [
-          { label: "Text", name: "text", widget: "string" },
-          { label: "URL", name: "url", widget: "string" }
-        ]}
-      - { label: "Secondary Button", name: "secondaryButton", widget: "object", required: false, fields: [
-          { label: "Text", name: "text", widget: "string" },
-          { label: "URL", name: "url", widget: "string" }
-        ]}
+  # --- NEWS PAGE ---
+  - name: "news_page"
+    label: "Page: News"
+    files:
+      - name: "hero"
+        label: "News Listing Hero"
+        file: "src/content/news/hero.md" 
+        fields:
+          - { name: "title", label: "Hero Title", widget: "string" }
+          - { name: "description", label: "Hero Description", widget: "text", maxlength: 250 }
+          - { label: "Background Image", name: "backgroundImage", widget: "image", required: false }
+          - { label: "Primary Button", name: "primaryButton", widget: "object", required: false, fields: [
+              { label: "Text", name: "text", widget: "string" },
+              { label: "URL", name: "url", widget: "string" }
+            ]}
+          - { label: "Secondary Button", name: "secondaryButton", widget: "object", required: false, fields: [
+              { label: "Text", name: "text", widget: "string" },
+              { label: "URL", name: "url", widget: "string" }
+            ]}
 
   # NEWS ITEMS (posts)
   - name: "news"
@@ -129,23 +134,25 @@ collections:
           { name: "image", label: "Image", widget: "image" }
       - { name: "body", label: "Body", widget: "markdown" }
 
-  # --- PHOTO GALLERY COLLECTION ---
-
-  - name: "photo_gallery_listing_hero"
-    label: "Photo Gallery Listing Hero"
-    file: "src/content/photo-gallery/hero.md"
-    fields:
-      - { name: "title", label: "Hero Title", widget: "string" }
-      - { name: "description", label: "Hero Description", widget: "text", maxlength: 250 }
-      - { label: "Background Image", name: "backgroundImage", widget: "image", required: false }
-      - { label: "Primary Button", name: "primaryButton", widget: "object", required: false, fields: [
-          { label: "Text", name: "text", widget: "string" },
-          { label: "URL", name: "url", widget: "string" }
-        ]}
-      - { label: "Secondary Button", name: "secondaryButton", widget: "object", required: false, fields: [
-          { label: "Text", name: "text", widget: "string" },
-          { label: "URL", name: "url", widget: "string" }
-        ]}
+  # --- PHOTO GALLERY PAGE ---
+  - name: "photo_gallery_page"
+    label: "Page: Photo Gallery"
+    files:
+      - name: "hero"
+        label: "Photo Gallery Listing Hero"
+        file: "src/content/photo-gallery/hero.md"
+        fields:
+          - { name: "title", label: "Hero Title", widget: "string" }
+          - { name: "description", label: "Hero Description", widget: "text", maxlength: 250 }
+          - { label: "Background Image", name: "backgroundImage", widget: "image", required: false }
+          - { label: "Primary Button", name: "primaryButton", widget: "object", required: false, fields: [
+              { label: "Text", name: "text", widget: "string" },
+              { label: "URL", name: "url", widget: "string" }
+            ]}
+          - { label: "Secondary Button", name: "secondaryButton", widget: "object", required: false, fields: [
+              { label: "Text", name: "text", widget: "string" },
+              { label: "URL", name: "url", widget: "string" }
+            ]}
 
   # PHOTO GALLERY ALBUMS
   - name: "photo_gallery"
