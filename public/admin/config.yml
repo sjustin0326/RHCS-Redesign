@@ -5,7 +5,9 @@ backend:
   public_folder: "/uploads"
   display_url: https://rhcs.netlify.app/
   logo_url: /logo.png
-
+  media_library:
+    name: assets
+    folder_depth: 1
 collections:
   # --- TREE TOURS PAGE ---
   - name: "tree_tours_page"
@@ -91,7 +93,7 @@ collections:
       - { name: "description", label: "Description", widget: "markdown", required: false }
 
   # --- NEWS COLLECTION ---
-  - name: "news_listing_hero" 
+  - name: "news_listing_hero"
     label: "News Listing Hero"
     file: "src/content/news/hero.md"
     fields:
@@ -107,7 +109,7 @@ collections:
           { label: "URL", name: "url", widget: "string" }
         ]}
 
-  - name: "news" 
+  - name: "news"
     label: "News Items"
     folder: "src/content/news"
     create: true
@@ -140,7 +142,7 @@ collections:
           { label: "URL", name: "url", widget: "string" }
         ]}
 
-  - name: "photo_gallery" 
+  - name: "photo_gallery"
     label: "Photo Gallery Albums"
     folder: "src/content/albums"
     create: true
