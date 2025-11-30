@@ -6,7 +6,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
+      {/* Hero Section TODO reemplazar con el componente hero section */}
       <section className="bg-forest-light text-cream py-20 px-6 animate-fade-in">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className={`text-4xl md:text-6xl font-bold mb-8 animate-slide-up ${tektonFont.className}`}>
