@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
 import { HeroSectionData } from '@/utils/heroUtils';
-
+import { tektonFont } from '@/lib/fonts';
 
 interface HeroSectionProps {
   data: HeroSectionData | null;
@@ -24,20 +24,17 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   textClasses
 }) => {
   if (!data) {
-    // Render a placeholder or nothing if no data is provided
+    // render a placeholder or nothing if no data is provided
     return null;
   }
 
   const { title, description, backgroundImage, primaryButton, secondaryButton } = data;
 
-  // Default to 'forest-light' solid background if no image is provided
-  const baseBgClass = backgroundImage ? '' : 'bg-forest-light';
-
   // Image overlay and filter styles
   const imageOverlayClasses = twMerge(
-    'absolute inset-0 z-0',
-    backgroundImage ? 'bg-forest-light/[.5]' : '', // Apply tint with specified opacity
-    'brightness-40' // Apply brightness filter
+    'absolute inset-0 z-0 rounded-lg',
+    backgroundImage ? 'bg-darkgreen/[.5]' : '', // Apply tint with specified opacity only if there's an image
+    'brightness-90' // Apply brightness filter
   );
 
   const imageFilterClasses = twMerge(
@@ -46,31 +43,31 @@ const HeroSection: React.FC<HeroSectionProps> = ({
 
   const containerClasses = twMerge(
     'relative w-full flex items-center justify-center text-center p-8 overflow-hidden',
-    baseBgClass, // Solid background if no image
+    'bg-forest-light', 
     heightClass // Apply height class
   );
 
   const contentWrapperClasses = 'relative z-10 flex flex-col items-center justify-center max-w-4xl mx-auto w-full';
 
   // Customizable text classes using props or defaults
-  const defaultTitleClasses = 'text-5xl font-bold mb-4 font-poppins text-white drop-shadow-lg';
-  const defaultDescriptionClasses = `text-xl mb-8 font-opensans text-cream max-w-2xl mx-auto ${description?.length > 100 ? 'lg:max-w-3xl' : ''}`; // Adjust max-width for longer descriptions if needed
+  const defaultTitleClasses = `text-5xl font-bold mb-4 text-cream shadow-inner-soft ${tektonFont.className}`;
+  const defaultDescriptionClasses = `text-xl mb-8 font-opensans text-cream max-w-2xl mx-auto shadow-inner-soft ${description?.length > 100 ? 'lg:max-w-3xl' : ''}`; // Adjust max-width for longer descriptions if needed
 
   const titleClasses = twMerge(defaultTitleClasses, textClasses?.title);
   const descriptionClasses = twMerge(defaultDescriptionClasses, textClasses?.description);
 
   return (
     <section className={containerClasses}>
-      {/* Background Image or Solid Color */}
+      {/* Background Image (if provided) */}
       {backgroundImage && (
-        <div className={twMerge('relative w-full h-full', imageFilterClasses)}>
+        <div className={twMerge('absolute inset-0 w-full h-full rounded-lg', imageFilterClasses)}>
           <Image
             src={backgroundImage}
             alt="Hero Background Image"
-            layout="fill" // Fills the parent container
-            objectFit="cover" // Covers the area, cropping if necessary
+            fill // Next.js 15 uses 'fill' instead of layout="fill"
+            style={{ objectFit: 'cover' }} // Use style prop for objectFit
             quality={75} // Adjust image quality as needed
-            className="z-0" // Ensure image is behind content
+            className="z-0 rounded-lg" // Ensure image is behind content and has rounded corners
           />
           {/* Tint Overlay */}
           <div className={imageOverlayClasses}></div>
@@ -99,7 +96,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             {secondaryButton?.text && secondaryButton.url && (
               <Link
                 href={secondaryButton.url}
-                className="px-8 py-3 bg-forest-light border-2 border-cream text-cream rounded-xl text-lg font-semibold hover:bg-forest-cream/10 transition-colors duration-300 font-inter
+                className="px-8 py-3  border-2 border-cream text-cream rounded-xl text-lg font-semibold hover:bg-forest-cream/10 transition-colors duration-300 font-inter
                            focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
               >
                 {secondaryButton.text}
