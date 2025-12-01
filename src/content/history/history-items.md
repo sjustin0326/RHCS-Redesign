@@ -26,4 +26,10 @@ items:
 
          Originally the Veteran’s Unit for WWI veterans suffering from shell shock.
     image: /uploads/csb.jpeg
+  - description: Home to over 80 bird species, the ecological integrity of Riverview
+      is a prime example of a biodiversity hotspot. Numerous creeks flow into
+      the Coquitlam River, providing important habitat for spawning salmon,
+      while wetlands and open meadows support diverse wildlife.
+    title: Ecological Value
+    image: /uploads/download-1-.png
 ---
