@@ -54,4 +54,34 @@ items:
 
          Apart from their aesthetic importance, the trees form a valuable gene pool and source of seeds.
     image: /uploads/arboretum.jpg
+  - title: Finnie's Garden
+    description: >-
+      **A Hidden Treasure**
+
+      Finnie’s Garden started in 1951 as a place where people who lived at Riverview could play outdoors and enjoy working with growing things. Art Finnie, a nurse and navy veteran, was asked to set up the garden, originally known as “Farm View.”
+
+
+      In a report, Art Finnie wrote that “it was the best therapy for the patients that they could have had.” Today, we can still see the fish pond, stone terraces, flower beds, and plots shown in the original plans.
+
+
+      **Restoration and Naturescaping**
+
+      Volunteers from the RHCS (aka “Friends of Finnie’s”) clean up the overgrowth to show the unique beauty and craftsmanship of the garden. We use "Naturescaping" methods: gardening with native plants to conserve water and create natural wildlife habitats.
+
+
+      **The Shed Mural**
+
+      In 2004, artist Gay Mitchell designed a mural for the garden shed featuring 50 indigenous and naturalized plants. The painting is a teaching panel of flowering species, many of which grow in the garden itself.
+
+
+      **Getting to Finnie's Garden**
+
+
+      * **Drivers:**
+
+         Turn west on Holly Drive and up Oak Crescent. Follow Holly Drive to the original main Entrance of the Hospital.
+      * **Walkers:**
+
+         Go straight ahead. Well down on the left is a fence gate. Go through and left down the hill a few meters to the lawn area and Finnie’s Garden sign.
+    image: /uploads/559858311_10164234655920799_7852132661504139447_n.jpg
 ---
