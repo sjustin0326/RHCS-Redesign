@@ -187,6 +187,42 @@ collections:
         field:
           { name: "image", label: "Image", widget: "image" }
 
+  # --- HISTORY PAGE ---
+  - name: "history_page"
+    label: "Page: History"
+    files:
+      - name: "hero"
+        label: "Hero Section"
+        file: "src/content/history/hero.md"
+        fields:
+          - { name: "title", label: "Hero Title", widget: "string" }
+          - { name: "description", label: "Hero Description", widget: "text", maxlength: 250 }
+          - { label: "Background Image", name: "backgroundImage", widget: "image", required: false }
+          - { label: "Primary Button", name: "primaryButton", widget: "object", required: false, fields: [
+              { label: "Text", name: "text", widget: "string", required: false },
+              { label: "URL", name: "url", widget: "string", required: false }
+            ]}
+          - { label: "Secondary Button", name: "secondaryButton", widget: "object", required: false, fields: [
+              { label: "Text", name: "text", widget: "string", required: false },
+              { label: "URL", name: "url", widget: "string", required: false }
+            ]}
+      - name: "history_items"
+        label: "History Items"
+        file: "src/content/history/history-items.md"
+        fields:
+          - name: "items"
+            label: "History Items"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "markdown", modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list] }
+              - { label: "Image", name: "image", widget: "image", required: false }
+              - { label: "Button", name: "button", widget: "object", required: false, fields: [
+                  { label: "Text", name: "text", widget: "string", required: false },
+                  { label: "URL", name: "url", widget: "string", required: false }
+                ]}
+
   # --- ABOUT US PAGE ---
   - name: "about-us-page"
     label: "Page: About Us"
