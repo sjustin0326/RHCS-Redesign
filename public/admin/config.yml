@@ -69,29 +69,108 @@ collections:
             fields:
               - { label: "By Car", name: "by_car", widget: "markdown", modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list] }
               - { label: "By Public Transit", name: "by_transit", widget: "markdown", modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list] }
-      - name: "maps"
-        label: "Maps"
-        file: "src/content/tree-tours/maps.md"
-        fields:
-          - { name: "title", label: "Section Title", widget: "string", default: "Maps" }
-          - name: "map_list"
-            label: "Maps & Links"
-            widget: "list"
-            summary: "{{fields.title}}"
-            fields:
-              - { label: "Title", name: "title", widget: "string" }
-              - name: "type"
-                label: "Type of Link"
-                widget: "select"
-                options: ["File Upload (PDF/Image)", "External Link"]
-              - name: "file"
-                label: "Map File"
-                widget: "file"
-                required: false
-              - name: "url"
-                label: "External URL"
-                widget: "string"
-                required: false
+       - name: "maps"
+      label: "Maps & Location"
+      file: "src/content/tree-tours/maps.md"
+      fields:
+        - { name: "title", label: "Section Title", widget: "string", default: "Maps" }
+        
+        # Location Settings Group
+        - label: "Location Settings"
+          name: "location"
+          widget: "object"
+          collapsed: false
+          summary: "Meeting Point: {{fields.address}}"
+          fields:
+            - { 
+                name: "title", 
+                label: "Location Title", 
+                widget: "string", 
+                default: "Location: Henry Esson Young Building",
+                hint: "Title displayed above the map"
+              }
+            - { 
+                name: "googleMapsEmbedUrl", 
+                label: "Google Maps Embed URL", 
+                widget: "string", 
+                required: true,
+                hint: "Go to Google Maps → Search location → Share → Embed a map → Copy the URL from src='...' (the part between quotes)"
+              }
+            - { 
+                name: "address", 
+                label: "Address", 
+                widget: "string", 
+                required: true,
+                maxlength: 100,
+                hint: "Full address of the meeting point (max 100 characters)"
+              }
+            - { 
+                name: "googleMapsDirectUrl", 
+                label: "Google Maps Link", 
+                widget: "string", 
+                required: true,
+                hint: "Go to Google Maps → Search location → Share → Copy link (e.g., https://maps.app.goo.gl/...)"
+              }
+
+              - name: "virtual_tours"
+      label: "Virtual Tours"
+      file: "src/content/tree-tours/virtual-tours.md"
+      fields:
+        - { 
+            name: "sectionTitle", 
+            label: "Section Title", 
+            widget: "string", 
+            default: "Virtual Tree Tour Videos",
+            hint: "Main heading for the virtual tours section"
+          }
+        - name: "videos"
+          label: "Videos"
+          widget: "list"
+          summary: "{{fields.title}}"
+          hint: "Add, edit, or remove virtual tour videos. Videos will appear in the order listed here."
+          fields:
+            - { 
+                label: "Video Title", 
+                name: "title", 
+                widget: "string", 
+                required: true,
+                hint: "Title of the video (displayed above the video player)"
+              }
+            - { 
+                label: "Description", 
+                name: "description", 
+                widget: "text", 
+                required: true,
+                hint: "Brief description of what viewers will see in this video"
+              }
+            - { 
+                label: "YouTube URL", 
+                name: "youtubeUrl", 
+                widget: "string", 
+                required: true,
+                pattern: ['^https:\/\/(www\.)?youtube\.com\/watch\?v=.+|^https:\/\/youtu\.be\/.+', "Must be a valid YouTube URL"],
+                hint: "Paste the full YouTube URL (e.g., https://www.youtube.com/watch?v=NfeEnBo0CwQ or https://youtu.be/NfeEnBo0CwQ)"
+              }
+        
+        # Downloadable Maps List
+        - name: "map_list"
+          label: "Downloadable Maps & Resources"
+          widget: "list"
+          summary: "{{fields.title}}"
+          fields:
+            - { label: "Title", name: "title", widget: "string" }
+            - name: "type"
+              label: "Type of Link"
+              widget: "select"
+              options: ["File Upload (PDF/Image)", "External Link"]
+            - name: "file"
+              label: "Map File"
+              widget: "file"
+              required: false
+            - name: "url"
+              label: "External URL"
+              widget: "string"
+              required: false
 
   # ========================================
   # DYNAMIC CONTENT COLLECTIONS

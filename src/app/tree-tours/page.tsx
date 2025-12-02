@@ -1,6 +1,13 @@
 import React from 'react';
 import { getSerializedNextEvent, getSerializedOtherUpcomingEvents } from '@/utils/eventUtils';
-import { getVisitorInfo, getDirections, getMaps, MapItem } from '@/utils/treeToursUtils';
+import { 
+  getVisitorInfo, 
+  getDirections, 
+  getMaps, 
+  MapItem,
+  getVirtualTours,
+  VirtualTourVideo
+} from '@/utils/treeToursUtils';
 import SectionNav from '../components/SectionNav';
 import UpcomingNextEvent from '../components/UpcomingNextEvent';
 import OtherUpcomingEvents from '../components/OtherUpcomingEvents';
@@ -34,7 +41,6 @@ const DirectionMethod: React.FC<DirectionMethodProps> = ({ icon, title, htmlCont
   </div>
 );
 
-// map for download/link
 const MapLink: React.FC<{ map: MapItem }> = ({ map }) => {
   const isExternalLink = map.type === 'External Link';
   const href = isExternalLink ? map.url : map.file;
@@ -46,7 +52,7 @@ const MapLink: React.FC<{ map: MapItem }> = ({ map }) => {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center justify-center w-full px-4 py-3 bg-darkgreen hover:bg-terracottalight text-cream hover:text-white  rounded-lg shadow-sm transition-all duration-300 ease-in-out font-poppins text-base font-medium group"
+      className="inline-flex items-center justify-center w-full px-4 py-3 bg-darkgreen hover:bg-terracottalight text-cream hover:text-white rounded-lg shadow-sm transition-all duration-300 ease-in-out font-poppins text-base font-medium group"
     >
       {isExternalLink ? (
         <ArrowTopRightOnSquareIcon className="w-5 h-5 mr-2 text-olive group-hover:text-white" />
@@ -61,6 +67,40 @@ const MapLink: React.FC<{ map: MapItem }> = ({ map }) => {
   );
 };
 
+const VirtualTourVideoCard: React.FC<{ video: VirtualTourVideo }> = ({ video }) => (
+  <div className="p-4 bg-darkcream rounded-xl shadow-inner-soft animate-slide-up mb-6">
+    <h3 className="text-xl font-inter font-black text-darkgreen mb-4 text-center">
+      {video.title}
+    </h3>
+    <p className='text-sm md:text-md font-opensans font-semibold text-gray-700 mb-4'>
+      {video.description}
+    </p>
+    
+    <div className="relative rounded-lg overflow-hidden shadow-medium" style={{ paddingBottom: '56.25%', height: 0 }}>
+      <iframe
+        src={video.youtubeEmbedUrl}
+        title={`${video.title} - YouTube video player`}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen
+        className="absolute inset-0 w-full h-full"
+      ></iframe>
+    </div>
+    
+    <p className="font-opensans text-sm text-gray-600 mt-2 text-center md:text-left">
+      <a
+        href={video.youtubeUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center text-terracotta hover:text-terracottalight hover:underline font-opensans text-base transition-colors duration-300"
+      >
+        <ArrowTopRightOnSquareIcon className="w-4 h-4 mr-1" />
+        Watch on YouTube
+      </a>
+    </p>
+  </div>
+);
+
 export default async function TreeToursPage() {
   const heroData = await getHeroSectionData('src/content/tree-tours/hero.md');
   const nextEvent = getSerializedNextEvent();
@@ -68,10 +108,11 @@ export default async function TreeToursPage() {
   const visitorInfo = getVisitorInfo();
   const directions = getDirections();
   const maps = getMaps();
+  const virtualTours = getVirtualTours();
 
   const treeTourSections = [
     { label: "Tree Tours", targetId: "tree-tours" },
-    { label: visitorInfo.title || "Visitor Information", targetId: "visitor-info" }, 
+    { label: visitorInfo.title || "Visitor Information", targetId: "visitor-info" },
     { label: directions.title || "Directions", targetId: "directions" },
     { label: maps.title || "Maps", targetId: "maps" },
   ];
@@ -89,20 +130,14 @@ export default async function TreeToursPage() {
     </section>
   );
 
-  const henryEssonYoungMapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9170.355807425884!2d-122.8138034394643!3d49.25024190817116!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5486789fc8a559f7%3A0xe4c6251d9aad915c!2sHenry%20Esson%20Young%20Building!5e0!3m2!1sen!2sca!4v1763627033587!5m2!1sen!2sca";
-  const riverviewAddress = "Kalmia Pl, Coquitlam, BC V3C 4J2"; 
-  const openInGoogleMapsUrl = "https://maps.app.goo.gl/phL7jfK1Vbkxkz9cA";
-  const youtubeVideoEmbedUrl = "https://www.youtube-nocookie.com/embed/NfeEnBo0CwQ?si=QRoEMRRlLr-eAH7t";
-  const youtubeVideoWatchUrl = "https://www.youtube.com/watch?v=NfeEnBo0CwQ";
-
   return (
     <main className=''>
-      <HeroSection 
+      <HeroSection
         data={heroData}
         heightClass="h-[50vh] min-h-[400px]"
         textClasses={{
-          title: "text-4xl md:text-6xl font-bold mb-8", 
-          description: "text-lg md:text-xl font-poppins font-medium mb-12" 
+          title: "text-4xl md:text-6xl font-bold mb-8",
+          description: "text-lg md:text-xl font-poppins font-medium mb-12"
         }}
       />
       <SectionNav sections={treeTourSections} />
@@ -113,6 +148,7 @@ export default async function TreeToursPage() {
           <h2 className="text-3xl font-inter font-black text-darkgreen capitalize animate-slide-down mb-8 text-center">
             NEXT TREE TOUR
           </h2>
+          
           {!nextEvent ? (
             <ComingSoon />
           ) : (
@@ -128,37 +164,18 @@ export default async function TreeToursPage() {
               )}
             </div>
           )}
-          {/*  Virtual Tree Tour Video */}
-          <div className="p-4 bg-darkcream rounded-xl shadow-inner-soft animate-slide-up">
-            <h2 className="text-xl font-inter font-black text-darkgreen capitalize animate-slide-down mb-4 text-center">
-                Virtual Tree Tour Video
-            </h2>
-            <p className='text-sm md:text-md font-opensans font-semibold text-gray-700 mb-4'>
-              Explore the beauty and history of the Riverview Arboretum from home with this relaxing Virtual Tree Tour by Camera Jamie. Wander through lush park-like grounds, discover unique and heritage trees, and learn interesting bits of trivia about Riverview Lands&apos; tree collections.
-            </p>
 
-            <div className="relative rounded-lg overflow-hidden shadow-medium" style={{ paddingBottom: '56.25%', height: 0 }}> {/* Aspect Ratio 16:9*/}
-              <iframe
-                src={youtubeVideoEmbedUrl} 
-                title="RHCS Virtual Tree Tour - YouTube video player"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-                className="absolute inset-0 w-full h-full"
-              ></iframe>
+          {/* Virtual Tree Tour Videos */}
+          {virtualTours.videos.length > 0 && (
+            <div className="mt-12">
+              <h2 className="text-2xl font-inter font-black text-darkgreen animate-slide-down mb-6 text-center">
+                {virtualTours.sectionTitle}
+              </h2>
+              {virtualTours.videos.map((video, index) => (
+                <VirtualTourVideoCard key={index} video={video} />
+              ))}
             </div>
-            <p className="font-opensans text-sm text-gray-600 mt-2 text-center md:text-left">
-              <a
-                href={youtubeVideoWatchUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center text-terracotta hover:text-terracottalight hover:underline font-opensans text-base transition-colors duration-300"
-              >
-                <ArrowTopRightOnSquareIcon className="w-4 h-4 mr-1" />
-                  Watch on YouTube
-                </a>
-              </p>
-            </div>
+          )}
         </PageSection>
 
         {/* === VISITOR INFORMATION === */}
@@ -170,7 +187,7 @@ export default async function TreeToursPage() {
 
         {/* === DIRECTIONS === */}
         <PageSection id="directions" title={directions.title}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <DirectionMethod
               icon={<CarIcon />}
               title="By Car"
@@ -186,28 +203,34 @@ export default async function TreeToursPage() {
 
         {/* === MAPS === */}
         <PageSection id="maps" title={maps.title}>
-          <div className="prose prose-poppins max-w-none  text-gray-700 bg-darkcream p-6 rounded-xl shadow-soft">
-            <p className='mb-6 text-lg font-poppins text-center'>Here are some helpful maps and resources for your visit:</p>
+          <div className="prose prose-poppins max-w-none text-gray-700 bg-darkcream p-6 rounded-xl shadow-soft">
+            <p className='mb-6 text-lg font-poppins text-center'>
+              Here are some helpful maps and resources for your visit:
+            </p>
 
             {/* Google Map Section */}
-            <div className=" p-4 bg-darkcream animate-scale-in  border-b-2 border-olive">
+            <div className="p-4 bg-darkcream animate-scale-in border-b-2 border-olive">
               <h3 className="text-xl font-inter font-semibold text-darkgreen mb-4 text-center md:text-left">
-                Location: Henry Esson Young Building
+                {maps.location.title}
               </h3>
-              <div className="relative mb-4 rounded-lg overflow-hidden shadow-medium" style={{ paddingBottom: '56.25%', height: 0 }}> {/* Aspect Ratio 16:9 for responsive iframe */}
+              
+              {/* Google Map Embed */}
+              <div className="mb-4">
                 <GoogleMap
-                  src={henryEssonYoungMapUrl}
-                  title="Google Map of Henry Esson Young Building"
-                  className="absolute inset-0 w-full h-full border-0"
-                  // width y height no son necesarios aquí ya que el contenedor `div` los controla
+                  src={maps.location.googleMapsEmbedUrl}
+                  title="Google Map of Meeting Location"
                 />
               </div>
+              
+              {/* Address */}
               <p className="font-poppins text-md text-gray-700 mb-2 text-center md:text-left">
-                Address: {riverviewAddress}
+                <strong>Address:</strong> {maps.location.address}
               </p>
+              
+              {/* Link to open in Google Maps */}
               <div className="text-center md:text-left">
                 <a
-                  href={openInGoogleMapsUrl}
+                  href={maps.location.googleMapsDirectUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center text-terracotta hover:text-terracottalight hover:underline font-opensans text-base transition-colors duration-300"
@@ -219,7 +242,7 @@ export default async function TreeToursPage() {
             </div>
 
             {/* Downloadable Maps & Links Section */}
-            <div className=" p-4 bg-darkcream rounded-xl  animate-slide-up">
+            <div className="p-4 bg-darkcream rounded-xl animate-slide-up mt-6">
               <h3 className="text-xl font-inter font-semibold text-darkgreen mb-4 text-center md:text-left">
                 Downloadable Maps & Resources
               </h3>
@@ -229,13 +252,12 @@ export default async function TreeToursPage() {
                     <MapLink key={index} map={mapItem} />
                   ))
                 ) : (
-                  <p className="text-gray-500 font-poppins col-span-full text-center">No maps or resources available yet.</p>
+                  <p className="text-gray-500 font-poppins col-span-full text-center">
+                    No maps or resources available yet.
+                  </p>
                 )}
               </div>
             </div>
-
-            
-
           </div>
         </PageSection>
       </div>

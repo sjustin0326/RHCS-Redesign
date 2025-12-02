@@ -15,13 +15,25 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
   title = 'Google Map Location',
   className = '',
 }) => {
+  const aspectRatio = (parseInt(height) / parseInt(width)) * 100;
+  
   return (
-    <div style={{ position: 'relative', overflow: 'hidden', paddingBottom: `${(parseInt(height) / parseInt(width)) * 100}%` }}>
+    <div 
+      className="relative rounded-lg overflow-hidden shadow-medium" 
+      style={{ paddingBottom: `${aspectRatio}%`, height: 0 }}
+    >
       <iframe
         src={src}
         width={width}
         height={height}
-        style={{ border: 0, position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+        style={{ 
+          border: 0, 
+          position: 'absolute', 
+          top: 0, 
+          left: 0, 
+          width: '100%', 
+          height: '100%' 
+        }}
         allowFullScreen={true}
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
