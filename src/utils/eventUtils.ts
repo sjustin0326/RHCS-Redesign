@@ -14,6 +14,17 @@ export interface Event {
   slug: string;
 }
 
+// Interfaz para el formato antiguo (para retrocompatibilidad)
+interface LegacyEvent {
+  title: string;
+  startDateTime: string;
+  endDateTime: string;
+  location?: string;
+  description?: string;
+  timezone: string;
+  slug: string;
+}
+
 export interface ParsedEvent extends Event {
   startDate: DateTime;
   endDate: DateTime;
@@ -42,6 +53,39 @@ export interface SerializedEvent {
   dayOfWeek: string;
 }
 
+// Función helper para verificar si es formato antiguo
+function isLegacyEvent(data: any): data is LegacyEvent {
+  return 'startDateTime' in data && 'endDateTime' in data;
+}
+
+// Función para convertir evento antiguo a nuevo formato
+function convertLegacyToNewFormat(legacyEvent: LegacyEvent): Event {
+  const format = 'yyyy-MM-dd hh:mm a';
+  const startDate = DateTime.fromFormat(legacyEvent.startDateTime, format, { 
+    zone: legacyEvent.timezone 
+  });
+  
+  if (!startDate.isValid) {
+    console.error('Cannot convert legacy event:', legacyEvent.title);
+    throw new Error('Invalid legacy event format');
+  }
+
+  const endDate = DateTime.fromFormat(legacyEvent.endDateTime, format, { 
+    zone: legacyEvent.timezone 
+  });
+
+  return {
+    title: legacyEvent.title,
+    day: startDate.toFormat('yyyy-MM-dd'),
+    startTime: startDate.toFormat('HH:mm'),
+    endTime: endDate.isValid ? endDate.toFormat('HH:mm') : startDate.plus({ hours: 1 }).toFormat('HH:mm'),
+    location: legacyEvent.location,
+    description: legacyEvent.description,
+    timezone: legacyEvent.timezone,
+    slug: legacyEvent.slug,
+  };
+}
+
 export function getAllEvents(): ParsedEvent[] {
   const eventsDirectory = path.join(process.cwd(), 'src/content/events');
 
@@ -57,30 +101,58 @@ export function getAllEvents(): ParsedEvent[] {
       const fileContents = fs.readFileSync(filePath, 'utf8');
       const { data } = matter(fileContents);
 
-      return {
-        ...data,
-        slug: data.slug || name.replace(/.md$/, ''),
-      } as Event;
+      const slug = data.slug || name.replace(/.md$/, '');
+
+      // Verificar si es formato antiguo y convertir
+      let eventData: Event;
+      if (isLegacyEvent(data)) {
+        console.log(`Converting legacy event: ${data.title}`);
+        try {
+          eventData = convertLegacyToNewFormat({ ...data, slug });
+        } catch (error) {
+          console.error(`Failed to convert legacy event ${data.title}:`, error);
+          return null;
+        }
+      } else {
+        eventData = { ...data, slug } as Event;
+      }
+
+      return eventData;
     })
+    .filter((event): event is Event => event !== null) // Type guard para filtrar nulls
     .map(parseEvent)
-    .filter(event => event !== null) as ParsedEvent[];
+    .filter((event): event is ParsedEvent => event !== null); // Type guard para filtrar nulls
 
   return events;
 }
 
 function parseEvent(event: Event): ParsedEvent | null {
   try {
+    // Validar que tenemos los campos necesarios
+    if (!event.day || !event.startTime || !event.endTime) {
+      console.error('Missing required fields for event:', event.title);
+      console.error('Event data:', { day: event.day, startTime: event.startTime, endTime: event.endTime });
+      return null;
+    }
+
     // Combinar día y hora para crear DateTime completos
     const startDateTimeString = `${event.day} ${event.startTime}`;
     const endDateTimeString = `${event.day} ${event.endTime}`;
     
     const format = 'yyyy-MM-dd HH:mm';
-    const startDate = DateTime.fromFormat(startDateTimeString, format, { zone: event.timezone });
-    const endDate = DateTime.fromFormat(endDateTimeString, format, { zone: event.timezone });
+    const startDate = DateTime.fromFormat(startDateTimeString, format, { 
+      zone: event.timezone || 'America/Vancouver' 
+    });
+    const endDate = DateTime.fromFormat(endDateTimeString, format, { 
+      zone: event.timezone || 'America/Vancouver' 
+    });
 
     if (!startDate.isValid || !endDate.isValid) {
       console.error('Invalid date/time format for event:', event.title);
       console.error('Day:', event.day, 'Start:', event.startTime, 'End:', event.endTime);
+      console.error('Start valid:', startDate.isValid, 'End valid:', endDate.isValid);
+      if (!startDate.isValid) console.error('Start invalidReason:', startDate.invalidReason);
+      if (!endDate.isValid) console.error('End invalidReason:', endDate.invalidReason);
       return null;
     }
 
