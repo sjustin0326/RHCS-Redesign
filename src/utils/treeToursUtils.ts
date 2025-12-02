@@ -27,13 +27,13 @@ export interface RawMapItem {
   file?: string;
   url?: string;
 }
+
 export interface LocationSettings {
   title: string;
   googleMapsEmbedUrl: string;
   address: string;
   googleMapsDirectUrl: string;
 }
-
 
 export interface Maps {
   title: string;
@@ -53,6 +53,13 @@ export interface VirtualTours {
   videos: VirtualTourVideo[];
 }
 
+// Interfaz para video sin tipo del CMS
+interface UnknownVideoData {
+  title?: string;
+  description?: string;
+  youtubeUrl?: string;
+  [key: string]: unknown;
+}
 
 const contentDirectory = path.join(process.cwd(), 'src/content/tree-tours');
 
@@ -79,9 +86,6 @@ function convertToEmbedUrl(youtubeUrl: string): string {
   
   return youtubeUrl;
 }
-
-
-
 
 export function getVisitorInfo(): VisitorInfo {
   const fullPath = path.join(contentDirectory, 'visitor-information.md');
@@ -121,6 +125,7 @@ export function getMaps(): Maps {
     address: locationData.address || '',
     googleMapsDirectUrl: locationData.googleMapsDirectUrl || '',
   };
+  
   const mapList: MapItem[] = (data.map_list || [] as RawMapItem[]).map((item: RawMapItem) => ({
     title: item.title,
     type: item.type || 'File Upload (PDF/Image)',
@@ -140,11 +145,11 @@ export function getVirtualTours(): VirtualTours {
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data } = matter(fileContents);
 
-  const videos: VirtualTourVideo[] = (data.videos || []).map((video: any) => ({
-    title: video.title,
-    description: video.description,
-    youtubeUrl: video.youtubeUrl,
-    youtubeEmbedUrl: convertToEmbedUrl(video.youtubeUrl),
+  const videos: VirtualTourVideo[] = (data.videos || []).map((video: UnknownVideoData) => ({
+    title: video.title || '',
+    description: video.description || '',
+    youtubeUrl: video.youtubeUrl || '',
+    youtubeEmbedUrl: convertToEmbedUrl(video.youtubeUrl || ''),
   }));
 
   return {

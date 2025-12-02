@@ -23,6 +23,7 @@ interface LegacyEvent {
   description?: string;
   timezone: string;
   slug: string;
+  [key: string]: unknown; // ← Agregar este index signature
 }
 
 export interface ParsedEvent extends Event {
@@ -53,16 +54,31 @@ export interface SerializedEvent {
   dayOfWeek: string;
 }
 
-// Función helper para verificar si es formato antiguo
-function isLegacyEvent(data: any): data is LegacyEvent {
-  return 'startDateTime' in data && 'endDateTime' in data;
+// Interfaz para datos sin tipo del CMS
+interface UnknownEventData {
+  title?: string;
+  startDateTime?: string;
+  endDateTime?: string;
+  day?: string;
+  startTime?: string;
+  endTime?: string;
+  location?: string;
+  description?: string;
+  timezone?: string;
+  slug?: string;
+  [key: string]: unknown;
 }
 
-// Función para convertir evento antiguo a nuevo formato
+// Función helper para verificar si es formato antiguo
+function isLegacyEvent(data: UnknownEventData): data is LegacyEvent {
+  return typeof data.startDateTime === 'string' && typeof data.endDateTime === 'string';
+}
+
+// ... resto del código sin cambios
 function convertLegacyToNewFormat(legacyEvent: LegacyEvent): Event {
   const format = 'yyyy-MM-dd hh:mm a';
-  const startDate = DateTime.fromFormat(legacyEvent.startDateTime, format, { 
-    zone: legacyEvent.timezone 
+  const startDate = DateTime.fromFormat(legacyEvent.startDateTime, format, {
+    zone: legacyEvent.timezone
   });
   
   if (!startDate.isValid) {
@@ -70,8 +86,8 @@ function convertLegacyToNewFormat(legacyEvent: LegacyEvent): Event {
     throw new Error('Invalid legacy event format');
   }
 
-  const endDate = DateTime.fromFormat(legacyEvent.endDateTime, format, { 
-    zone: legacyEvent.timezone 
+  const endDate = DateTime.fromFormat(legacyEvent.endDateTime, format, {
+    zone: legacyEvent.timezone
   });
 
   return {
@@ -103,12 +119,11 @@ export function getAllEvents(): ParsedEvent[] {
 
       const slug = data.slug || name.replace(/.md$/, '');
 
-      // Verificar si es formato antiguo y convertir
       let eventData: Event;
       if (isLegacyEvent(data)) {
         console.log(`Converting legacy event: ${data.title}`);
         try {
-          eventData = convertLegacyToNewFormat({ ...data, slug });
+          eventData = convertLegacyToNewFormat({ ...data, slug } as LegacyEvent);
         } catch (error) {
           console.error(`Failed to convert legacy event ${data.title}:`, error);
           return null;
@@ -119,32 +134,30 @@ export function getAllEvents(): ParsedEvent[] {
 
       return eventData;
     })
-    .filter((event): event is Event => event !== null) // Type guard para filtrar nulls
+    .filter((event): event is Event => event !== null)
     .map(parseEvent)
-    .filter((event): event is ParsedEvent => event !== null); // Type guard para filtrar nulls
+    .filter((event): event is ParsedEvent => event !== null);
 
   return events;
 }
 
 function parseEvent(event: Event): ParsedEvent | null {
   try {
-    // Validar que tenemos los campos necesarios
     if (!event.day || !event.startTime || !event.endTime) {
       console.error('Missing required fields for event:', event.title);
       console.error('Event data:', { day: event.day, startTime: event.startTime, endTime: event.endTime });
       return null;
     }
-
-    // Combinar día y hora para crear DateTime completos
     const startDateTimeString = `${event.day} ${event.startTime}`;
     const endDateTimeString = `${event.day} ${event.endTime}`;
-    
     const format = 'yyyy-MM-dd HH:mm';
-    const startDate = DateTime.fromFormat(startDateTimeString, format, { 
-      zone: event.timezone || 'America/Vancouver' 
+    
+    const startDate = DateTime.fromFormat(startDateTimeString, format, {
+      zone: event.timezone || 'America/Vancouver'
     });
-    const endDate = DateTime.fromFormat(endDateTimeString, format, { 
-      zone: event.timezone || 'America/Vancouver' 
+    
+    const endDate = DateTime.fromFormat(endDateTimeString, format, {
+      zone: event.timezone || 'America/Vancouver'
     });
 
     if (!startDate.isValid || !endDate.isValid) {
