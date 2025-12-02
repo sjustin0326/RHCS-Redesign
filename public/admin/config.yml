@@ -98,30 +98,63 @@ collections:
   # =======================================
 
   # --- EVENTS ---
-  - name: "events"
-    label: "Events"
-    folder: "src/content/events"
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields:
-      - name: "title"
-        label: "Title of Event"
-        asda 
-      - name: "startDateTime"
-        label: "Start Date and Time"
-        widget: "datetime"
-        date_format: "YYYY-MM-DD"
-        time_format: "hh:mm A"
-        format: "YYYY-MM-DD hh:mm A"
-      - name: "endDateTime"
-        label: "End Date and Time"
-        widget: "datetime"
-        date_format: "YYYY-MM-DD"
-        time_format: "hh:mm A"
-        format: "YYYY-MM-DD hh:mm A"
-      - { name: "location", label: "Location", widget: "string", required: false }
-      - { name: "timezone", label: "Timezone", widget: "hidden", default: "America/Vancouver" }
-      - { name: "description", label: "Description", widget: "markdown", required: false }
+- name: "events"
+  label: "Events"
+  folder: "src/content/events"
+  create: true
+  slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+  fields:
+    - name: "title"
+      label: "Event Title"
+      widget: "string"
+      required: true
+    
+    - name: "day"
+      label: "Event Date"
+      widget: "datetime"
+      date_format: "YYYY-MM-DD"
+      time_format: false
+      format: "YYYY-MM-DD"
+      required: true
+      hint: "Select the date of the event (events are typically one day every 3 months)"
+    
+    - name: "startTime"
+      label: "Start Time"
+      widget: "string"
+      required: true
+      pattern: ['^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$', "Must be in format HH:MM (e.g., 10:00 or 14:30)"]
+      hint: "Enter start time in 24-hour format (HH:MM), e.g., 10:00"
+    
+    - name: "endTime"
+      label: "End Time"
+      widget: "string"
+      required: true
+      pattern: ['^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$', "Must be in format HH:MM (e.g., 11:00 or 15:30)"]
+      hint: "Enter end time in 24-hour format (HH:MM), e.g., 11:00"
+    
+    - name: "location"
+      label: "Location"
+      widget: "string"
+      required: false
+      default: "Henry Esson Young (H.E.Y) Building"
+    
+    - name: "description"
+      label: "Description"
+      widget: "markdown"
+      required: false
+      modes: [rich_text]
+      buttons: [bold, italic, link, bulleted-list, numbered-list]
+    
+    - name: "timezone"
+      label: "Timezone"
+      widget: "hidden"
+      default: "America/Vancouver"
+    
+    - name: "slug"
+      label: "Slug"
+      widget: "string"
+      required: false
+      hint: "Leave empty to auto-generate from title"
 
   # ========================================
   # PAGES COLLECTIONS (CONTINUED)

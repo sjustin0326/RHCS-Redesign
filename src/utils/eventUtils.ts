@@ -5,8 +5,9 @@ import { DateTime } from 'luxon';
 
 export interface Event {
   title: string;
-  startDateTime: string;
-  endDateTime: string;
+  day: string; // YYYY-MM-DD
+  startTime: string; // HH:MM
+  endTime: string; // HH:MM
   location?: string;
   description?: string;
   timezone: string;
@@ -24,11 +25,11 @@ export interface ParsedEvent extends Event {
   dayOfWeek: string;
 }
 
-// Nueva interfaz para datos serializados (sin objetos DateTime)
 export interface SerializedEvent {
   title: string;
-  startDateTime: string;
-  endDateTime: string;
+  day: string;
+  startTime: string;
+  endTime: string;
   location?: string;
   description?: string;
   timezone: string;
@@ -58,7 +59,7 @@ export function getAllEvents(): ParsedEvent[] {
 
       return {
         ...data,
-        slug: name.replace(/.md$/, ''),
+        slug: data.slug || name.replace(/.md$/, ''),
       } as Event;
     })
     .map(parseEvent)
@@ -69,12 +70,17 @@ export function getAllEvents(): ParsedEvent[] {
 
 function parseEvent(event: Event): ParsedEvent | null {
   try {
-    const format = 'yyyy-MM-dd hh:mm a';
-    const startDate = DateTime.fromFormat(event.startDateTime, format, { zone: event.timezone });
-    const endDate = DateTime.fromFormat(event.endDateTime, format, { zone: event.timezone });
+    // Combinar día y hora para crear DateTime completos
+    const startDateTimeString = `${event.day} ${event.startTime}`;
+    const endDateTimeString = `${event.day} ${event.endTime}`;
+    
+    const format = 'yyyy-MM-dd HH:mm';
+    const startDate = DateTime.fromFormat(startDateTimeString, format, { zone: event.timezone });
+    const endDate = DateTime.fromFormat(endDateTimeString, format, { zone: event.timezone });
 
     if (!startDate.isValid || !endDate.isValid) {
-      console.error('Invalid date format for event:', event.title, '- Received:', event.startDateTime);
+      console.error('Invalid date/time format for event:', event.title);
+      console.error('Day:', event.day, 'Start:', event.startTime, 'End:', event.endTime);
       return null;
     }
 
@@ -123,12 +129,12 @@ export function getOtherUpcomingEvents(): ParsedEvent[] {
   return upcomingEvents.slice(1);
 }
 
-// Funciones para serializar eventos (sin objetos DateTime)
 export function serializeEvent(event: ParsedEvent): SerializedEvent {
   return {
     title: event.title,
-    startDateTime: event.startDateTime,
-    endDateTime: event.endDateTime,
+    day: event.day,
+    startTime: event.startTime,
+    endTime: event.endTime,
     location: event.location,
     description: event.description,
     timezone: event.timezone,

@@ -1,93 +1,231 @@
-'use client';
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import { DateTime } from 'luxon';
 
-import React, { useState } from 'react';
-import { SerializedEvent } from '@/utils/eventUtils';
-import Modal from './Modal';
-import EventDetailsModal from './EventDetailsModal';
-
-interface UpcomingNextEventProps {
-  event: SerializedEvent; // Cambiar de ParsedEvent a SerializedEvent
+export interface Event {
+  title: string;
+  day: string; // YYYY-MM-DD
+  startTime: string; // HH:MM
+  endTime: string; // HH:MM
+  location?: string;
+  description?: string;
+  timezone: string;
+  slug: string;
 }
 
-const UpcomingNextEvent: React.FC<UpcomingNextEventProps> = ({ event }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+// Interfaz para el formato antiguo (para retrocompatibilidad)
+interface LegacyEvent {
+  title: string;
+  startDateTime: string;
+  endDateTime: string;
+  location?: string;
+  description?: string;
+  timezone: string;
+  slug: string;
+}
 
-  // Check if description is truncated (you can adjust this logic)
-  const isDescriptionTruncated = event.description && event.description.length > 200;
+export interface ParsedEvent extends Event {
+  startDate: DateTime;
+  endDate: DateTime;
+  formattedStartDate: string;
+  formattedStartTime: string;
+  formattedEndTime: string;
+  dayOfMonth: string;
+  month: string;
+  dayOfWeek: string;
+}
 
-  const truncatedDescription = event.description 
-    ? event.description.replace(/<[^>]*>/g, '').substring(0, 200) + '...'
-    : '';
+export interface SerializedEvent {
+  title: string;
+  day: string;
+  startTime: string;
+  endTime: string;
+  location?: string;
+  description?: string;
+  timezone: string;
+  slug: string;
+  formattedStartDate: string;
+  formattedStartTime: string;
+  formattedEndTime: string;
+  dayOfMonth: string;
+  month: string;
+  dayOfWeek: string;
+}
 
-  return (
-    <>
-      <div className="bg-white rounded-lg  mb-4 shadow-strong">
-        <div className="flex flex-col justify-center rounded-xl  sm:flex-row gap-2 md:gap-6 h-full ">
-          {/* Date Display */}
-          <div className="flex md:justify-center justify-start self-stretch ">
-            <div className="bg-darkgreen rounded-t-lg md:rounded-l-xl flex flex-col md:justify-center md:py-6  py-2 md: md:px-12 min-w-[5rem] w-full text-center h-full">
-              <div className="text-lg font-poppins font-bold text-white uppercase tracking-wide">
-                {event.month}
-              </div>
-              <div className="text-3xl my-2 font-poppins font-bold text-white">
-                {event.dayOfMonth}
-              </div>
-              <div className="text-md font-poppins font-bold text-white capitalize">
-                {event.dayOfWeek}
-              </div>
-            </div>
-          </div>
+// Función helper para verificar si es formato antiguo
+function isLegacyEvent(data: any): data is LegacyEvent {
+  return 'startDateTime' in data && 'endDateTime' in data;
+}
 
-          {/* Event Details */}
-          <div className="flex-1 min-w-0 my-4 mx-4 md:mx-0 md:mr-6">
-            <h3 className="text-md md:text-lg font-semibold text-darkgreen mb-3">
-              {event.title}
-            </h3>
+// Función para convertir evento antiguo a nuevo formato
+function convertLegacyToNewFormat(legacyEvent: LegacyEvent): Event {
+  const format = 'yyyy-MM-dd hh:mm a';
+  const startDate = DateTime.fromFormat(legacyEvent.startDateTime, format, { 
+    zone: legacyEvent.timezone 
+  });
+  
+  if (!startDate.isValid) {
+    console.error('Cannot convert legacy event:', legacyEvent.title);
+    throw new Error('Invalid legacy event format');
+  }
 
-            <div className="space-y-2 mb-4">
-              {/* Time */}
-              <div className="flex items-center gap-2 text-sm md:text-md font-opensans font-semibold text-olive">
-                <svg className="w-4 h-4 flex-shrink-0" fill="#606C38" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-                </svg>
-                <span className="break-words">{event.formattedStartTime} - {event.formattedEndTime}</span>
-              </div>
+  const endDate = DateTime.fromFormat(legacyEvent.endDateTime, format, { 
+    zone: legacyEvent.timezone 
+  });
 
-              {/* Location */}
-              {event.location && (
-                <div className="flex items-start gap-2 text-sm md:text-md font-opensans font-semibold text-olive">
-                  <svg className="w-4 h-4 flex-shrink-0 mt-0.5" fill="#606C38" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                  </svg>
-                  <span className="break-words">{event.location}</span>
-                </div>
-              )}
-            </div>
+  return {
+    title: legacyEvent.title,
+    day: startDate.toFormat('yyyy-MM-dd'),
+    startTime: startDate.toFormat('HH:mm'),
+    endTime: endDate.isValid ? endDate.toFormat('HH:mm') : startDate.plus({ hours: 1 }).toFormat('HH:mm'),
+    location: legacyEvent.location,
+    description: legacyEvent.description,
+    timezone: legacyEvent.timezone,
+    slug: legacyEvent.slug,
+  };
+}
 
-            {/* Description */}
-            {event.description && (
-              <div className="text-sm md:text-md font-opensans font-semibold text-gray-700">
-                <div dangerouslySetInnerHTML={{ __html: isDescriptionTruncated ? truncatedDescription : event.description }} />
-                {isDescriptionTruncated && (
-                  <button
-                    onClick={() => setIsModalOpen(true)}
-                    className="text-terracotta hover:text-darkgreen font-medium mt-1 transition-colors duration-200 underline mb-4"
-                  >
-                    Read More &rarr;
-                  </button>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
+export function getAllEvents(): ParsedEvent[] {
+  const eventsDirectory = path.join(process.cwd(), 'src/content/events');
 
-      {/* Modal */}
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <EventDetailsModal event={event} />
-      </Modal>
-    </>
-  );
-};
+  if (!fs.existsSync(eventsDirectory)) {
+    return [];
+  }
 
-export default UpcomingNextEvent;
+  const filenames = fs.readdirSync(eventsDirectory);
+  const events = filenames
+    .filter(name => name.endsWith('.md'))
+    .map(name => {
+      const filePath = path.join(eventsDirectory, name);
+      const fileContents = fs.readFileSync(filePath, 'utf8');
+      const { data } = matter(fileContents);
+
+      const slug = data.slug || name.replace(/.md$/, '');
+
+      // Verificar si es formato antiguo y convertir
+      let eventData: Event;
+      if (isLegacyEvent(data)) {
+        console.log(`Converting legacy event: ${data.title}`);
+        try {
+          eventData = convertLegacyToNewFormat({ ...data, slug });
+        } catch (error) {
+          console.error(`Failed to convert legacy event ${data.title}:`, error);
+          return null;
+        }
+      } else {
+        eventData = { ...data, slug } as Event;
+      }
+
+      return eventData;
+    })
+    .filter((event): event is Event => event !== null) // Type guard para filtrar nulls
+    .map(parseEvent)
+    .filter((event): event is ParsedEvent => event !== null); // Type guard para filtrar nulls
+
+  return events;
+}
+
+function parseEvent(event: Event): ParsedEvent | null {
+  try {
+    // Validar que tenemos los campos necesarios
+    if (!event.day || !event.startTime || !event.endTime) {
+      console.error('Missing required fields for event:', event.title);
+      console.error('Event data:', { day: event.day, startTime: event.startTime, endTime: event.endTime });
+      return null;
+    }
+
+    // Combinar día y hora para crear DateTime completos
+    const startDateTimeString = `${event.day} ${event.startTime}`;
+    const endDateTimeString = `${event.day} ${event.endTime}`;
+    
+    const format = 'yyyy-MM-dd HH:mm';
+    const startDate = DateTime.fromFormat(startDateTimeString, format, { 
+      zone: event.timezone || 'America/Vancouver' 
+    });
+    const endDate = DateTime.fromFormat(endDateTimeString, format, { 
+      zone: event.timezone || 'America/Vancouver' 
+    });
+
+    if (!startDate.isValid || !endDate.isValid) {
+      console.error('Invalid date/time format for event:', event.title);
+      console.error('Day:', event.day, 'Start:', event.startTime, 'End:', event.endTime);
+      console.error('Start valid:', startDate.isValid, 'End valid:', endDate.isValid);
+      if (!startDate.isValid) console.error('Start invalidReason:', startDate.invalidReason);
+      if (!endDate.isValid) console.error('End invalidReason:', endDate.invalidReason);
+      return null;
+    }
+
+    return {
+      ...event,
+      startDate,
+      endDate,
+      formattedStartDate: startDate.toFormat('yyyy-MM-dd'),
+      formattedStartTime: startDate.toFormat('h:mm a'),
+      formattedEndTime: endDate.toFormat('h:mm a'),
+      dayOfMonth: startDate.toFormat('d'),
+      month: startDate.toFormat('MMM').toUpperCase(),
+      dayOfWeek: startDate.toFormat('cccc'),
+    };
+  } catch (error) {
+    console.error('Error parsing event:', event.title, error);
+    return null;
+  }
+}
+
+export function getUpcomingEvents(): ParsedEvent[] {
+  const allEvents = getAllEvents();
+  const now = DateTime.now().setZone('America/Vancouver');
+
+  return allEvents
+    .filter(event => event.endDate > now)
+    .sort((a, b) => a.startDate.toMillis() - b.startDate.toMillis());
+}
+
+export function getPastEvents(): ParsedEvent[] {
+  const allEvents = getAllEvents();
+  const now = DateTime.now().setZone('America/Vancouver');
+
+  return allEvents
+    .filter(event => event.endDate <= now)
+    .sort((a, b) => b.startDate.toMillis() - a.startDate.toMillis());
+}
+
+export function getNextEvent(): ParsedEvent | null {
+  const upcomingEvents = getUpcomingEvents();
+  return upcomingEvents.length > 0 ? upcomingEvents[0] : null;
+}
+
+export function getOtherUpcomingEvents(): ParsedEvent[] {
+  const upcomingEvents = getUpcomingEvents();
+  return upcomingEvents.slice(1);
+}
+
+export function serializeEvent(event: ParsedEvent): SerializedEvent {
+  return {
+    title: event.title,
+    day: event.day,
+    startTime: event.startTime,
+    endTime: event.endTime,
+    location: event.location,
+    description: event.description,
+    timezone: event.timezone,
+    slug: event.slug,
+    formattedStartDate: event.formattedStartDate,
+    formattedStartTime: event.formattedStartTime,
+    formattedEndTime: event.formattedEndTime,
+    dayOfMonth: event.dayOfMonth,
+    month: event.month,
+    dayOfWeek: event.dayOfWeek,
+  };
+}
+
+export function getSerializedNextEvent(): SerializedEvent | null {
+  const nextEvent = getNextEvent();
+  return nextEvent ? serializeEvent(nextEvent) : null;
+}
+
+export function getSerializedOtherUpcomingEvents(): SerializedEvent[] {
+  const otherEvents = getOtherUpcomingEvents();
+  return otherEvents.map(serializeEvent);
+}
