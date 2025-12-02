@@ -95,7 +95,7 @@ collections:
 
   # ========================================
   # DYNAMIC CONTENT COLLECTIONS
-  # ========================================
+  # =======================================
 
   # --- EVENTS ---
   - name: "events"
@@ -104,6 +104,9 @@ collections:
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
+      - name: "title"
+        label: "Title of Event"
+        asda 
       - name: "startDateTime"
         label: "Start Date and Time"
         widget: "datetime"
