@@ -19,7 +19,7 @@ export interface SubPage {
       name: "Tree Tours",
       href: "/tree-tours",
       subPages: [
-        { name: "Tree Tours Events", href: "/tree-tours#tree-tours", id: "tree-tours" },
+        { name: "Tree Tours Events", href: "/tree-tours", id: "tree-tours" },
         { name: "Visitor Information", href: "/tree-tours#visitor-info", id: "visitor-info" },
         { name: "Directions", href: "/tree-tours#directions", id: "directions" },
         { name: "Maps", href: "/tree-tours#maps", id: "maps" },
