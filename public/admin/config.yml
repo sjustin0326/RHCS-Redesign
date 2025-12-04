@@ -371,19 +371,28 @@ collections:
             { name: "image", label: "Image", widget: "image" }
     
     - name: "get_involved"
-      label: "Get Involved Section"
-      file: "src/content/about/get-involved.md"
-      fields:
-        - { name: "title", label: "Section Title", widget: "string", default: "Get Involved" }
-        - { name: "body", label: "Content", widget: "markdown", modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list], hint: "Invitation to become a member or volunteer (max 250 characters)", maxlength: 250 }
-        - { label: "Primary Button", name: "primaryButton", widget: "object", required: true, fields: [
-            { label: "Text", name: "text", widget: "string", default: "Become a Member" },
-            { label: "URL", name: "url", widget: "string", default: "/get-involved#membership" }
-          ]}
-        - { label: "Secondary Button", name: "secondaryButton", widget: "object", required: true, fields: [
-            { label: "Text", name: "text", widget: "string", default: "Volunteer With Us" },
-            { label: "URL", name: "url", widget: "string", default: "/get-involved#volunteer" }
-          ]}
+    label: "Get Involved Section"
+    file: "src/content/about/get-involved.md"
+    fields:
+      - { name: "title", label: "Section Title", widget: "string", default: "Get Involved" }
+      - { name: "body", label: "Content", widget: "markdown", modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list], hint: "Invitation to become a member or volunteer (max 250 characters)", maxlength: 250 }
+      - name: "images"
+        label: "Carousel Images"
+        widget: "list"
+        summary: "{{fields.image}}"
+        min: 1
+        required: false
+        hint: "Add images of volunteers and members to inspire visitors"
+        field:
+          { name: "image", label: "Image", widget: "image" }
+      - { label: "Primary Button", name: "primaryButton", widget: "object", required: true, fields: [
+          { label: "Text", name: "text", widget: "string", default: "Become a Member" },
+          { label: "URL", name: "url", widget: "string", default: "/get-involved#membership" }
+        ]}
+      - { label: "Secondary Button", name: "secondaryButton", widget: "object", required: true, fields: [
+          { label: "Text", name: "text", widget: "string", default: "Volunteer With Us" },
+          { label: "URL", name: "url", widget: "string", default: "/get-involved#volunteer" }
+        ]}
 
   # --- PHOTO GALLERY PAGE ---
   - name: "photo_gallery_page"

@@ -28,6 +28,7 @@ export interface Achievements {
 export interface GetInvolved {
   title: string;
   htmlContent: string;
+  images?: string[];
   primaryButton: {
     text: string;
     url: string;
@@ -41,16 +42,37 @@ export interface GetInvolved {
 //path to about content folder
 const contentDirectory = path.join(process.cwd(), 'src/content/about');
 
-//Function to read and parse a markdown file
+//Function to read and parse a markdown file with error handling
 function readMarkdownFile(fileName: string) {
   const fullPath = path.join(contentDirectory, fileName);
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
-  return matter(fileContents);
+  
+  // Check if file exists
+  if (!fs.existsSync(fullPath)) {
+    console.warn(`Warning: File not found: ${fullPath}`);
+    return null;
+  }
+  
+  try {
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    return matter(fileContents);
+  } catch (error) {
+    console.error(`Error reading file ${fullPath}:`, error);
+    return null;
+  }
 }
 
 //Mission data
 export function getMission(): MissionVision {
-  const { data, content } = readMarkdownFile('mission.md');
+  const result = readMarkdownFile('mission.md');
+  
+  if (!result) {
+    return {
+      title: 'Our Mission',
+      htmlContent: '<p>Mission content coming soon.</p>',
+    };
+  }
+  
+  const { data, content } = result;
   
   return {
     title: (data.title || 'Our Mission') as string,
@@ -60,7 +82,16 @@ export function getMission(): MissionVision {
 
 //Vision data
 export function getVision(): MissionVision {
-  const { data, content } = readMarkdownFile('vision.md');
+  const result = readMarkdownFile('vision.md');
+  
+  if (!result) {
+    return {
+      title: 'Our Vision',
+      htmlContent: '<p>Vision content coming soon.</p>',
+    };
+  }
+  
+  const { data, content } = result;
   
   return {
     title: (data.title || 'Our Vision') as string,
@@ -70,7 +101,16 @@ export function getVision(): MissionVision {
 
 //What We Do data
 export function getWhatWeDo(): WhatWeDo {
-  const { data, content } = readMarkdownFile('what-we-do.md');
+  const result = readMarkdownFile('what-we-do.md');
+  
+  if (!result) {
+    return {
+      title: 'What We Do',
+      htmlContent: '<p>Content coming soon.</p>',
+    };
+  }
+  
+  const { data, content } = result;
   
   return {
     title: (data.title || 'What We Do') as string,
@@ -81,7 +121,16 @@ export function getWhatWeDo(): WhatWeDo {
 
 //Why Founded data
 export function getWhyFounded(): WhyFounded {
-  const { data, content } = readMarkdownFile('why-founded.md');
+  const result = readMarkdownFile('why-founded.md');
+  
+  if (!result) {
+    return {
+      title: 'Why Was RHCS Founded',
+      htmlContent: '<p>Content coming soon.</p>',
+    };
+  }
+  
+  const { data, content } = result;
   
   return {
     title: (data.title || 'Why Was RHCS Founded') as string,
@@ -91,7 +140,17 @@ export function getWhyFounded(): WhyFounded {
 
 //Achievements data
 export function getAchievements(): Achievements {
-  const { data, content } = readMarkdownFile('achievements.md');
+  const result = readMarkdownFile('achievements.md');
+  
+  if (!result) {
+    return {
+      title: 'Our Achievements',
+      description: '',
+      images: [],
+    };
+  }
+  
+  const { data, content } = result;
   
   return {
     title: (data.title || 'Our Achievements') as string,
@@ -101,12 +160,32 @@ export function getAchievements(): Achievements {
 }
 
 //GetInvolved data
+//GetInvolved data
 export function getGetInvolved(): GetInvolved {
-  const { data, content } = readMarkdownFile('get-involved.md');
+  const result = readMarkdownFile('get-involved.md');
+  
+  if (!result) {
+    return {
+      title: 'Get Involved',
+      htmlContent: '<p>Get involved content coming soon.</p>',
+      images: [], // Default to empty array
+      primaryButton: {
+        text: 'Become a Member',
+        url: '/get-involved#membership',
+      },
+      secondaryButton: {
+        text: 'Volunteer With Us',
+        url: '/get-involved#volunteer',
+      },
+    };
+  }
+  
+  const { data, content } = result;
   
   return {
     title: (data.title || 'Get Involved') as string,
     htmlContent: marked.parse(content) as string,
+    images: (data.images || []).map((img: { image: string }) => img.image), // Extract image paths
     primaryButton: {
       text: data.primaryButton?.text || 'Become a Member',
       url: data.primaryButton?.url || '/get-involved#membership',
