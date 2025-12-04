@@ -347,26 +347,20 @@ collections:
         fields:
           - { name: "title", label: "Section Title", widget: "string", default: "What We Do" }
           - { name: "body", label: "Content", widget: "markdown", modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list] }
+          - { name: "image", label: "Optional Image", name: "WhatWeDoImage", widget: "image", required: false }
       
-      - name: "historic_roots"
-        label: "Historic Roots"
-        file: "src/content/about/historic-roots.md"
-        fields:
-          - { name: "title", label: "Section Title", widget: "string", default: "Historic Roots" }
-          - { name: "body", label: "Content", widget: "markdown", modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list] }
+      # - name: "historic_roots" ASK ABOUT THIS SECTION
+      #   label: "Historic Roots"
+      #   file: "src/content/about/historic-roots.md"
+      #   fields:
+      #     - { name: "title", label: "Section Title", widget: "string", default: "Historic Roots" }
+      #     - { name: "body", label: "Content", widget: "markdown", modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list] }
       
       - name: "why_founded"
         label: "Why Was RHCS Founded"
         file: "src/content/about/why-founded.md"
         fields:
           - { name: "title", label: "Section Title", widget: "string", default: "Why Was RHCS Founded" }
-          - { name: "body", label: "Content", widget: "markdown", modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list] }
-      
-      - name: "initial_impact"
-        label: "Our Initial Impact"
-        file: "src/content/about/initial-impact.md"
-        fields:
-          - { name: "title", label: "Section Title", widget: "string", default: "Our Initial Impact" }
           - { name: "body", label: "Content", widget: "markdown", modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list] }
       
       - name: "achievements"
