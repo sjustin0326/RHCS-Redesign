@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import ImageCarousel from './ImageCarousel';
 import { Achievements } from '@/utils/aboutUtils';
 
@@ -8,33 +7,46 @@ interface AchievementsSectionProps {
 }
 
 const AchievementsSection: React.FC<AchievementsSectionProps> = ({ data }) => {
-  // Prepare images for carousel format
-  const carouselImages = data.images.map((imgSrc) => ({
-    src: imgSrc,
-    width: 1200,
-    height: 800,
-  }));
+  // Only prepare images if they exist and are valid
+  const carouselImages = data.images && data.images.length > 0
+    ? data.images
+        .filter(imgSrc => imgSrc && imgSrc.trim() !== '')
+        .map((imgSrc) => ({
+          src: imgSrc,
+          width: 1200,
+          height: 800,
+        }))
+    : null;
 
   return (
     <section id="achievements" className="py-16 bg-white">
       <div className="container mx-auto px-4 max-w-6xl">
-        <h2 className="text-4xl font-bold mb-6 text-center text-darkgreen">
+        {/* Title */}
+        <h2 className="text-4xl font-bold mb-8 text-center text-darkgreen">
           {data.title}
         </h2>
         
-        {data.description && (
-          <div 
-            className="prose prose-lg mx-auto mb-10 text-center text-gray-700"
-            dangerouslySetInnerHTML={{ __html: data.description }}
-          />
-        )}
-        
-        {/* Image Carousel */}
-        <div className="mt-8">
-          <ImageCarousel 
-            images={carouselImages}
-            altText={data.title}
-          />
+        {/* Two-column grid layout on medium+ screens */}
+        <div className="grid md:grid-cols-2 gap-8 items-center">
+          {/* Left column: Description text */}
+          <div>
+            {data.description && (
+              <div 
+                className="prose prose-lg text-gray-700"
+                dangerouslySetInnerHTML={{ __html: data.description }}
+              />
+            )}
+          </div>
+          
+          {/* Right column: Image Carousel */}
+          {carouselImages && carouselImages.length > 0 && (
+            <div className="flex items-center">
+              <ImageCarousel 
+                images={carouselImages}
+                altText={data.title}
+              />
+            </div>
+          )}
         </div>
       </div>
     </section>

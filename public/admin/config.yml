@@ -361,7 +361,7 @@ collections:
         file: "src/content/about/achievements.md"
         fields:
           - { name: "title", label: "Section Title", widget: "string", default: "Our Achievements" }
-          - { name: "description", label: "Description", widget: "markdown", required: false, modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list] }
+          - { name: "body", label: "Achievements Description", widget: "markdown", modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list], hint: "List of achievements (use bullet points)" }
           - name: "images"
             label: "Achievement Images"
             widget: "list"
