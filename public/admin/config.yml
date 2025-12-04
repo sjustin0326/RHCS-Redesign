@@ -307,92 +307,94 @@ collections:
         fields: 
           - { name: "body", label: "Content", widget: "markdown" }
 
-    # --- ABOUT US PAGE ---
-- name: "about_us_page"
-  label: "Page: About Us"
-  files:
-    - name: "hero"
-      label: "Hero Section"
-      file: "src/content/about/hero.md"
-      fields:
-        - { name: "title", label: "Hero Title", widget: "string" }
-        - { name: "description", label: "Hero Description", widget: "text", maxlength: 250 }
-        - { label: "Background Image", name: "backgroundImage", widget: "image", required: false }
-        - { label: "Primary Button", name: "primaryButton", widget: "object", required: false, fields: [
-            { label: "Text", name: "text", widget: "string", required: false },
-            { label: "URL", name: "url", widget: "string", required: false }
-          ]}
-        - { label: "Secondary Button", name: "secondaryButton", widget: "object", required: false, fields: [
-            { label: "Text", name: "text", widget: "string", required: false },
-            { label: "URL", name: "url", widget: "string", required: false }
-          ]}
-    
-    - name: "mission"
-      label: "Mission"
-      file: "src/content/about/mission.md"
-      fields:
-        - { name: "title", label: "Section Title", widget: "string", default: "Our Mission" }
-        - { name: "body", label: "Content", widget: "markdown", modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list] }
-    
-    - name: "vision"
-      label: "Vision"
-      file: "src/content/about/vision.md"
-      fields:
-        - { name: "title", label: "Section Title", widget: "string", default: "Our Vision" }
-        - { name: "body", label: "Content", widget: "markdown", modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list] }
-    
-    - name: "what_we_do"
-      label: "What We Do"
-      file: "src/content/about/what-we-do.md"
-      fields:
-        - { name: "title", label: "Section Title", widget: "string", default: "What We Do" }
-        - { name: "body", label: "Content", widget: "markdown", modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list] }
-        - { name: "image", label: "Optional Image", widget: "image", required: false }
-    
-    - name: "why_founded"
-      label: "Why Was RHCS Founded"
-      file: "src/content/about/why-founded.md"
-      fields:
-        - { name: "title", label: "Section Title", widget: "string", default: "Why Was RHCS Founded" }
-        - { name: "body", label: "Content", widget: "markdown", modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list] }
-    
-    - name: "achievements"
-      label: "Our Achievements"
-      file: "src/content/about/achievements.md"
-      fields:
-        - { name: "title", label: "Section Title", widget: "string", default: "Our Achievements" }
-        - { name: "description", label: "Description", widget: "markdown", required: false, modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list] }
-        - name: "images"
-          label: "Achievement Images"
-          widget: "list"
-          summary: "{{fields.image}}"
-          min: 1
-          field:
-            { name: "image", label: "Image", widget: "image" }
-    
-    - name: "get_involved"
-    label: "Get Involved Section"
-    file: "src/content/about/get-involved.md"
-    fields:
-      - { name: "title", label: "Section Title", widget: "string", default: "Get Involved" }
-      - { name: "body", label: "Content", widget: "markdown", modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list], hint: "Invitation to become a member or volunteer (max 250 characters)", maxlength: 250 }
-      - name: "images"
-        label: "Carousel Images"
-        widget: "list"
-        summary: "{{fields.image}}"
-        min: 1
-        required: false
-        hint: "Add images of volunteers and members to inspire visitors"
-        field:
-          { name: "image", label: "Image", widget: "image" }
-      - { label: "Primary Button", name: "primaryButton", widget: "object", required: true, fields: [
-          { label: "Text", name: "text", widget: "string", default: "Become a Member" },
-          { label: "URL", name: "url", widget: "string", default: "/get-involved#membership" }
-        ]}
-      - { label: "Secondary Button", name: "secondaryButton", widget: "object", required: true, fields: [
-          { label: "Text", name: "text", widget: "string", default: "Volunteer With Us" },
-          { label: "URL", name: "url", widget: "string", default: "/get-involved#volunteer" }
-        ]}
+      # --- ABOUT US PAGE ---
+  - name: "about_us_page"
+    label: "Page: About Us"
+    files:
+      - name: "hero"
+        label: "Hero Section"
+        file: "src/content/about/hero.md"
+        fields:
+          - { name: "title", label: "Hero Title", widget: "string" }
+          - { name: "description", label: "Hero Description", widget: "text", maxlength: 250 }
+          - { label: "Background Image", name: "backgroundImage", widget: "image", required: false }
+          - { label: "Primary Button", name: "primaryButton", widget: "object", required: false, fields: [
+              { label: "Text", name: "text", widget: "string", required: false },
+              { label: "URL", name: "url", widget: "string", required: false }
+            ]}
+          - { label: "Secondary Button", name: "secondaryButton", widget: "object", required: false, fields: [
+              { label: "Text", name: "text", widget: "string", required: false },
+              { label: "URL", name: "url", widget: "string", required: false }
+            ]}
+      
+      - name: "mission"
+        label: "Mission"
+        file: "src/content/about/mission.md"
+        fields:
+          - { name: "title", label: "Section Title", widget: "string", default: "Our Mission" }
+          - { name: "body", label: "Content", widget: "markdown", modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list] }
+          - { name: "image", label: "Optional Image", widget: "image", required: false, hint: "Optional: Add an inspirational image for this section" }
+      
+      - name: "vision"
+        label: "Vision"
+        file: "src/content/about/vision.md"
+        fields:
+          - { name: "title", label: "Section Title", widget: "string", default: "Our Vision" }
+          - { name: "body", label: "Content", widget: "markdown", modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list] }
+          - { name: "image", label: "Optional Image", widget: "image", required: false, hint: "Optional: Add an inspirational image for this section" }
+      
+      - name: "what_we_do"
+        label: "What We Do"
+        file: "src/content/about/what-we-do.md"
+        fields:
+          - { name: "title", label: "Section Title", widget: "string", default: "What We Do" }
+          - { name: "body", label: "Content", widget: "markdown", modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list] }
+          - { name: "image", label: "Optional Image", widget: "image", required: false }
+      
+      - name: "why_founded"
+        label: "Why Was RHCS Founded"
+        file: "src/content/about/why-founded.md"
+        fields:
+          - { name: "title", label: "Section Title", widget: "string", default: "Why Was RHCS Founded" }
+          - { name: "body", label: "Content", widget: "markdown", modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list] }
+      
+      - name: "achievements"
+        label: "Our Achievements"
+        file: "src/content/about/achievements.md"
+        fields:
+          - { name: "title", label: "Section Title", widget: "string", default: "Our Achievements" }
+          - { name: "description", label: "Description", widget: "markdown", required: false, modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list] }
+          - name: "images"
+            label: "Achievement Images"
+            widget: "list"
+            summary: "{{fields.image}}"
+            min: 1
+            field:
+              { name: "image", label: "Image", widget: "image" }
+      
+      - name: "get_involved"
+        label: "Get Involved Section"
+        file: "src/content/about/get-involved.md"
+        fields:
+          - { name: "title", label: "Section Title", widget: "string", default: "Get Involved" }
+          - { name: "body", label: "Content", widget: "markdown", modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list], hint: "Invitation to become a member or volunteer (max 250 characters)", maxlength: 250 }
+          - name: "images"
+            label: "Carousel Images"
+            widget: "list"
+            summary: "{{fields.image}}"
+            min: 1
+            required: false
+            hint: "Add images of volunteers and members to inspire visitors"
+            field:
+              { name: "image", label: "Image", widget: "image" }
+          - { label: "Primary Button", name: "primaryButton", widget: "object", required: true, fields: [
+              { label: "Text", name: "text", widget: "string", default: "Become a Member" },
+              { label: "URL", name: "url", widget: "string", default: "/get-involved#membership" }
+            ]}
+          - { label: "Secondary Button", name: "secondaryButton", widget: "object", required: true, fields: [
+              { label: "Text", name: "text", widget: "string", default: "Volunteer With Us" },
+              { label: "URL", name: "url", widget: "string", default: "/get-involved#volunteer" }
+            ]}
 
   # --- PHOTO GALLERY PAGE ---
   - name: "photo_gallery_page"
