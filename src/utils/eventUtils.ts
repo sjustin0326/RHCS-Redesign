@@ -113,10 +113,16 @@ export function getAllEvents(): ParsedEvent[] {
     .map(name => {
       const filePath = path.join(eventsDirectory, name);
       const fileContents = fs.readFileSync(filePath, 'utf8');
-      const { data } = matter(fileContents, { engines: {
-        yaml: s => yaml.load(s, { schema: yaml.JSON_SCHEMA }) // type is fine
-      }
-
+      const { data } = matter(fileContents, { 
+        engines: {
+          yaml: (s: string) => {
+            const result = yaml.load(s, { schema: yaml.JSON_SCHEMA });
+            if (typeof result !== 'object' || result === null) {
+              return {};
+            }
+            return result;
+          }
+        }
       });
 
       const slug = data.slug || name.replace(/.md$/, '');
