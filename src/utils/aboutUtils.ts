@@ -151,15 +151,27 @@ export function getAchievements(): Achievements {
   }
   
   const { data, content } = result;
+  let imagesList: string[] = [];
+  
+  if (data.images && Array.isArray(data.images)) {
+    imagesList = data.images.map((img: string | { image: string }) => {
+      if (typeof img === 'string') {
+        return img;
+      }
+      if (img && typeof img === 'object' && 'image' in img) {
+        return img.image;
+      }
+      return '';
+    }).filter((img: string) => img !== '');
+  }
   
   return {
     title: (data.title || 'Our Achievements') as string,
     description: content ? (marked.parse(content) as string) : '',
-    images: (data.images || []).map((img: { image: string }) => img.image),
+    images: imagesList,
   };
 }
 
-//GetInvolved data
 //GetInvolved data
 export function getGetInvolved(): GetInvolved {
   const result = readMarkdownFile('get-involved.md');
@@ -168,7 +180,7 @@ export function getGetInvolved(): GetInvolved {
     return {
       title: 'Get Involved',
       htmlContent: '<p>Get involved content coming soon.</p>',
-      images: [], // Default to empty array
+      images: [],
       primaryButton: {
         text: 'Become a Member',
         url: '/get-involved#membership',
@@ -181,11 +193,24 @@ export function getGetInvolved(): GetInvolved {
   }
   
   const { data, content } = result;
+  let imagesList: string[] = [];
+  
+  if (data.images && Array.isArray(data.images)) {
+    imagesList = data.images.map((img: string | { image: string }) => {
+      if (typeof img === 'string') {
+        return img;
+      }
+      if (img && typeof img === 'object' && 'image' in img) {
+        return img.image;
+      }
+      return '';
+    }).filter((img: string) => img !== '');
+  }
   
   return {
     title: (data.title || 'Get Involved') as string,
     htmlContent: marked.parse(content) as string,
-    images: (data.images || []).map((img: { image: string }) => img.image), // Extract image paths
+    images: imagesList,
     primaryButton: {
       text: data.primaryButton?.text || 'Become a Member',
       url: data.primaryButton?.url || '/get-involved#membership',
