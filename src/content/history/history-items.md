@@ -83,5 +83,5 @@ items:
       * **Walkers:**
 
          Go straight ahead. Well down on the left is a fence gate. Go through and left down the hill a few meters to the lawn area and Finnie’s Garden sign.
-    image: /uploads/559858311_10164234655920799_7852132661504139447_n.jpg
+    image: /uploads/finnies-garden.jpeg
 ---
