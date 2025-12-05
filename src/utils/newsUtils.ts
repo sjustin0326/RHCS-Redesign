@@ -4,7 +4,7 @@ import matter from 'gray-matter';
 import { marked } from 'marked'; // FIX: Correct import statement
 import sizeOf from 'image-size';
 
-const newsDirectory = path.join(process.cwd(), 'src/content/news');
+const newsDirectory = path.join(process.cwd(), 'src/content/news/posts');
 
 export interface NewsPost {
   slug: string;

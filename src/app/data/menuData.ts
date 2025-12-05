@@ -30,7 +30,7 @@ export interface SubPage {
       href: "/news",
     },
     {
-      name: "History",
+      name: "The Lands",
       href: "/history",
     },
     {

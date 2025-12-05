@@ -223,7 +223,7 @@ collections:
   # --- NEWS ITEMS ---
   - name: "news"
     label: "News Items"
-    folder: "src/content/news"
+    folder: "src/content/news/posts"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
