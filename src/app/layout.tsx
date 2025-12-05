@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { tektonFont, inter, poppins, openSans } from '@/lib/fonts'
 import Navigation from './components/Navigation'
+import Footer from './components/Footer'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body className="font-sans bg-background text-primary antialiased">
         <Navigation/>
           {children}
+          <Footer />
         </body>
     </html>
   )

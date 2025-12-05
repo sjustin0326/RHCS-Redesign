@@ -14,25 +14,82 @@ collections:
   # ========================================
   
   # --- HOME PAGE ---
-  - name: "home_page"
-    label: "Page: Home"
-    files:
-      - name: "hero"
-        label: "Hero Section"
-        file: "src/content/home/hero.md"
-        fields:
-          - { name: "title", label: "Hero Title", widget: "string" }
-          - { name: "description", label: "Hero Description", widget: "text", maxlength: 250 }
-          - { label: "Background Image", name: "backgroundImage", widget: "image", required: false }
-          - { label: "Primary Button", name: "primaryButton", widget: "object", required: false, fields: [
-              { label: "Text", name: "text", widget: "string", required: false },
-              { label: "URL", name: "url", widget: "string", required: false }
-            ]}
-          - { label: "Secondary Button", name: "secondaryButton", widget: "object", required: false, fields: [
-              { label: "Text", name: "text", widget: "string", required: false },
-              { label: "URL", name: "url", widget: "string", required: false }
-            ]}
+- name: "home_page"
+  label: "Page: Home"
+  files:
+    - name: "hero"
+      label: "Hero Section"
+      file: "src/content/home/hero.md"
+      fields:
+        - { name: "title", label: "Hero Title", widget: "string" }
+        - { name: "description", label: "Hero Description", widget: "text", maxlength: 250 }
+        - { label: "Background Image", name: "backgroundImage", widget: "image", required: false }
+        - { label: "Primary Button", name: "primaryButton", widget: "object", required: false, fields: [
+            { label: "Text", name: "text", widget: "string", required: false },
+            { label: "URL", name: "url", widget: "string", required: false }
+          ]}
+        - { label: "Secondary Button", name: "secondaryButton", widget: "object", required: false, fields: [
+            { label: "Text", name: "text", widget: "string", required: false },
+            { label: "URL", name: "url", widget: "string", required: false }
+          ]}
+    
+    - name: "intro_mission"
+      label: "Introduction & Mission Section"
+      file: "src/content/home/intro-mission.md"
+      fields:
+        - { name: "title", label: "Section Title", widget: "string", default: "Welcome to RHCS" }
+        - { name: "body", label: "Introduction Text", widget: "markdown", modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list], hint: "Brief introduction and mission statement highlight" }
+        - name: "images"
+          label: "Carousel Images"
+          widget: "list"
+          summary: "{{fields.image}}"
+          min: 1
+          field:
+            { name: "image", label: "Image", widget: "image" }
+        - { label: "Learn More Button", name: "learnMoreButton", widget: "object", fields: [
+            { label: "Text", name: "text", widget: "string", default: "Learn More" },
+            { label: "URL", name: "url", widget: "string", default: "/about-us" }
+          ]}
 
+    - name: "media_section"
+      label: "RHCS in Media Section"
+      file: "src/content/home/media.md"
+      fields:
+        - { name: "title", label: "Section Title", widget: "string", default: "RHCS in Media" }
+        - name: "mediaItems"
+          label: "Media Items"
+          widget: "list"
+          summary: "{{fields.title}}"
+          fields:
+            - { label: "Title", name: "title", widget: "string" }
+            - { label: "Description", name: "description", widget: "text" }
+            - { label: "Type", name: "type", widget: "select", options: ["YouTube Video", "Audio"] }
+            - { label: "YouTube URL", name: "youtubeUrl", widget: "string", required: false, hint: "For YouTube videos" }
+            - { label: "Audio File", name: "audioFile", widget: "file", required: false, hint: "For audio files (.wav, .mp3)" }
+
+    - name: "virtual_tour"
+      label: "Virtual Tour Section"
+      file: "src/content/home/virtual-tour.md"
+      fields:
+        - { name: "title", label: "Section Title", widget: "string", default: "Virtual Tree Tour" }
+        - { name: "description", label: "Description", widget: "text" }
+        - { label: "YouTube URL", name: "youtubeUrl", widget: "string", required: true }
+
+    - name: "get_involved_cards"
+      label: "Get Involved Cards"
+      file: "src/content/home/get-involved-cards.md"
+      fields:
+        - { name: "title", label: "Section Title", widget: "string", default: "Get Involved" }
+        - name: "cards"
+          label: "Cards"
+          widget: "list"
+          max: 3
+          summary: "{{fields.title}}"
+          fields:
+            - { label: "Title", name: "title", widget: "string" }
+            - { label: "Icon", name: "icon", widget: "select", options: ["Membership", "Donate", "Volunteer"] }
+            - { label: "Description", name: "description", widget: "text", maxlength: 150 }
+            - { label: "Link URL", name: "url", widget: "string" }
   # --- TREE TOURS PAGE ---
   - name: "tree_tours_page"
     label: "Page: Tree Tours"
