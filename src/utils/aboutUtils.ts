@@ -39,6 +39,20 @@ export interface GetInvolved {
   };
 }
 
+export interface MemoriamSection {
+  title: string;
+  description: string;
+}
+
+export interface MemoriamEntry {
+  fullName: string;
+  dateOfBirth: string;
+  dateOfDeath: string;
+  description?: string;
+  images?: string[];
+  slug: string;
+}
+
 //path to about content folder
 const contentDirectory = path.join(process.cwd(), 'src/content/about');
 
@@ -220,4 +234,85 @@ export function getGetInvolved(): GetInvolved {
       url: data.secondaryButton?.url || '/get-involved#volunteer',
     },
   };
+}
+
+export function getMemoriamSection(): MemoriamSection {
+  const result = readMarkdownFile('memoriam.md');
+  if (!result) {
+    return {
+      title: 'In Memoriam',
+      description: '',
+    };
+  }
+  const { data, content } = result;
+  return {
+    title: (data.title || 'In Memoriam') as string,
+    description: content || (data.description as string) || '',
+  };
+}
+// Get all In Memoriam entries
+// Get all In Memoriam entries
+export function getMemoriamEntries(): MemoriamEntry[] {
+  const memoriamDirectory = path.join(contentDirectory, 'memoriam');
+  
+  // Check if directory exists
+  if (!fs.existsSync(memoriamDirectory)) {
+    console.warn(`Warning: Memoriam directory not found: ${memoriamDirectory}`);
+    return [];
+  }
+
+  try {
+    const fileNames = fs.readdirSync(memoriamDirectory);
+    const entries = fileNames
+      .filter((fileName) => fileName.endsWith('.md'))
+      .map((fileName) => {
+        const fullPath = path.join(memoriamDirectory, fileName);
+        const fileContents = fs.readFileSync(fullPath, 'utf8');
+        const { data, content } = matter(fileContents);
+        
+        // Parse images array
+        let imagesList: string[] = [];
+        if (data.images && Array.isArray(data.images)) {
+          imagesList = data.images
+            .map((img: string | { image: string }) => {
+              if (typeof img === 'string') {
+                return img;
+              }
+              if (img && typeof img === 'object' && 'image' in img) {
+                return img.image;
+              }
+              return '';
+            })
+            .filter((img: string) => img !== '');
+        }
+
+        // Get description from either content body or frontmatter description field
+        let descriptionText: string | undefined;
+        if (content && content.trim()) {
+          descriptionText = content.trim();
+        } else if (data.description && typeof data.description === 'string') {
+          descriptionText = data.description.trim();
+        }
+
+        return {
+          fullName: data.fullName as string,
+          dateOfBirth: data.dateOfBirth as string,
+          dateOfDeath: data.dateOfDeath as string,
+          description: descriptionText,
+          images: imagesList.length > 0 ? imagesList : undefined,
+          slug: fileName.replace(/\.md$/, ''),
+        };
+      })
+      // Sort by date of death (most recent first)
+      .sort((a, b) => {
+        const dateA = new Date(a.dateOfDeath);
+        const dateB = new Date(b.dateOfDeath);
+        return dateB.getTime() - dateA.getTime();
+      });
+
+    return entries;
+  } catch (error) {
+    console.error(`Error reading memoriam entries:`, error);
+    return [];
+  }
 }
