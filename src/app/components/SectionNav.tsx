@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 
-// component props: label of section, id to scroll to
 interface SectionItem {
   label: string;
   targetId: string;
@@ -35,7 +34,6 @@ const SectionNav: React.FC<SectionNavProps> = ({ sections }) => {
       if (!currentSectionId && sections.length > 0) {
         currentSectionId = sections[0].targetId;
       }
-      
       setActiveSection(currentSectionId);
     };
 
@@ -46,15 +44,13 @@ const SectionNav: React.FC<SectionNavProps> = ({ sections }) => {
     };
   }, [sections]);
 
-  const baseClasses = "px-4 py-2 rounded-full text-sm font-inter font-medium transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500";
+  const baseClasses = "px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-inter font-medium transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 whitespace-nowrap";
   const inactiveClasses = "bg-darkcream text-gray-600 hover:bg-terracotta-300";
   const activeClasses = "bg-darkgreen text-white shadow-md";
 
   return (
-    // nav component container
-    <nav className="w-full py-4 md:pt-12 mb-8 sticky top-0 bg-cream bg-opacity-80 backdrop-blur-sm z-40">
-      <div className="container mx-auto flex justify-center items-center gap-2 md:gap-4 flex-wrap px-4">
-        {/* mapping all sections to make a link */}
+    <nav className="w-full py-3 sm:py-4 md:pt-8 lg:pt-12 mb-6 sm:mb-8 sticky top-0 bg-cream bg-opacity-90 backdrop-blur-sm z-40 shadow-soft">
+      <div className="container mx-auto flex justify-start sm:justify-center items-center gap-2 sm:gap-3 md:gap-4 overflow-x-auto px-4 sm:px-6 scrollbar-hide flex-nowrap sm:flex-wrap">
         {sections.map((section) => (
           <a
             key={section.targetId}

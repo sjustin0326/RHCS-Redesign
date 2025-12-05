@@ -7,7 +7,6 @@ interface AchievementsSectionProps {
 }
 
 const AchievementsSection: React.FC<AchievementsSectionProps> = ({ data }) => {
-  // Only prepare images if they exist and are valid
   const carouselImages = data.images && data.images.length > 0
     ? data.images
         .filter(imgSrc => imgSrc && imgSrc.trim() !== '')
@@ -19,20 +18,23 @@ const AchievementsSection: React.FC<AchievementsSectionProps> = ({ data }) => {
     : null;
 
   return (
-    <section id="achievements" className="py-16 bg-white">
-      <div className="container mx-auto px-4 max-w-6xl">
+    <section 
+      id="achievements" 
+      className="py-8 sm:py-12 md:py-16 lg:py-20 bg-white px-4 sm:px-6"
+    >
+      <div className="container mx-auto max-w-7xl">
         {/* Title */}
-        <h2 className="text-4xl font-bold mb-8 text-center text-darkgreen">
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 lg:mb-10 text-center text-darkgreen font-inter">
           {data.title}
         </h2>
         
-        {/* Two-column grid layout on medium+ screens */}
-        <div className="grid md:grid-cols-2 gap-8 items-center">
+        {/* Two-column grid layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
           {/* Left column: Description text */}
-          <div>
+          <div className="order-2 lg:order-1">
             {data.description && (
-              <div 
-                className="prose prose-lg text-gray-700"
+              <div
+                className="prose prose-sm sm:prose-base lg:prose-lg text-gray-700 font-poppins max-w-none"
                 dangerouslySetInnerHTML={{ __html: data.description }}
               />
             )}
@@ -40,8 +42,8 @@ const AchievementsSection: React.FC<AchievementsSectionProps> = ({ data }) => {
           
           {/* Right column: Image Carousel */}
           {carouselImages && carouselImages.length > 0 && (
-            <div className="flex items-center">
-              <ImageCarousel 
+            <div className="order-1 lg:order-2 flex items-center">
+              <ImageCarousel
                 images={carouselImages}
                 altText={data.title}
               />

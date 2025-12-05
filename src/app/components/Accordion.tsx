@@ -12,15 +12,17 @@ const Accordion: React.FC<AccordionProps> = ({ title, htmlContent, defaultOpen =
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <div className="border-b border-gray-300">
+    <div className="border border-gray-200 rounded-xl overflow-hidden shadow-soft">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex justify-between items-center py-4 px-6 text-left bg-darkgreen hover:bg-terracotta-300 transition-colors duration-300 rounded-t-lg"
+        className="w-full flex justify-between items-center py-3 sm:py-4 px-4 sm:px-6 text-left bg-darkgreen hover:bg-olive transition-colors duration-300"
         aria-expanded={isOpen}
       >
-        <span className="text-xl font-semibold text-cream">{title}</span>
+        <span className="text-lg sm:text-xl lg:text-2xl font-semibold text-cream font-inter pr-4">
+          {title}
+        </span>
         <svg
-          className={`w-6 h-6 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+          className={`w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
           fill="#FEFAE0"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -28,10 +30,9 @@ const Accordion: React.FC<AccordionProps> = ({ title, htmlContent, defaultOpen =
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
-      
       {isOpen && (
-        <div 
-          className="px-6 py-4 bg-white prose max-w-none"
+        <div
+          className="px-4 sm:px-6 py-4 sm:py-5 bg-white prose prose-sm sm:prose-base lg:prose-lg max-w-none font-poppins"
           dangerouslySetInnerHTML={{ __html: htmlContent }}
         />
       )}

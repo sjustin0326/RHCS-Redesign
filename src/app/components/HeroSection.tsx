@@ -20,21 +20,19 @@ interface HeroSectionProps {
 
 const HeroSection: React.FC<HeroSectionProps> = ({
   data,
-  heightClass = 'h-[50vh] min-h-[400px]', // Default height
+  heightClass = 'h-[40vh] sm:h-[45vh] md:h-[50vh] min-h-[350px] sm:min-h-[400px]',
   textClasses
 }) => {
   if (!data) {
-    // render a placeholder or nothing if no data is provided
     return null;
   }
 
   const { title, description, backgroundImage, primaryButton, secondaryButton } = data;
 
-  // overlay and filter styles
   const imageOverlayClasses = twMerge(
     'absolute inset-0 z-0 rounded-lg',
-    backgroundImage ? 'bg-darkgreen/[.5]' : '', // tint with specified opacity only if theres an image
-    'brightness-90' // Apply brightness filter
+    backgroundImage ? 'bg-darkgreen/[.5]' : '',
+    'brightness-90'
   );
 
   const imageFilterClasses = twMerge(
@@ -42,21 +40,21 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   );
 
   const containerClasses = twMerge(
-    'relative w-full flex items-center justify-center text-center p-8 overflow-hidden',
-    'bg-forest-light', 
+    'relative w-full flex items-center justify-center text-center p-4 sm:p-6 md:p-8 overflow-hidden',
+    'bg-forest-light',
     heightClass
   );
 
-  const contentWrapperClasses = 'relative z-10 flex flex-col items-center justify-center max-w-4xl mx-auto w-full';
-  const defaultTitleClasses = `text-5xl font-bold mb-4 text-cream shadow-inner-soft ${tektonFont.className}`;
-  const defaultDescriptionClasses = `text-xl mb-8 font-opensans text-cream max-w-2xl mx-auto shadow-inner-soft ${description?.length > 100 ? 'lg:max-w-3xl' : ''}`;
+  const contentWrapperClasses = 'relative z-10 flex flex-col items-center justify-center max-w-5xl mx-auto w-full px-4';
+  const defaultTitleClasses = `text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-tekton font-bold mb-3 sm:mb-4 text-cream shadow-inner-soft ${tektonFont.className} leading-tight`;
+  const defaultDescriptionClasses = `text-base sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-8 font-poppins text-cream max-w-2xl lg:max-w-3xl mx-auto shadow-inner-soft ${description && description.length > 100 ? 'lg:max-w-4xl' : ''}`;
 
   const titleClasses = twMerge(defaultTitleClasses, textClasses?.title);
   const descriptionClasses = twMerge(defaultDescriptionClasses, textClasses?.description);
 
   return (
     <section className={containerClasses}>
-      {/* Background Image (if provided) */}
+      {/* Background Image */}
       {backgroundImage && (
         <div className={twMerge('absolute inset-0 w-full h-full rounded-lg', imageFilterClasses)}>
           <Image
@@ -65,9 +63,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             fill
             style={{ objectFit: 'cover' }}
             quality={75}
+            priority
             className="z-0 rounded-lg"
+            sizes="100vw"
           />
-          {/* Tint Overlay */}
           <div className={imageOverlayClasses}></div>
         </div>
       )}
@@ -75,18 +74,17 @@ const HeroSection: React.FC<HeroSectionProps> = ({
       {/* Content Wrapper */}
       <div className={contentWrapperClasses}>
         <h1 className={titleClasses}>{title}</h1>
-        {description && ( //ONLY render paragraph IF description exists
+        {description && (
           <p className={descriptionClasses}>{description}</p>
         )}
 
         {/* Buttons */}
         {(primaryButton?.text && primaryButton.url) || (secondaryButton?.text && secondaryButton.url) ? (
-          <div className="flex flex-col sm:flex-row gap-4 mt-6">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-4 sm:mt-6 w-full sm:w-auto">
             {primaryButton?.text && primaryButton.url && (
               <Link
                 href={primaryButton.url}
-                className="px-8 py-3 bg-terracotta text-cream rounded-xl text-lg font-semibold shadow-md hover:bg-terracottalight transition-colors duration-300 font-inter
-                           focus:outline-none focus:ring-2 focus:ring-terracottalight focus:ring-opacity-50"
+                className="w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 bg-terracotta text-cream rounded-xl text-base sm:text-lg font-semibold shadow-md hover:bg-terracottalight transition-colors duration-300 font-inter focus:outline-none focus:ring-2 focus:ring-terracottalight focus:ring-opacity-50 text-center"
               >
                 {primaryButton.text}
               </Link>
@@ -94,8 +92,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             {secondaryButton?.text && secondaryButton.url && (
               <Link
                 href={secondaryButton.url}
-                className="px-8 py-3  border-2 border-cream text-cream rounded-xl text-lg font-semibold hover:bg-forest-cream/10 transition-colors duration-300 font-inter
-                           focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+                className="w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 border-2 border-cream text-cream rounded-xl text-base sm:text-lg font-semibold hover:bg-forest-cream/10 transition-colors duration-300 font-inter focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 text-center"
               >
                 {secondaryButton.text}
               </Link>
