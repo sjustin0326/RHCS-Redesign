@@ -1,5 +1,20 @@
 ---
 items:
+  - title: Land Acknowledgement
+    description: >-
+      The Riverview Horticultural Centre Society acknowledges our presence on
+      the ancestral and unceded territory of the kʷikʷəƛ̓əm (Kwikwetlem) First
+      Nation.
+
+
+
+
+      We recognize the deep, continuous relationship the kʷikʷəƛ̓əm have with these lands, historically known as Riverview, are also known by the kʷikʷəƛ̓əm people as səmiq̓ʷəʔelə — the Place of the Great Blue Heron (pronounced suh-MEE-kwuh-EL-uh).
+
+
+
+
+      We extend our deep respect to the kʷikʷəƛ̓əm people for their enduring stewardship of this land and recognize their ongoing, living connection to it. We are committed to conducting our work with respect and pursuing a path of reconciliation as guests in this territory.
   - title: Establishment (1904–1913)
     description: >-
       In 1904, the Province of British Columbia set aside 1,000 acres of land
