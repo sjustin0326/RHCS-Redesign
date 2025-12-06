@@ -357,7 +357,13 @@ collections:
       - { name: "contactEmail", label: "Contact Email", widget: "string", required: false, hint: "e.g., trees@rhcs.org" }
       - { name: "contactURL", label: "Contact URL", widget: "string", required: false, hint: "e.g., https://forms.gle/1234" }
       - { name: "order", label: "Display Order", widget: "number", default: 0, value_type: "int", min: 0, hint: "Lower numbers appear first" }
-      - { name: "body", label: "Position Description", widget: "markdown", required: true, hint: "Full description of the volunteer position" }
+      - name: "body"
+        label: "Position Description"
+        widget: "markdown"
+        required: true
+        modes: [rich_text]
+        buttons: [bold, italic, link, heading-two, heading-three, bulleted-list, numbered-list]
+        hint: "Full description of the volunteer position"
 
   # --- ABOUT US PAGE ---
   - name: "about_us_page"
