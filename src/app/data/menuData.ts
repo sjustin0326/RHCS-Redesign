@@ -45,12 +45,12 @@ export interface SubPage {
     {
       name: "About Us",
       href: "/about-us",
-      subPages: [
-        { name: "Mission, Vision, Founding History", href: "/about-us", id: "mission-vision" },
-        { name: "About Riverview Lands and Finnie's Garden", href: "/about-us/riverview-lands", id: "riverview-lands" },
-        { name: "Our Achievements", href: "/about", id: "achievements" },
-        { name: "In Memoriam", href: "/about", id: "memoriam" },
-      ],
+      // subPages: [
+      //   { name: "Mission, Vision, Founding History", href: "/about-us", id: "mission-vision" },
+      //   { name: "About Riverview Lands and Finnie's Garden", href: "/about-us/riverview-lands", id: "riverview-lands" },
+      //   { name: "Our Achievements", href: "/about", id: "achievements" },
+      //   { name: "In Memoriam", href: "/about", id: "memoriam" },
+      // ],
     },
   //   {
   //     name: "Resource Library",
