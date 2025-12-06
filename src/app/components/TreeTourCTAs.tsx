@@ -7,7 +7,7 @@ export default function TreeTourCTAs() {
       {/* Primary CTA */}
       <Link
         href="/tree-tours#visitor-info"
-        className="inline-block px-8 py-3 bg-darkgreen text-cream font-inter font-semibold rounded-lg hover:bg-olive transition-colors shadow-medium hover:shadow-strong text-center"
+        className="inline-block px-8 py-3 bg-terracotta text-cream font-inter font-semibold rounded-lg hover:bg-olive transition-colors shadow-medium hover:shadow-strong text-center"
       >
         Check Visitor Information
       </Link>
@@ -15,7 +15,7 @@ export default function TreeTourCTAs() {
       {/* Secondary CTA */}
       <Link
         href="/tree-tours#directions"
-        className="inline-block px-8 py-3 bg-white text-darkgreen border-2 border-darkgreen font-inter font-semibold rounded-lg hover:bg-darkcream transition-colors shadow-soft hover:shadow-medium text-center"
+        className="inline-block px-8 py-3 bg-white text-terracotta border-2 border-terracotta font-inter font-semibold rounded-lg hover:bg-darkcream transition-colors shadow-soft hover:shadow-medium text-center"
       >
         How To Get There?
       </Link>

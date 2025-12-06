@@ -31,7 +31,7 @@ export default function IntroMissionSection({ data }: IntroMissionSectionProps) 
             />
             <Link
               href={data.learnMoreButton.url}
-              className="inline-block px-8 py-3 bg-darkgreen text-cream font-inter font-semibold rounded-lg hover:bg-olive transition-colors shadow-medium hover:shadow-strong"
+              className="inline-block px-8 py-3 bg-terracotta text-cream font-inter font-semibold rounded-lg hover:bg-terracottalight transition-colors shadow-medium hover:shadow-strong"
             >
               {data.learnMoreButton.text}
             </Link>

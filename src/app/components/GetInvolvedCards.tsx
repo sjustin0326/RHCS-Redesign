@@ -1,8 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
+import ImageCarousel from './ImageCarousel';
 import { GetInvolvedCardsData } from '@/utils/homeUtils';
 
-// Icon components
+// Icon components (mantener los mismos)
 const MembershipIcon = () => (
   <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -39,10 +40,20 @@ export default function GetInvolvedCards({ data }: GetInvolvedCardsProps) {
           {data.title}
         </h2>
 
+        {/* Image Carousel - Solo se muestra si hay imágenes */}
+        {data.images && data.images.length > 0 && (
+          <div className="mb-12 animate-slide-down">
+            <ImageCarousel 
+              images={data.images} 
+              altText="Get Involved with RHCS" 
+            />
+          </div>
+        )}
+
+        {/* Cards Grid */}
         <div className="grid md:grid-cols-3 gap-8">
           {data.cards.map((card, index) => {
             const IconComponent = iconMap[card.icon];
-            
             return (
               <Link
                 key={index}
@@ -62,7 +73,7 @@ export default function GetInvolvedCards({ data }: GetInvolvedCardsProps) {
                   </h3>
 
                   {/* Description */}
-                  <p className="text-base font-poppins text-dark/70 mb-6  font-semibold">
+                  <p className="text-base font-poppins text-dark/70 mb-6 font-semibold">
                     {card.description}
                   </p>
 

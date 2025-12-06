@@ -1,5 +1,6 @@
 ---
 title: Get Involved
+images: []
 cards:
   - title: Become a Member
     icon: Membership

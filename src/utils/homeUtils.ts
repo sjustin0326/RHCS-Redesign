@@ -47,6 +47,11 @@ export interface GetInvolvedCard {
 
 export interface GetInvolvedCardsData {
   title: string;
+  images: {
+    src: string;
+    width: number;
+    height: number;
+  }[];
   cards: GetInvolvedCard[];
 }
 
@@ -136,10 +141,10 @@ export async function getVirtualTourData(): Promise<VirtualTourData> {
 
 export async function getGetInvolvedCardsData(): Promise<GetInvolvedCardsData> {
   const filePath = path.join(process.cwd(), 'src/content/home/get-involved-cards.md');
-  
   if (!fs.existsSync(filePath)) {
     return {
       title: 'Get Involved',
+      images: [],
       cards: []
     };
   }
@@ -149,6 +154,7 @@ export async function getGetInvolvedCardsData(): Promise<GetInvolvedCardsData> {
 
   return {
     title: data.title || 'Get Involved',
+    images: processImages(data.images || []),
     cards: data.cards || []
   };
 }
