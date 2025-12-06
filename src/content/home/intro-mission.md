@@ -1,8 +1,12 @@
 ---
 title: Welcome to RHCS
 images:
-  - /uploads/placeholder-land-1.jpg
-  - /uploads/placeholder-land-2.jpg
+  - /uploads/img_0858.jpg
+  - /uploads/img_0857.jpg
+  - /uploads/img_0860.jpg
+  - /uploads/img_0861.jpg
+  - /uploads/img_0863.jpg
+  - /uploads/img_0864.jpg
 learnMoreButton:
   text: Learn More
   url: /about-us
