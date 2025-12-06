@@ -1,10 +1,11 @@
 ---
-title: "Events Assistant"
-description: "Assist with displays (setup, take down, staffing) at public events like Treefest."
-timeCommitment: "5-10 hours per event"
-contactType: "Email"
-contactEmail: "trees@rhcs.org"
-icon: "Events"
+title: TEST EVENT - Events Assistant
+description: Assist with displays (setup, take down, staffing) at public events
+  like Treefest.
+timeCommitment: 5-10 hours per event
+contactType: Email
+contactEmail: trees@rhcs.org
+icon: Events
 order: 1
 ---
 
