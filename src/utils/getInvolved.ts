@@ -63,7 +63,6 @@ export interface VolunteerPosition {
   contactType: 'Email' | 'External Link';
   contactEmail?: string;
   contactURL?: string;
-  icon: string;
   order: number;
   slug: string;
 }
@@ -227,7 +226,6 @@ export function getVolunteerPositions(): VolunteerPosition[] {
           contactType: (data.contactType || 'Email') as 'Email' | 'External Link',
           contactEmail: data.contactEmail as string | undefined,
           contactURL: data.contactURL as string | undefined,
-          icon: (data.icon || 'Events') as string,
           order: (data.order || 0) as number,
           slug: fileName.replace(/\.md$/, ''),
         };

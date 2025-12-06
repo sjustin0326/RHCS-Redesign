@@ -6,10 +6,11 @@ interface DonationsSectionProps {
   data: DonationsData;
 }
 
+// Mapeo de nombres de iconos a rutas de archivos SVG
 const iconMap: Record<string, string> = {
-  card: '/icons/card.svg',
-  donation: '/icons/donation.svg',
-  email: '/icons/email.svg',
+  card: '/Cheque.svg',
+  donation: '/Cash.svg',
+  email: '/e-Transfer.svg',
 };
 
 const DonationsSection: React.FC<DonationsSectionProps> = ({ data }) => {
@@ -30,7 +31,6 @@ const DonationsSection: React.FC<DonationsSectionProps> = ({ data }) => {
         <h3 className="text-xl sm:text-2xl font-bold text-darkgreen mb-6 text-center font-inter">
           Payment Options
         </h3>
-        
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 mb-6">
           {data.paymentOptions.map((option, index) => (
             <div
@@ -46,7 +46,6 @@ const DonationsSection: React.FC<DonationsSectionProps> = ({ data }) => {
                   Preferred
                 </div>
               )}
-              
               <div className="flex flex-col items-center text-center">
                 {iconMap[option.icon] && (
                   <div className="w-12 h-12 mb-3 flex items-center justify-center">
@@ -55,7 +54,6 @@ const DonationsSection: React.FC<DonationsSectionProps> = ({ data }) => {
                       alt={option.method}
                       width={48}
                       height={48}
-                      className="w-full h-full object-contain"
                     />
                   </div>
                 )}

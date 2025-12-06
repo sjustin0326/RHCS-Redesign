@@ -7,10 +7,11 @@ interface MembershipSectionProps {
   data: MembershipData;
 }
 
+// Mapeo de nombres de iconos a rutas de archivos SVG
 const iconMap: Record<string, string> = {
-  card: '/icons/card.svg',
-  donation: '/icons/donation.svg',
-  email: '/icons/email.svg',
+  card: '/Cheque.svg',
+  donation: '/donate.svg',
+  email: '/e-Transfer.svg',
 };
 
 const MembershipSection: React.FC<MembershipSectionProps> = ({ data }) => {
@@ -30,7 +31,12 @@ const MembershipSection: React.FC<MembershipSectionProps> = ({ data }) => {
         {/* Pricing Card */}
         <div className="bg-cream rounded-2xl p-6 sm:p-8 mb-8 border-2 border-darkgreen/10 max-w-md mx-auto">
           <div className="flex items-center gap-3 mb-4">
-            <Image src="/icons/card.svg" alt="Membership" width={32} height={32} />
+            <Image 
+              src="/Membership.svg" 
+              alt="Membership" 
+              width={32} 
+              height={32}
+            />
             <h3 className="text-xl sm:text-2xl font-bold text-darkgreen font-inter">
               {data.pricing.title}
             </h3>
@@ -45,7 +51,6 @@ const MembershipSection: React.FC<MembershipSectionProps> = ({ data }) => {
         <h3 className="text-xl sm:text-2xl font-bold text-darkgreen mb-6 text-center font-inter">
           How to Pay
         </h3>
-        
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6">
           {data.paymentMethods.map((method, index) => (
             <div
@@ -54,7 +59,12 @@ const MembershipSection: React.FC<MembershipSectionProps> = ({ data }) => {
             >
               <div className="flex items-center gap-3 mb-3">
                 {iconMap[method.icon] && (
-                  <Image src={iconMap[method.icon]} alt={method.method} width={24} height={24} />
+                  <Image 
+                    src={iconMap[method.icon]} 
+                    alt={method.method} 
+                    width={24} 
+                    height={24}
+                  />
                 )}
                 <h4 className="text-lg sm:text-xl font-semibold text-darkgreen font-inter">
                   {method.method}

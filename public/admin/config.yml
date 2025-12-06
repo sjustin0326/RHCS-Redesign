@@ -357,7 +357,6 @@ collections:
         default: "Email"
       - { name: "contactEmail", label: "Contact Email", widget: "string", required: false, hint: "e.g., trees@rhcs.org" }
       - { name: "contactURL", label: "Contact URL", widget: "string", required: false, hint: "e.g., https://forms.gle/1234" }
-      - { name: "icon", label: "Icon", widget: "select", options: ["Events", "Guided Walks", "Safety Support", "Gardening"], default: "Events" }
       - { name: "order", label: "Display Order", widget: "number", default: 0, value_type: "int", min: 0, hint: "Lower numbers appear first" }
 
   # --- ABOUT US PAGE ---
