@@ -33,6 +33,10 @@ export default async function Home() {
         }}
       />
 
+
+      {/* Introduction & Mission Section */}
+      <IntroMissionSection data={introMissionData} />
+
       {/* Next Tree Tour Event */}
       <section className="py-16 px-6 bg-white">
         <div className="max-w-4xl mx-auto">
@@ -46,8 +50,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Introduction & Mission Section */}
-      <IntroMissionSection data={introMissionData} />
+      
 
       {/* RHCS in Media */}
       <MediaSection data={mediaSectionData} />
