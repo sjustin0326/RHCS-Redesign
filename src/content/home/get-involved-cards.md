@@ -1,7 +1,7 @@
 ---
 title: Get Involved
 images:
-  - /uploads/download.png
+  - /uploads/506435815_24199884319635431_1807955981329343488_n.jpg
   - /uploads/487504342_1062369175919953_6940874033545627006_n.jpg
   - /uploads/img_0459.jpeg
   - /uploads/img_5968.jpg
