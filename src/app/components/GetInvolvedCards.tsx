@@ -50,7 +50,7 @@ export default function GetInvolvedCards({ data }: GetInvolvedCardsProps) {
           </div>
         )}
 
-        {/* Cards Grid */}
+        {/* Cards Grid TODO*/}
         <div className="grid md:grid-cols-3 gap-8">
           {data.cards.map((card, index) => {
             const IconComponent = iconMap[card.icon];

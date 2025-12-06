@@ -10,10 +10,10 @@ logo_url: /logo.png
 
 collections:
   # ========================================
-  # PAGES COLLECTIONS
+  # PAGES COLLECTIONS//
   # ========================================
   
-  # --- HOME PAGE ---
+    # --- HOME PAGE ---
   - name: "home_page"
     label: "Page: Home"
     files:
@@ -76,30 +76,29 @@ collections:
           - { label: "YouTube URL", name: "youtubeUrl", widget: "string", required: true }
 
       - name: "get_involved_cards"
-        - name: "get_involved_cards"
-          label: "Get Involved Cards"
-          file: "src/content/home/get-involved-cards.md"
-          fields:
-            - { name: "title", label: "Section Title", widget: "string", default: "Get Involved" }
-            - name: "images"
-              label: "Carousel Images"
-              widget: "list"
-              summary: "{{fields.image}}"
-              min: 1
-              required: false
-              hint: "Add images for the carousel (optional)"
-              field:
-                { name: "image", label: "Image", widget: "image" }
-            - name: "cards"
-              label: "Cards"
-              widget: "list"
-              max: 3
-              summary: "{{fields.title}}"
-              fields:
-                - { label: "Title", name: "title", widget: "string" }
-                - { label: "Icon", name: "icon", widget: "select", options: ["Membership", "Donate", "Volunteer"] }
-                - { label: "Description", name: "description", widget: "text", maxlength: 150 }
-                - { label: "Link URL", name: "url", widget: "string" }
+        label: "Get Involved Cards"
+        file: "src/content/home/get-involved-cards.md"
+        fields:
+          - { name: "title", label: "Section Title", widget: "string", default: "Get Involved" }
+          - name: "images"
+            label: "Carousel Images"
+            widget: "list"
+            summary: "{{fields.image}}"
+            min: 1
+            required: false
+            hint: "Add images for the carousel (optional)"
+            field:
+              { name: "image", label: "Image", widget: "image" }
+          - name: "cards"
+            label: "Cards"
+            widget: "list"
+            max: 3
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Icon", name: "icon", widget: "select", options: ["Membership", "Donate", "Volunteer"] }
+              - { label: "Description", name: "description", widget: "text", maxlength: 150 }
+              - { label: "Link URL", name: "url", widget: "string" }
 
   # --- TREE TOURS PAGE ---
   - name: "tree_tours_page"
