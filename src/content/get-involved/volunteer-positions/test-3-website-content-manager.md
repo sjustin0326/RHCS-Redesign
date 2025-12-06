@@ -2,8 +2,7 @@
 title: Test 3 - Website Content Manager
 timeCommitment: 3-5 hours per week, flexible schedule
 contactType: Email
-contactEmail: ""
-contactURL: https://forms.gle/z9jfe9BpDpCuc23Z9
+contactEmail: trees@rhcs.org
 order: 3
 ---
 *Help us keep our website fresh and informative! As our Website Content Manager, you'll update content, add news posts, manage event listings, and ensure our online presence accurately reflects all the great work happening at RHCS. No coding knowledge needed!*
