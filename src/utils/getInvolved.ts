@@ -193,12 +193,10 @@ export function getVolunteerSection(): VolunteerSection {
 // Get all Volunteer Positions
 export function getVolunteerPositions(): VolunteerPosition[] {
   const positionsDirectory = path.join(contentDirectory, 'volunteer-positions');
-  
   if (!fs.existsSync(positionsDirectory)) {
     console.warn(`Warning: Volunteer positions directory not found: ${positionsDirectory}`);
     return [];
   }
-  
   try {
     const fileNames = fs.readdirSync(positionsDirectory);
     const positions = fileNames
@@ -207,17 +205,10 @@ export function getVolunteerPositions(): VolunteerPosition[] {
         const fullPath = path.join(positionsDirectory, fileName);
         const fileContents = fs.readFileSync(fullPath, 'utf8');
         const { data, content } = matter(fileContents);
-        
-        // Use content or description
-        let descriptionText: string;
-        if (content && content.trim()) {
-          descriptionText = content.trim();
-        } else if (data.description && typeof data.description === 'string') {
-          descriptionText = data.description.trim();
-        } else {
-          descriptionText = '';
-        }
-        
+
+        // El content ahora viene del body del markdown
+        const descriptionText = content ? content.trim() : '';
+
         return {
           title: data.title as string,
           description: descriptionText,
@@ -230,9 +221,7 @@ export function getVolunteerPositions(): VolunteerPosition[] {
           slug: fileName.replace(/\.md$/, ''),
         };
       })
-      // Sort by order field
       .sort((a, b) => a.order - b.order);
-    
     return positions;
   } catch (error) {
     console.error(`Error reading volunteer positions:`, error);
