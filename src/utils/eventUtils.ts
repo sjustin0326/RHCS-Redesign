@@ -3,6 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import { DateTime } from 'luxon';
 import yaml from 'js-yaml';
+import { marked } from 'marked';
 
 export interface Event {
   title: string;
@@ -35,6 +36,7 @@ export interface ParsedEvent extends Event {
   dayOfMonth: string;
   month: string;
   dayOfWeek: string;
+  descriptionHTML?: string; // Nueva propiedad para HTML renderizado
 }
 
 export interface SerializedEvent {
@@ -44,6 +46,7 @@ export interface SerializedEvent {
   endTime: string;
   location?: string;
   description?: string;
+  descriptionHTML?: string; // Agrega esto
   timezone: string;
   slug: string;
   formattedStartDate: string;
@@ -53,6 +56,12 @@ export interface SerializedEvent {
   month: string;
   dayOfWeek: string;
 }
+
+// Configura marked para seguridad
+marked.setOptions({
+  breaks: true,
+  gfm: true,
+});
 
 //no type interface
 interface UnknownEventData {
@@ -155,11 +164,8 @@ function parseEvent(event: Event): ParsedEvent | null {
       return null;
     }
 
-    // Combine date with time strings
     const startDateTimeString = `${event.day} ${event.startTime}`;
     const endDateTimeString = `${event.day} ${event.endTime}`;
-    
-    // Updated format to include time
     const format = 'yyyy-MM-dd HH:mm';
     
     const startDate = DateTime.fromFormat(startDateTimeString, format, {
@@ -179,6 +185,11 @@ function parseEvent(event: Event): ParsedEvent | null {
       return null;
     }
 
+    // Convierte Markdown a HTML
+    const descriptionHTML = event.description 
+      ? marked.parse(event.description) as string
+      : undefined;
+
     return {
       ...event,
       startDate,
@@ -189,12 +200,34 @@ function parseEvent(event: Event): ParsedEvent | null {
       dayOfMonth: startDate.toFormat('d'),
       month: startDate.toFormat('MMM').toUpperCase(),
       dayOfWeek: startDate.toFormat('cccc'),
+      descriptionHTML, // Agrega el HTML renderizado
     };
   } catch (error) {
     console.error('Error parsing event:', event.title, error);
     return null;
   }
 }
+
+export function serializeEvent(event: ParsedEvent): SerializedEvent {
+  return {
+    title: event.title,
+    day: event.day,
+    startTime: event.startTime,
+    endTime: event.endTime,
+    location: event.location,
+    description: event.description,
+    descriptionHTML: event.descriptionHTML, // Agrega esto
+    timezone: event.timezone,
+    slug: event.slug,
+    formattedStartDate: event.formattedStartDate,
+    formattedStartTime: event.formattedStartTime,
+    formattedEndTime: event.formattedEndTime,
+    dayOfMonth: event.dayOfMonth,
+    month: event.month,
+    dayOfWeek: event.dayOfWeek,
+  };
+}
+
 
 export function getUpcomingEvents(): ParsedEvent[] {
   const allEvents = getAllEvents();
@@ -224,24 +257,7 @@ export function getOtherUpcomingEvents(): ParsedEvent[] {
   return upcomingEvents.slice(1);
 }
 
-export function serializeEvent(event: ParsedEvent): SerializedEvent {
-  return {
-    title: event.title,
-    day: event.day,
-    startTime: event.startTime,
-    endTime: event.endTime,
-    location: event.location,
-    description: event.description,
-    timezone: event.timezone,
-    slug: event.slug,
-    formattedStartDate: event.formattedStartDate,
-    formattedStartTime: event.formattedStartTime,
-    formattedEndTime: event.formattedEndTime,
-    dayOfMonth: event.dayOfMonth,
-    month: event.month,
-    dayOfWeek: event.dayOfWeek,
-  };
-}
+
 
 export function getSerializedNextEvent(): SerializedEvent | null {
   const nextEvent = getNextEvent();

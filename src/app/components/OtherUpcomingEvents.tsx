@@ -37,10 +37,14 @@ const OtherUpcomingEvents: React.FC<OtherUpcomingEventsProps> = ({ events }) => 
     <>
       <div className="space-y-3 sm:space-y-4">
         {currentEvents.map((event) => {
-          const isDescriptionTruncated = event.description && event.description.length > 100;
-          const truncatedDescription = event.description
-            ? event.description.replace(/<[^>]*>/g, '').substring(0, 100) + '...'
+          // Usa descriptionHTML para truncar
+          const plainText = event.descriptionHTML 
+            ? event.descriptionHTML.replace(/<[^>]*>/g, '')
             : '';
+          const isDescriptionTruncated = plainText.length > 100;
+          const truncatedDescription = isDescriptionTruncated 
+            ? plainText.substring(0, 100) + '...'
+            : plainText;
 
           return (
             <div
@@ -68,7 +72,6 @@ const OtherUpcomingEvents: React.FC<OtherUpcomingEventsProps> = ({ events }) => 
                   <h4 className="text-base sm:text-lg md:text-xl font-semibold text-darkgreen mb-2 font-inter">
                     {event.title}
                   </h4>
-                  
                   <div className="space-y-1.5 sm:space-y-2 mb-3">
                     <div className="flex flex-wrap items-center gap-2 text-sm sm:text-base font-opensans font-semibold text-olive">
                       <div className="flex items-center gap-1.5 sm:gap-2">
@@ -88,12 +91,16 @@ const OtherUpcomingEvents: React.FC<OtherUpcomingEventsProps> = ({ events }) => 
                     </div>
                   </div>
 
-                  {event.description && (
+                  {event.descriptionHTML && (
                     <div className="text-sm sm:text-base font-poppins text-gray-700">
-                      <div dangerouslySetInnerHTML={{ __html: isDescriptionTruncated ? truncatedDescription : event.description }} />
+                      {isDescriptionTruncated ? (
+                        <p>{truncatedDescription}</p>
+                      ) : (
+                        <div dangerouslySetInnerHTML={{ __html: event.descriptionHTML }} />
+                      )}
                       {isDescriptionTruncated && (
-                        <button 
-                          onClick={() => handleReadMore(event)} 
+                        <button
+                          onClick={() => handleReadMore(event)}
                           className="text-terracotta hover:text-terracottalight font-medium mt-1.5 sm:mt-2 transition-colors duration-200 underline font-inter text-sm sm:text-base"
                         >
                           Read More &rarr;

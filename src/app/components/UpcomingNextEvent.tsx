@@ -12,11 +12,13 @@ interface UpcomingNextEventProps {
 const UpcomingNextEvent: React.FC<UpcomingNextEventProps> = ({ event }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const isDescriptionTruncated = event.description && event.description.length > 200;
-
-  const truncatedDescription = event.description
-    ? event.description.replace(/<[^>]*>/g, '').substring(0, 200) + '...'
+  const plainText = event.descriptionHTML 
+    ? event.descriptionHTML.replace(/<[^>]*>/g, '')
     : '';
+  const isDescriptionTruncated = plainText.length > 200;
+  const truncatedDescription = isDescriptionTruncated 
+    ? plainText.substring(0, 200) + '...'
+    : plainText;
 
   return (
     <>
@@ -64,9 +66,13 @@ const UpcomingNextEvent: React.FC<UpcomingNextEventProps> = ({ event }) => {
             </div>
 
             {/* Description */}
-            {event.description && (
+            {event.descriptionHTML && (
               <div className="text-sm sm:text-base md:text-md font-poppins text-gray-700">
-                <div dangerouslySetInnerHTML={{ __html: isDescriptionTruncated ? truncatedDescription : event.description }} />
+                {isDescriptionTruncated ? (
+                  <p>{truncatedDescription}</p>
+                ) : (
+                  <div dangerouslySetInnerHTML={{ __html: event.descriptionHTML }} />
+                )}
                 {isDescriptionTruncated && (
                   <button
                     onClick={() => setIsModalOpen(true)}

@@ -4,7 +4,7 @@ import React from 'react';
 import { SerializedEvent } from '@/utils/eventUtils';
 
 interface EventDetailsModalProps {
-  event: SerializedEvent; // Asegurar que use SerializedEvent
+  event: SerializedEvent;
 }
 
 const EventDetailsModal: React.FC<EventDetailsModalProps> = ({ event }) => {
@@ -23,12 +23,10 @@ const EventDetailsModal: React.FC<EventDetailsModalProps> = ({ event }) => {
             {event.dayOfWeek}
           </div>
         </div>
-        
         <div className="flex-1">
           <h2 className="text-2xl font-bold text-darkgreen mb-3">
             {event.title}
           </h2>
-          
           <div className="space-y-2">
             {/* Time */}
             <div className="flex items-center gap-2 text-sm text-gray-600">
@@ -37,7 +35,6 @@ const EventDetailsModal: React.FC<EventDetailsModalProps> = ({ event }) => {
               </svg>
               <span className="font-medium">{event.formattedStartTime} - {event.formattedEndTime}</span>
             </div>
-            
             {/* Location */}
             {event.location && (
               <div className="flex items-start gap-2 text-sm text-gray-600">
@@ -50,14 +47,13 @@ const EventDetailsModal: React.FC<EventDetailsModalProps> = ({ event }) => {
           </div>
         </div>
       </div>
-      
       {/* Full Description */}
-      {event.description && (
+      {event.descriptionHTML && (
         <div className="border-t pt-6">
           <h3 className="text-lg font-semibold text-darkgreen mb-3">Event Details</h3>
-          <div 
-            className="prose prose-sm max-w-none text-gray-700 leading-relaxed"
-            dangerouslySetInnerHTML={{ __html: event.description }}
+          <div
+            className="prose prose-sm max-w-none text-gray-700 leading-relaxed prose-headings:text-darkgreen prose-a:text-terracotta prose-a:hover:text-terracottalight prose-strong:text-darkgreen prose-ul:list-disc prose-ol:list-decimal"
+            dangerouslySetInnerHTML={{ __html: event.descriptionHTML }}
           />
         </div>
       )}
