@@ -1,5 +1,5 @@
 ---
-title: Tree Tour - July
+title: Tree Tour - July 2026
 day: 2026-07-19
 startTime: 13:00
 endTime: 15:00
