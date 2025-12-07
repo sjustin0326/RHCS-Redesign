@@ -3,6 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   serverExternalPackages: ['gray-matter'], 
   
+  turbopack: {},
+  
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {
