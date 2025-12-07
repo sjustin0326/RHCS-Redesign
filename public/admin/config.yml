@@ -198,7 +198,7 @@ collections:
       - { name: "description", label: "Description", widget: "markdown", required: false, modes: [rich_text], buttons: [bold, italic, link, bulleted-list, numbered-list] }
       - { name: "timezone", label: "Timezone", widget: "hidden", default: "America/Vancouver" }
 
-  # --- NEWS PAGE ---
+  # --- NEWS PAGE uwu ---
   - name: "news_page"
     label: "Page: News"
     files:
