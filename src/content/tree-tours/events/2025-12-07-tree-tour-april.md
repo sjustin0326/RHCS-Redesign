@@ -3,7 +3,7 @@ title: Tree Tour - April
 day: 2026-04-12
 startTime: 13:00
 endTime: 15:00
-location: Serenity Gardens, behind Henry Esson Young (H.E.Y) Building
+location: Serenity Gardens, by the Henry Esson Young (H.E.Y) Building
 description: >-
   *Please check our website and social media (
   [Facebook](https://www.facebook.com/profile.php?id=100064406420900) and
