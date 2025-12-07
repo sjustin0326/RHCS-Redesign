@@ -20,6 +20,10 @@ order: 1
 * Reliability and commitment to regular volunteering
 * Gardening experience helpful but not required
 
+**Requirements:**
+
+* Take a archaeological class (A one day class yearly to qualify through BC Housing)
+
 **What you'll gain:**
 
 * Hands-on gardening experience and skill development
