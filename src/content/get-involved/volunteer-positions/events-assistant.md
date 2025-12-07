@@ -1,10 +1,10 @@
 ---
-title: "Test 1 - Events Assistant"
-timeCommitment: "4-5 hours per event"
-contactType: "Email"
-contactEmail: "trees@rhcs.org"
+title: Tree Tours Assistant
+timeCommitment: 2 - 3 hours per event
+contactType: Email
+contactEmail: trees@rhcs.org
 contactURL: ""
-order: 1
+order: 10
 ---
 
 Help us make our public events a success! As an Events Assistant, you'll help set up displays, assist visitors, and ensure everything runs smoothly at community events like Treefest.
