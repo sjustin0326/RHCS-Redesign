@@ -1,6 +1,6 @@
 ---
-title: Test 4 - Garden & Grounds Maintenance
-timeCommitment: 3-6 hours per week, flexible schedule
+title: Garden & Grounds Maintenance
+timeCommitment: 3 - 6 hours per week, flexible schedule
 contactType: Email
 contactEmail: trees@rhcs.org
 order: 1
