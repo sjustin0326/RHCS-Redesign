@@ -1,13 +1,11 @@
 ---
-title: Test 3 - Website Content Manager
-timeCommitment: 3-5 hours per week, flexible schedule
+title: Website Content Manager
+timeCommitment: 3 - 5 hours per week, flexible schedule
 contactType: Email
 contactEmail: trees@rhcs.org
 order: 3
 ---
-*Help us keep our website fresh and informative! As our Website Content Manager, you'll update content, add news posts, manage event listings, and ensure our online presence accurately reflects all the great work happening at RHCS. No coding knowledge needed!*
-
-
+*Help us keep our website fresh and informative! As our Website Content Manager, you'll update content, add news posts, manage Tree Tours listings, and ensure our online presence accurately reflects all the great work happening at RHCS. No coding knowledge needed!*
 
 **What you'll do:**
 
@@ -18,8 +16,6 @@ order: 3
 * Ensure all content is current, accurate, and engaging
 * Monitor the website for broken links or outdated information
 
-
-
 **Requirements:**
 
 * Comfortable using computers and web browsers
@@ -29,8 +25,6 @@ order: 3
 * Ability to follow content guidelines and maintain consistency
 * No technical or coding experience required - training provided!
 
-
-
 **Benefits:**
 
 * Flexible remote volunteer opportunity - work from home
@@ -39,8 +33,6 @@ order: 3
 * Directly impact RHCS's online visibility and outreach
 * See the immediate results of your contributions
 * Great for students, retirees, or anyone wanting remote volunteer work
-
-
 
 **Ideal for:**
 
