@@ -19,4 +19,4 @@ images:
 
 * **Community Alliances:** Partnered with the B.C. Schizophrenia Society and Burke Mountain Naturalists, gathering a 22,000-signature petition to demand permanent preservation.
 
-* **Public Outreach:** Maintained a strong media presence and hosted displays at major events like the Van Dusen Garden Show and the annual Riverview TreeFest.
+* **Public Outreach:** Maintained a strong media presence and hosted displays at major events like the Van Dusen Garden Show.

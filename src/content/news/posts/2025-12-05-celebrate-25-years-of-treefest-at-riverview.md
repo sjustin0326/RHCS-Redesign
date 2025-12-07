@@ -36,5 +36,3 @@ Also that day, which will run from 10:45 a.m. to 4 p.m., the SPARC Antique Radio
 As well, the Kwikwetlem First Nation, which has a claim on the Riverview lands as part of its traditional territory, will be holding an opening prayer and will have a tent on site, as will RHCS and the Burke Mountain Naturalists.
 
 Anderson said the location of Treefest will be different from last year but will be mostly contained to the arboretum area, with plenty of free parking. The public is encouraged to enter the property via Colony Farm Road at Lougheed Highway.
-
-• Maps and more details about the event are available at rhcs.org/treefest. Watch for banners and signs to mark the way to the festival site.
