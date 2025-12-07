@@ -99,4 +99,52 @@ items:
 
          Go straight ahead. Well down on the left is a fence gate. Go through and left down the hill a few meters to the lawn area and Finnie’s Garden sign.
     image: /uploads/finnies-garden.jpeg
+  - description: >-
+      One day in 2004, Norma Gillespie spoke to me at our plots in Colony Farm
+      Gardens. She asked me to design a mural for Finnie’s Garden on the
+      Riverview Lands. I knew Norma and Don Gillespie well through the Burke
+      Mountain Naturalists. So, I said yes.
+
+
+      Before this time, I had been involved with The Riverview Horticultural Centre Society and Treefest helping to organize and participating in artists displays and demonstrations; encouraging an informal children’s art display, later shown at the Evergreen Cultural Centre art room; and providing artwork for the society’s pamphlet.
+
+
+      I imagined a teaching panel of 50 indigenous and naturalized plants, flowering species, many of which grew in the garden itself.
+
+
+      I began by preparing preliminary drawings of each species.
+
+
+      The 6’ x 16’ west side of the shed had recently been primed with yellow paint.
+
+
+      Negative cut-out shapes of the plants were used to spray coloured and metallic acrylic paint to the surface. This allowed me to design the composition, taking into consideration the placement, shape, colour and size of the plants to create an overall design.
+
+
+      I chose familiar and common species that could be easily recognized. Using permanent black ink marker, I drew the plants freehand as I referred to my original researched drawings.
+
+
+      Then, the acrylic paint colour was applied by brush. My dear friend, visual artist Laura Babak-Nagy, assisted me to help provide colour to the plants, as our 3- and 4-year-old children Christina and Emery played in the garden beside us.
+
+
+      The painting is a bittersweet reminder of our close friendship, and that of our families, as Laura died shortly after the completion of our collaboration.
+
+
+      Finally, I rendered the names of the plant species in English and Latin in black and metallic mauve permanent markers.
+
+
+      Longtime friend and Finnie’s Garden fence and trellis maker Niall Williams applied approximately 7 coats of clear acrylic varnish to the painted surface to protect the work.
+
+
+      The concept of this piece was developed with the hope and awareness that many people would continue to walk and rest at the site of the painting in Finnie’s Garden seeking peace and refreshment.
+
+
+      My grateful thanks to Laura Babak-Nagy and Niall Williams for dreaming along with me. And especially to Norma and Don Gillespie and Riverview Horticultural and Burke Mountain Naturalists friends, and all those who cherish this unique place.
+
+
+
+
+      \- Gay Mitchel
+    title: Finnie’s Garden Shed Botanical Painting / Mural
+    image: /uploads/finniesmural.jpeg
 ---
