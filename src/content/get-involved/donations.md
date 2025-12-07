@@ -13,8 +13,9 @@ paymentOptions:
     icon: donation
     details: Accepted at any RHCS tree tour or event
     preferred: false
-taxReceiptNote: (Please indicate if you would like a tax receipt, if your
-  donation is over $25.)
+taxReceiptNote: (RHCS is a registered charity. Please indicate if you would like
+  a tax receipt. Tax receipts are issued for donations of $25 or more, excluding
+  any membership portion)
 ---
 Riverview Horticultural Centre Society is a registered non-profit society with charitable income status.
 
