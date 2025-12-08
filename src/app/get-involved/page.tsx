@@ -11,7 +11,9 @@ import {
   getDonationsData,
   getVolunteerSection,
   getVolunteerPositions,
+  getVolunteerCarouselImages,
 } from '@/utils/getInvolved';
+import { getImagesWithDimensions } from '@/utils/imageUtils'; // Change this line
 
 export default async function GetInvolvedPage() {
   const heroData = await getHeroSectionData('src/content/get-involved/hero.md');
@@ -19,6 +21,8 @@ export default async function GetInvolvedPage() {
   const donationsData = getDonationsData();
   const volunteerSectionData = getVolunteerSection();
   const volunteerPositions = getVolunteerPositions();
+  const volunteerCarouselData = getVolunteerCarouselImages();
+  const volunteerCarouselImages = await getImagesWithDimensions(volunteerCarouselData.images);
 
   const sections = [
     { label: 'Membership', targetId: 'membership' },
@@ -39,9 +43,10 @@ export default async function GetInvolvedPage() {
       <DonationsSection data={donationsData} />
       
       {/* Volunteer Section */}
-      <VolunteerSection 
-        sectionData={volunteerSectionData} 
-        positions={volunteerPositions} 
+      <VolunteerSection
+        sectionData={volunteerSectionData}
+        positions={volunteerPositions}
+        carouselImages={volunteerCarouselImages}
       />
     </main>
   );
