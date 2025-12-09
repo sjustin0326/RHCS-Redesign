@@ -5,24 +5,6 @@ import { marked } from 'marked';
 
 const contentDirectory = path.join(process.cwd(), 'src/content/get-involved');
 
-// export interface WhyGetInvolved {
-//   title: string;
-//   benefits: {
-//     members: {
-//       icon: string;
-//       text: string;
-//     };
-//     donors: {
-//       icon: string;
-//       text: string;
-//     };
-//     volunteers: {
-//       icon: string;
-//       text: string;
-//     };
-//   };
-// }
-
 export interface PaymentMethod {
   method: string;
   icon: string;
@@ -67,15 +49,12 @@ export interface VolunteerPosition {
   slug: string;
 }
 
-
 function readMarkdownFile(fileName: string) {
   const fullPath = path.join(contentDirectory, fileName);
-  
   if (!fs.existsSync(fullPath)) {
     console.warn(`Warning: File not found: ${fullPath}`);
     return null;
   }
-  
   try {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     return matter(fileContents);
@@ -85,37 +64,8 @@ function readMarkdownFile(fileName: string) {
   }
 }
 
-
-// export function getWhyGetInvolved(): WhyGetInvolved {
-//   const result = readMarkdownFile('why-get-involved.md');
-  
-//   if (!result) {
-//     return {
-//       title: 'Why Get Involved?',
-//       benefits: {
-//         members: { icon: 'email', text: 'Join us and receive our newsletters' },
-//         donors: { icon: 'donation', text: 'Your donation helps preserve these lands' },
-//         volunteers: { icon: 'volunteer', text: 'Make a tangible difference' },
-//       },
-//     };
-//   }
-  
-//   const { data } = result;
-  
-//   return {
-//     title: (data.title || 'Why Get Involved?') as string,
-//     benefits: {
-//       members: data.benefits?.members || { icon: 'email', text: '' },
-//       donors: data.benefits?.donors || { icon: 'donation', text: '' },
-//       volunteers: data.benefits?.volunteers || { icon: 'volunteer', text: '' },
-//     },
-//   };
-// }
-
-// Get Membership data
 export function getMembershipData(): MembershipData {
   const result = readMarkdownFile('membership.md');
-  
   if (!result) {
     return {
       title: 'Join the Society',
@@ -124,15 +74,13 @@ export function getMembershipData(): MembershipData {
       paymentMethods: [],
     };
   }
-  
   const { data, content } = result;
-  
-  // Process payment methods to convert markdown details to HTML
+
   const paymentMethods = (data.paymentMethods || []).map((pm: PaymentMethod) => ({
     ...pm,
     details: marked.parse(pm.details) as string,
   }));
-  
+
   return {
     title: (data.title || 'Join the Society') as string,
     htmlContent: marked.parse(content || data.body || '') as string,
@@ -143,10 +91,8 @@ export function getMembershipData(): MembershipData {
   };
 }
 
-// Get Donations data
 export function getDonationsData(): DonationsData {
   const result = readMarkdownFile('donations.md');
-  
   if (!result) {
     return {
       title: 'Support Our Work',
@@ -154,15 +100,13 @@ export function getDonationsData(): DonationsData {
       paymentOptions: [],
     };
   }
-  
   const { data, content } = result;
-  
-  // Process payment options to convert markdown details to HTML
+
   const paymentOptions = (data.paymentOptions || []).map((po: PaymentMethod) => ({
     ...po,
     details: marked.parse(po.details) as string,
   }));
-  
+
   return {
     title: (data.title || 'Support Our Work') as string,
     htmlContent: marked.parse(content || data.body || '') as string,
@@ -171,26 +115,21 @@ export function getDonationsData(): DonationsData {
   };
 }
 
-// Get Volunteer Section data
 export function getVolunteerSection(): VolunteerSection {
   const result = readMarkdownFile('volunteer.md');
-  
   if (!result) {
     return {
       title: 'Volunteer Opportunities',
       description: '',
     };
   }
-  
   const { data, content } = result;
-  
   return {
     title: (data.title || 'Volunteer Opportunities') as string,
     description: content || (data.description as string) || '',
   };
 }
 
-// Get all Volunteer Positions
 export function getVolunteerPositions(): VolunteerPosition[] {
   const positionsDirectory = path.join(contentDirectory, 'volunteer-positions');
   if (!fs.existsSync(positionsDirectory)) {
@@ -206,7 +145,6 @@ export function getVolunteerPositions(): VolunteerPosition[] {
         const fileContents = fs.readFileSync(fullPath, 'utf8');
         const { data, content } = matter(fileContents);
 
-        // El content ahora viene del body del markdown
         const descriptionText = content ? content.trim() : '';
 
         return {
@@ -235,27 +173,43 @@ export interface CarouselImages {
 
 export function getVolunteerCarouselImages(): CarouselImages {
   const fullPath = path.join(contentDirectory, 'volunteer-carousel.md');
-  
   if (!fs.existsSync(fullPath)) {
     console.warn(`Warning: Volunteer carousel images file not found: ${fullPath}`);
     return { images: [] };
   }
-  
   try {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const { data } = matter(fileContents);
-    
-    // Validar que images existe y es un array
+
+    console.log('Volunteer carousel raw data:', data); // Debug log
+
     if (!data.images || !Array.isArray(data.images)) {
       console.warn('No images array found in volunteer carousel data');
       return { images: [] };
     }
-    
-    // Filtrar items vacíos o sin propiedad image
+
+    // FIXED: Extract the image path correctly
     const images = data.images
-      .filter((item: { image?: string }) => item && item.image)
-      .map((item: { image: string }) => item.image);
-    
+      .filter((item: unknown) => {
+        // Handle both string and object formats
+        if (typeof item === 'string') return true;
+        if (typeof item === 'object' && item !== null && 'image' in item) {
+          return !!(item as { image?: string }).image;
+        }
+        return false;
+      })
+      .map((item: unknown) => {
+        // If it's already a string, return it
+        if (typeof item === 'string') return item;
+        // If it's an object with image property, extract it
+        if (typeof item === 'object' && item !== null && 'image' in item) {
+          return (item as { image: string }).image;
+        }
+        return '';
+      })
+      .filter((path: string) => path !== ''); // Remove any empty strings
+
+    console.log('Volunteer processed images:', images); // Debug log
     return { images };
   } catch (error) {
     console.error('Error reading volunteer carousel images:', error);

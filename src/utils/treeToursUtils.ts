@@ -57,7 +57,6 @@ export interface VirtualTours {
   videos: VirtualTourVideo[];
 }
 
-// Interfaz para video sin tipo del CMS
 interface UnknownVideoData {
   title?: string;
   description?: string;
@@ -72,12 +71,9 @@ function convertToEmbedUrl(youtubeUrl: string): string {
     const url = new URL(youtubeUrl);
     let videoId = '';
 
-    // Formato: https://www.youtube.com/watch?v=VIDEO_ID
     if (url.hostname.includes('youtube.com')) {
       videoId = url.searchParams.get('v') || '';
-    } 
-    // Formato: https://youtu.be/VIDEO_ID
-    else if (url.hostname.includes('youtu.be')) {
+    } else if (url.hostname.includes('youtu.be')) {
       videoId = url.pathname.slice(1);
     }
 
@@ -87,38 +83,54 @@ function convertToEmbedUrl(youtubeUrl: string): string {
   } catch (error) {
     console.error('Error parsing YouTube URL:', error);
   }
-  
   return youtubeUrl;
 }
 
 export function getTreeToursCarouselImages(): CarouselImages {
   const fullPath = path.join(contentDirectory, 'carousel-images.md');
-  
   if (!fs.existsSync(fullPath)) {
     console.warn(`Warning: Tree tours carousel images file not found: ${fullPath}`);
     return { images: [] };
   }
-  
   try {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const { data } = matter(fileContents);
+
+    console.log('Tree tours carousel raw data:', data); // Debug log
 
     if (!data.images || !Array.isArray(data.images)) {
       console.warn('No images array found in tree tours carousel data');
       return { images: [] };
     }
 
+    // FIXED: Extract the image path correctly
     const images = data.images
-      .filter((item: { image?: string }) => item && item.image)
-      .map((item: { image: string }) => item.image);
-    
+      .filter((item: unknown) => {
+        // Handle both string and object formats
+        if (typeof item === 'string') return true;
+        if (typeof item === 'object' && item !== null && 'image' in item) {
+          return !!(item as { image?: string }).image;
+        }
+        return false;
+      })
+      .map((item: unknown) => {
+        // If it's already a string, return it
+        if (typeof item === 'string') return item;
+        // If it's an object with image property, extract it
+        if (typeof item === 'object' && item !== null && 'image' in item) {
+          return (item as { image: string }).image;
+        }
+        return '';
+      })
+      .filter((path: string) => path !== ''); // Remove any empty strings
+
+    console.log('Tree tours processed images:', images); // Debug log
     return { images };
   } catch (error) {
     console.error('Error reading tree tours carousel images:', error);
     return { images: [] };
   }
 }
-
 
 export function getVisitorInfo(): VisitorInfo {
   const fullPath = path.join(contentDirectory, 'visitor-information.md');
@@ -150,7 +162,6 @@ export function getMaps(): Maps {
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data } = matter(fileContents);
 
-  // Extraer location settings
   const locationData = data.location || {};
   const location: LocationSettings = {
     title: locationData.title || 'Location: Henry Esson Young Building',
@@ -158,7 +169,7 @@ export function getMaps(): Maps {
     address: locationData.address || '',
     googleMapsDirectUrl: locationData.googleMapsDirectUrl || '',
   };
-  
+
   const mapList: MapItem[] = (data.map_list || [] as RawMapItem[]).map((item: RawMapItem) => ({
     title: item.title,
     type: item.type || 'File Upload (PDF/Image)',

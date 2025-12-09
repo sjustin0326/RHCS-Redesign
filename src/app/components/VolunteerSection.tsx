@@ -49,15 +49,7 @@ const VolunteerSection: React.FC<VolunteerSectionProps> = ({
           {sectionData.title}
         </h2>
 
-        {/* Carousel - solo mostrar si hay imágenes */}
-          {carouselImages.length > 0 && (
-            <div className="mb-8 sm:mb-10 md:mb-12">
-              <ImageCarousel
-                images={carouselImages}
-                altText="Volunteer Activities"
-              />
-            </div>
-          )}
+        
 
         {/* Description */}
         {sectionData.description && (
@@ -65,6 +57,17 @@ const VolunteerSection: React.FC<VolunteerSectionProps> = ({
             className="prose prose-sm sm:prose-base lg:prose-lg mx-auto mb-10 sm:mb-12 text-gray-700 font-poppins text-center max-w-3xl"
             dangerouslySetInnerHTML={{ __html: marked.parse(sectionData.description) as string }}
           />
+        )}
+
+        {/*Image Carousel*/}
+        {carouselImages.length > 0 && (
+          <div className="mb-8 sm:mb-10 md:mb-12">
+            <ImageCarousel
+              images={carouselImages}
+              altText="Volunteer Activities"
+              maxWidth="60%"
+            />
+          </div>
         )}
 
         {/* Positions Grid */}

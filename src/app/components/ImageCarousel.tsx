@@ -5,7 +5,6 @@ import Image from 'next/image';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 
-
 interface ImageCarouselProps {
   images: {
     src: string;
@@ -13,6 +12,7 @@ interface ImageCarouselProps {
     height: number;
   }[];
   altText: string;
+  maxWidth?: '60%' | '70%' | '80%' | '100%'; // Add maxWidth prop
 }
 
 // arrow
@@ -22,7 +22,7 @@ const ArrowIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export default function ImageCarousel({ images, altText }: ImageCarouselProps) {
+export default function ImageCarousel({ images, altText, maxWidth = '100%' }: ImageCarouselProps) {
   // fullscreen overlay
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
@@ -44,7 +44,7 @@ export default function ImageCarousel({ images, altText }: ImageCarouselProps) {
     setLightboxOpen(false);
     setSelectedImageIndex(null);
   };
-  
+
   // navegation for overlay
   const lightboxPrev = () => {
     if (selectedImageIndex !== null) {
@@ -59,7 +59,7 @@ export default function ImageCarousel({ images, altText }: ImageCarouselProps) {
       setSelectedImageIndex(newIndex);
     }
   };
-  
+
   // nav with keyboard on overlay/lightbox
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -73,15 +73,25 @@ export default function ImageCarousel({ images, altText }: ImageCarouselProps) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [lightboxOpen, selectedImageIndex]);
 
+  // Map maxWidth to Tailwind classes
+  const maxWidthClass = {
+    '60%': 'lg:max-w-[60%]',
+    '70%': 'lg:max-w-[70%]',
+    '80%': 'lg:max-w-[80%]',
+    '100%': 'max-w-4xl'
+  }[maxWidth];
 
   return (
     <>
-      <div className="relative w-full max-w-4xl mx-auto overflow-hidden rounded-lg aspect-[4/3] lg:aspect-16/9 bg-black/5" ref={emblaRef}>
+      <div 
+        className={`relative w-full ${maxWidthClass} mx-auto overflow-hidden rounded-lg aspect-[4/3] lg:aspect-16/9 bg-black/5`} 
+        ref={emblaRef}
+      >
         {/* slides */}
         <div className="flex h-full">
           {images.map((img, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className="relative flex-grow-0 flex-shrink-0 w-full basis-full cursor-pointer"
               onClick={() => openLightbox(index)}
             >
@@ -115,7 +125,7 @@ export default function ImageCarousel({ images, altText }: ImageCarouselProps) {
 
       {/* Lightbox / Overlay*/}
       {lightboxOpen && selectedImageIndex !== null && (
-        <div 
+        <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 animate-fade-in"
           onClick={closeLightbox}
           role="dialog"
@@ -133,14 +143,13 @@ export default function ImageCarousel({ images, altText }: ImageCarouselProps) {
           </div>
 
           {/* close button */}
-          <button 
+          <button
             className="absolute top-5 right-5 text-white text-5xl font-bold w-12 h-12"
             onClick={closeLightbox}
             aria-label="Close image overlay"
           >
             &times;
           </button>
-          
           {/* nav buttons on <overlay/lightbox*/}
           <button
             className="absolute top-1/2 left-5 -translate-y-1/2 text-white/70 hover:text-white transition-colors"
