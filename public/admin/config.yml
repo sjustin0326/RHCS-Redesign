@@ -5,7 +5,7 @@ backend:
 media_folder: "public/uploads"
 public_folder: "/uploads"
 
-display_url: https://rhcs.netlify.app/
+display_url: https://rhcs.org
 logo_url: /logo.png
 
 collections:
