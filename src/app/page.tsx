@@ -51,7 +51,7 @@ export default async function Home() {
       </section>
 
       {/* RHCS in Media */}
-      <MediaSection data={mediaSectionData} />
+      {!mediaSectionData?.isHidden && <MediaSection data={mediaSectionData} />}
 
       {/* Virtual Tree Tour */}
       <VirtualTourSection data={virtualTourData} />
