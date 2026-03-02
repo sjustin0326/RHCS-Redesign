@@ -55,6 +55,7 @@ collections:
         label: "RHCS in Media Section"
         file: "src/content/home/media.md"
         fields:
+          - { name: "isHidden", label: "Hide this section completely?", widget: "boolean", default: false }
           - { name: "title", label: "Section Title", widget: "string", default: "RHCS in Media" }
           - name: "mediaItems"
             label: "Media Items"
